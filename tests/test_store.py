@@ -262,6 +262,7 @@ def test_a_shredded_household_cannot_be_read_back(cell, settings):
         fresh.close()
 
 
+@__import__("pytest").mark.skipif(__import__("sys").platform != "win32", reason="an open file can still be deleted on POSIX; the busy-cell refusal is Windows-only")
 def test_a_busy_cell_refuses_to_claim_it_was_erased(cell):
     """A receipt is a claim about the disk. If the file is still open elsewhere we must say so."""
     add(cell, "Take 500 mg paracetamol")
