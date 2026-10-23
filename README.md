@@ -68,3 +68,10 @@ python scripts/serve.py   # http://localhost:8080/simulator
 - `careloop/` server, `frontend/` (5 workspaces), `alexa/` skill package, `artifacts/`, `tests/`, `preflight/`, `scripts/`, `evidence/`, `Dockerfile`.
 - MIT licence; stdlib-only runtime with two optional packages (`cryptography`, `boto3`).
 - No web fonts, icon libraries, audio files or third-party brand assets.
+## Screenshots
+
+![Screenshot 1](docs/screenshots/screenshot-1.png)
+
+![Screenshot 2](docs/screenshots/screenshot-2.png)
+
+![Screenshot 3](docs/screenshots/screenshot-3.png)

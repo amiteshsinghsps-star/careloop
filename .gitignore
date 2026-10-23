@@ -47,3 +47,4 @@ scripts/eval/report.json
 preflight_report.json
 *.preflight.json
 list.json
+desktop.ini
