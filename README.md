@@ -75,11 +75,3 @@ python scripts/serve.py   # http://localhost:8080/simulator
 ![Screenshot 2](docs/screenshots/screenshot-2.png)
 
 ![Screenshot 3](docs/screenshots/screenshot-3.png)
-
-## Screenshots
-
-![Screenshot 1](docs/screenshots/screenshot-1.png)
-
-![Screenshot 2](docs/screenshots/screenshot-2.png)
-
-![Screenshot 3](docs/screenshots/screenshot-3.png)
