@@ -1,0 +1,16 @@
+### browser-chain.json vs the headless twin, each device on its own freshly seeded household
+device compare  chain: 6 phrase-turns here, 6 there (browser scenario id 'chain')
+IDENTICAL: 72 fields compared, 0 divergences
+
+### browser-reminder.json vs the headless twin, each device on its own freshly seeded household
+device compare  reminder: 2 phrase-turns here, 2 there (browser scenario id 'reminder')
+IDENTICAL: 32 fields compared, 0 divergences
+
+### browser-delivery.json vs the headless twin, each device on its own freshly seeded household
+device compare  delivery: 4 phrase-turns here, 4 there (browser scenario id 'delivery')
+IDENTICAL: 48 fields compared, 0 divergences
+
+### browser-speaker.json vs the headless twin, each device on its own freshly seeded household
+device compare  speaker: 4 phrase-turns here, 4 there (browser scenario id 'speaker')
+IDENTICAL: 50 fields compared, 0 divergences
+

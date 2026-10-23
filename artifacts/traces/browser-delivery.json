@@ -1,0 +1,763 @@
+{
+  "kind": "careloop-alexa-device-trace",
+  "version": 1,
+  "scenario": "delivery",
+  "created_at": "2026-10-23T14:02:40.234Z",
+  "device": {
+    "locale": "en-US",
+    "model": "simulated-browser-device"
+  },
+  "turns": [
+    {
+      "index": 0,
+      "utterance": "what is next for Papa",
+      "at_ms": 0,
+      "state": "speaking",
+      "slu": {
+        "intent": "WhatsMyPlanIntent",
+        "builtIn": null,
+        "matched": "literal",
+        "confidence": 0.95,
+        "slots": [
+          {
+            "name": "Person",
+            "spoken": "Papa",
+            "resolved": "Papa",
+            "id": "Papa",
+            "state": "success",
+            "confidence": 1
+          }
+        ]
+      },
+      "routed": {
+        "tool": "get_care_plan",
+        "args": {
+          "person": "Papa"
+        }
+      },
+      "agrees": true,
+      "local": false,
+      "called": true,
+      "dialog": null,
+      "connection": null,
+      "proactive": false,
+      "delivery": null,
+      "meta": null,
+      "refused": null,
+      "request_envelope": {
+        "version": "1.0",
+        "session": {
+          "new": false,
+          "sessionId": "cl-31495cfb126d6e8d",
+          "application": {
+            "applicationId": "amzn1.ask.skill.careloop-simulated"
+          },
+          "user": {
+            "userId": "amzn1.ask.account.CARELOOP-SIMULATED"
+          },
+          "attributes": {
+            "lastUtterance": "what is next for Papa"
+          }
+        },
+        "context": {
+          "System": {
+            "application": {
+              "applicationId": "amzn1.ask.skill.careloop-simulated"
+            },
+            "user": {
+              "userId": "amzn1.ask.account.CARELOOP-SIMULATED"
+            },
+            "device": {
+              "deviceId": "careloop-simulated-device-0001",
+              "supportedInterfaces": {}
+            },
+            "apiEndpoint": "https://api.amazonalexa.com/v2/accounts/",
+            "apiAccessToken": "simulated-access-token-never-sent"
+          }
+        },
+        "request": {
+          "type": "IntentRequest",
+          "requestId": "simreq-mvl1hpty-1",
+          "timestamp": "2026-10-23T14:02:38Z",
+          "locale": "en-US",
+          "dialogState": "COMPLETED",
+          "intent": {
+            "name": "WhatsMyPlanIntent",
+            "confirmationStatus": "NONE",
+            "slots": {
+              "Person": {
+                "name": "Person",
+                "value": "Papa",
+                "confirmationStatus": "NONE",
+                "slotValue": {
+                  "type": "Simple",
+                  "value": "Papa"
+                },
+                "resolutions": {
+                  "resolutionsPerAuthority": [
+                    {
+                      "authority": "CareLoopPerson",
+                      "status": {
+                        "code": "ER_SUCCESS_MATCH"
+                      },
+                      "values": [
+                        {
+                          "value": {
+                            "name": "Papa",
+                            "id": "Papa"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "response_envelope": {
+        "version": "1.0",
+        "sessionAttributes": {
+          "lastUtterance": "what is next for Papa",
+          "careloop": {
+            "model": "ec4b62d616b3",
+            "tool": "get_care_plan",
+            "intent": "WhatsMyPlanIntent",
+            "view": "plan",
+            "state": "await"
+          }
+        },
+        "response": {
+          "shouldEndSession": false,
+          "outputSpeech": {
+            "type": "SSML",
+            "ssml": "<speak>For Papa: the first item — Check the blood pressure every morning and write it down.  <break strength=\"x-weak\"/> plus 2 more.  <break strength=\"x-weak\"/> According to your clinician, as recorded on 23 October 2026.</speak>"
+          },
+          "card": {
+            "type": "Simple",
+            "title": "Care plan",
+            "content": "For Papa: the first item — Check the blood pressure every morning and write it down. plus 2 more. According to your clinician, as recorded on 23 October 2026."
+          },
+          "reprompt": {
+            "outputSpeech": {
+              "type": "SSML",
+              "ssml": "<speak>I only repeat what your clinician recorded for this household. I can tell you what is next, why something was said, what changed, and what is still to do.</speak>"
+            }
+          }
+        }
+      },
+      "spoken_text": "For Papa: the first item — Check the blood pressure every morning and write it down. plus 2 more. According to your clinician, as recorded on 23 October 2026.",
+      "words": 29,
+      "estimate_ms": 10745,
+      "masked_fields": [
+        "items[1].text"
+      ],
+      "problems": [],
+      "tool_ms": 61
+    },
+    {
+      "index": 1,
+      "utterance": "say that slower",
+      "at_ms": 400,
+      "state": "speaking",
+      "slu": {
+        "intent": "AdjustDeliveryIntent",
+        "builtIn": null,
+        "matched": "literal",
+        "confidence": 0.95,
+        "slots": [
+          {
+            "name": "Delivery",
+            "spoken": "slower",
+            "resolved": "slower",
+            "id": "slower",
+            "state": "success",
+            "confidence": 1
+          }
+        ]
+      },
+      "routed": {
+        "tool": "get_care_plan",
+        "args": {}
+      },
+      "agrees": false,
+      "local": false,
+      "called": false,
+      "dialog": null,
+      "connection": null,
+      "proactive": false,
+      "delivery": {
+        "style": "slower",
+        "rate": "80%",
+        "volume": null,
+        "maxSpokenWords": 48,
+        "truncated": false,
+        "appliedTo": "held"
+      },
+      "meta": null,
+      "refused": null,
+      "request_envelope": {
+        "version": "1.0",
+        "session": {
+          "new": false,
+          "sessionId": "cl-31495cfb126d6e8d",
+          "application": {
+            "applicationId": "amzn1.ask.skill.careloop-simulated"
+          },
+          "user": {
+            "userId": "amzn1.ask.account.CARELOOP-SIMULATED"
+          },
+          "attributes": {
+            "lastUtterance": "say that slower"
+          }
+        },
+        "context": {
+          "System": {
+            "application": {
+              "applicationId": "amzn1.ask.skill.careloop-simulated"
+            },
+            "user": {
+              "userId": "amzn1.ask.account.CARELOOP-SIMULATED"
+            },
+            "device": {
+              "deviceId": "careloop-simulated-device-0001",
+              "supportedInterfaces": {}
+            },
+            "apiEndpoint": "https://api.amazonalexa.com/v2/accounts/",
+            "apiAccessToken": "simulated-access-token-never-sent"
+          }
+        },
+        "request": {
+          "type": "IntentRequest",
+          "requestId": "simreq-mvl1hq5e-2",
+          "timestamp": "2026-10-23T14:02:38Z",
+          "locale": "en-US",
+          "dialogState": "COMPLETED",
+          "intent": {
+            "name": "AdjustDeliveryIntent",
+            "confirmationStatus": "NONE",
+            "slots": {
+              "Delivery": {
+                "name": "Delivery",
+                "value": "slower",
+                "confirmationStatus": "NONE",
+                "slotValue": {
+                  "type": "Simple",
+                  "value": "slower"
+                },
+                "resolutions": {
+                  "resolutionsPerAuthority": [
+                    {
+                      "authority": "CareLoopDeliveryStyle",
+                      "status": {
+                        "code": "ER_SUCCESS_MATCH"
+                      },
+                      "values": [
+                        {
+                          "value": {
+                            "name": "slower",
+                            "id": "slower"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "response_envelope": {
+        "version": "1.0",
+        "sessionAttributes": {
+          "lastUtterance": "say that slower",
+          "careloop": {
+            "model": "ec4b62d616b3",
+            "tool": "get_care_plan",
+            "intent": "AdjustDeliveryIntent",
+            "view": "plan",
+            "state": "await"
+          }
+        },
+        "response": {
+          "shouldEndSession": false,
+          "outputSpeech": {
+            "type": "SSML",
+            "ssml": "<speak><prosody rate=\"80%\">Slower now.  <break strength=\"x-weak\"/> For Papa: the first item — Check the blood pressure every morning and write it down.  <break strength=\"x-weak\"/> plus 2 more.  <break strength=\"x-weak\"/> According to your clinician, as recorded on 23 October 2026.</prosody></speak>"
+          },
+          "card": {
+            "type": "Simple",
+            "title": "Care plan",
+            "content": "Slower now. For Papa: the first item — Check the blood pressure every morning and write it down. plus 2 more. According to your clinician, as recorded on 23 October 2026."
+          },
+          "reprompt": {
+            "outputSpeech": {
+              "type": "SSML",
+              "ssml": "<speak>I only repeat what your clinician recorded for this household. I can tell you what is next, why something was said, what changed, and what is still to do.</speak>"
+            }
+          }
+        }
+      },
+      "spoken_text": "Slower now. For Papa: the first item — Check the blood pressure every morning and write it down. plus 2 more. According to your clinician, as recorded on 23 October 2026.",
+      "words": 31,
+      "estimate_ms": 14391,
+      "masked_fields": [
+        "items[1].text"
+      ],
+      "problems": [],
+      "tool_ms": 0
+    },
+    {
+      "index": 2,
+      "utterance": "say that shorter",
+      "at_ms": 800,
+      "state": "speaking",
+      "slu": {
+        "intent": "AdjustDeliveryIntent",
+        "builtIn": null,
+        "matched": "literal",
+        "confidence": 0.95,
+        "slots": [
+          {
+            "name": "Delivery",
+            "spoken": "shorter",
+            "resolved": "shorter",
+            "id": "brief",
+            "state": "success",
+            "confidence": 1
+          }
+        ]
+      },
+      "routed": {
+        "tool": "get_care_plan",
+        "args": {}
+      },
+      "agrees": false,
+      "local": false,
+      "called": false,
+      "dialog": null,
+      "connection": null,
+      "proactive": false,
+      "delivery": {
+        "style": "brief",
+        "rate": "100%",
+        "volume": null,
+        "maxSpokenWords": 18,
+        "truncated": true,
+        "appliedTo": "held"
+      },
+      "meta": null,
+      "refused": null,
+      "request_envelope": {
+        "version": "1.0",
+        "session": {
+          "new": false,
+          "sessionId": "cl-31495cfb126d6e8d",
+          "application": {
+            "applicationId": "amzn1.ask.skill.careloop-simulated"
+          },
+          "user": {
+            "userId": "amzn1.ask.account.CARELOOP-SIMULATED"
+          },
+          "attributes": {
+            "lastUtterance": "say that shorter"
+          }
+        },
+        "context": {
+          "System": {
+            "application": {
+              "applicationId": "amzn1.ask.skill.careloop-simulated"
+            },
+            "user": {
+              "userId": "amzn1.ask.account.CARELOOP-SIMULATED"
+            },
+            "device": {
+              "deviceId": "careloop-simulated-device-0001",
+              "supportedInterfaces": {}
+            },
+            "apiEndpoint": "https://api.amazonalexa.com/v2/accounts/",
+            "apiAccessToken": "simulated-access-token-never-sent"
+          }
+        },
+        "request": {
+          "type": "IntentRequest",
+          "requestId": "simreq-mvl1hqh5-3",
+          "timestamp": "2026-10-23T14:02:39Z",
+          "locale": "en-US",
+          "dialogState": "COMPLETED",
+          "intent": {
+            "name": "AdjustDeliveryIntent",
+            "confirmationStatus": "NONE",
+            "slots": {
+              "Delivery": {
+                "name": "Delivery",
+                "value": "shorter",
+                "confirmationStatus": "NONE",
+                "slotValue": {
+                  "type": "Simple",
+                  "value": "shorter"
+                },
+                "resolutions": {
+                  "resolutionsPerAuthority": [
+                    {
+                      "authority": "CareLoopDeliveryStyle",
+                      "status": {
+                        "code": "ER_SUCCESS_MATCH"
+                      },
+                      "values": [
+                        {
+                          "value": {
+                            "name": "shorter",
+                            "id": "brief"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "response_envelope": {
+        "version": "1.0",
+        "sessionAttributes": {
+          "lastUtterance": "say that shorter",
+          "careloop": {
+            "model": "ec4b62d616b3",
+            "tool": "get_care_plan",
+            "intent": "AdjustDeliveryIntent",
+            "view": "plan",
+            "state": "await"
+          }
+        },
+        "response": {
+          "shouldEndSession": false,
+          "outputSpeech": {
+            "type": "SSML",
+            "ssml": "<speak>The short version.  <break strength=\"x-weak\"/> For Papa: the first item — Check the blood pressure every morning and write it</speak>"
+          },
+          "card": {
+            "type": "Simple",
+            "title": "Care plan",
+            "content": "The short version. For Papa: the first item — Check the blood pressure every morning and write it down. plus 2 more. According to your clinician, as recorded on 23 October 2026."
+          },
+          "reprompt": {
+            "outputSpeech": {
+              "type": "SSML",
+              "ssml": "<speak>I only repeat what your clinician recorded for this household. I can tell you what is next, why something was said, what changed, and what is still to do.</speak>"
+            }
+          }
+        }
+      },
+      "spoken_text": "The short version. For Papa: the first item — Check the blood pressure every morning and write it",
+      "words": 18,
+      "estimate_ms": 6645,
+      "masked_fields": [
+        "items[1].text"
+      ],
+      "problems": [],
+      "tool_ms": 0
+    },
+    {
+      "index": 3,
+      "utterance": "say that the usual way",
+      "at_ms": 1200,
+      "state": "speaking",
+      "slu": {
+        "intent": "AdjustDeliveryIntent",
+        "builtIn": null,
+        "matched": "literal",
+        "confidence": 0.95,
+        "slots": [
+          {
+            "name": "Delivery",
+            "spoken": "the usual way",
+            "resolved": "the usual way",
+            "id": "normal",
+            "state": "success",
+            "confidence": 1
+          }
+        ]
+      },
+      "routed": {
+        "tool": "get_care_plan",
+        "args": {}
+      },
+      "agrees": false,
+      "local": false,
+      "called": false,
+      "dialog": null,
+      "connection": null,
+      "proactive": false,
+      "delivery": {
+        "style": "normal",
+        "rate": "100%",
+        "volume": "100%",
+        "maxSpokenWords": 48,
+        "truncated": false,
+        "appliedTo": "held"
+      },
+      "meta": null,
+      "refused": null,
+      "request_envelope": {
+        "version": "1.0",
+        "session": {
+          "new": false,
+          "sessionId": "cl-31495cfb126d6e8d",
+          "application": {
+            "applicationId": "amzn1.ask.skill.careloop-simulated"
+          },
+          "user": {
+            "userId": "amzn1.ask.account.CARELOOP-SIMULATED"
+          },
+          "attributes": {
+            "lastUtterance": "say that the usual way"
+          }
+        },
+        "context": {
+          "System": {
+            "application": {
+              "applicationId": "amzn1.ask.skill.careloop-simulated"
+            },
+            "user": {
+              "userId": "amzn1.ask.account.CARELOOP-SIMULATED"
+            },
+            "device": {
+              "deviceId": "careloop-simulated-device-0001",
+              "supportedInterfaces": {}
+            },
+            "apiEndpoint": "https://api.amazonalexa.com/v2/accounts/",
+            "apiAccessToken": "simulated-access-token-never-sent"
+          }
+        },
+        "request": {
+          "type": "IntentRequest",
+          "requestId": "simreq-mvl1hqsg-4",
+          "timestamp": "2026-10-23T14:02:39Z",
+          "locale": "en-US",
+          "dialogState": "COMPLETED",
+          "intent": {
+            "name": "AdjustDeliveryIntent",
+            "confirmationStatus": "NONE",
+            "slots": {
+              "Delivery": {
+                "name": "Delivery",
+                "value": "the usual way",
+                "confirmationStatus": "NONE",
+                "slotValue": {
+                  "type": "Simple",
+                  "value": "the usual way"
+                },
+                "resolutions": {
+                  "resolutionsPerAuthority": [
+                    {
+                      "authority": "CareLoopDeliveryStyle",
+                      "status": {
+                        "code": "ER_SUCCESS_MATCH"
+                      },
+                      "values": [
+                        {
+                          "value": {
+                            "name": "the usual way",
+                            "id": "normal"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "response_envelope": {
+        "version": "1.0",
+        "sessionAttributes": {
+          "lastUtterance": "say that the usual way",
+          "careloop": {
+            "model": "ec4b62d616b3",
+            "tool": "get_care_plan",
+            "intent": "AdjustDeliveryIntent",
+            "view": "plan",
+            "state": "await"
+          }
+        },
+        "response": {
+          "shouldEndSession": false,
+          "outputSpeech": {
+            "type": "SSML",
+            "ssml": "<speak>Back to the usual pace and length.  <break strength=\"x-weak\"/> For Papa: the first item — Check the blood pressure every morning and write it down.  <break strength=\"x-weak\"/> plus 2 more.  <break strength=\"x-weak\"/> According to your clinician, as recorded on 23 October 2026.</speak>"
+          },
+          "card": {
+            "type": "Simple",
+            "title": "Care plan",
+            "content": "Back to the usual pace and length. For Papa: the first item — Check the blood pressure every morning and write it down. plus 2 more. According to your clinician, as recorded on 23 October 2026."
+          },
+          "reprompt": {
+            "outputSpeech": {
+              "type": "SSML",
+              "ssml": "<speak>I only repeat what your clinician recorded for this household. I can tell you what is next, why something was said, what changed, and what is still to do.</speak>"
+            }
+          }
+        }
+      },
+      "spoken_text": "Back to the usual pace and length. For Papa: the first item — Check the blood pressure every morning and write it down. plus 2 more. According to your clinician, as recorded on 23 October 2026.",
+      "words": 36,
+      "estimate_ms": 13391,
+      "masked_fields": [
+        "items[1].text"
+      ],
+      "problems": [],
+      "tool_ms": 0
+    }
+  ],
+  "events": [
+    {
+      "atMs": 0,
+      "kind": "state",
+      "from": "idle",
+      "to": "wake",
+      "note": "wake word"
+    },
+    {
+      "atMs": 0,
+      "kind": "state",
+      "from": "wake",
+      "to": "listening",
+      "note": "microphone open"
+    },
+    {
+      "atMs": 0,
+      "kind": "state",
+      "from": "listening",
+      "to": "wake",
+      "note": "wake word"
+    },
+    {
+      "atMs": 0,
+      "kind": "state",
+      "from": "wake",
+      "to": "listening",
+      "note": "microphone open"
+    },
+    {
+      "atMs": 0,
+      "kind": "heard",
+      "from": "listening",
+      "to": "processing",
+      "note": "heard “what is next for Papa”"
+    },
+    {
+      "atMs": 0,
+      "kind": "answer",
+      "from": "processing",
+      "to": "speaking",
+      "note": "29 words, about 10.7 s"
+    },
+    {
+      "atMs": 400,
+      "kind": "state",
+      "from": "speaking",
+      "to": "wake",
+      "note": "wake word"
+    },
+    {
+      "atMs": 400,
+      "kind": "state",
+      "from": "wake",
+      "to": "listening",
+      "note": "microphone open"
+    },
+    {
+      "atMs": 400,
+      "kind": "heard",
+      "from": "listening",
+      "to": "processing",
+      "note": "heard “say that slower”"
+    },
+    {
+      "atMs": 400,
+      "kind": "answer",
+      "from": "processing",
+      "to": "speaking",
+      "note": "31 words, about 14.4 s"
+    },
+    {
+      "atMs": 800,
+      "kind": "state",
+      "from": "speaking",
+      "to": "wake",
+      "note": "wake word"
+    },
+    {
+      "atMs": 800,
+      "kind": "state",
+      "from": "wake",
+      "to": "listening",
+      "note": "microphone open"
+    },
+    {
+      "atMs": 800,
+      "kind": "heard",
+      "from": "listening",
+      "to": "processing",
+      "note": "heard “say that shorter”"
+    },
+    {
+      "atMs": 800,
+      "kind": "answer",
+      "from": "processing",
+      "to": "speaking",
+      "note": "18 words, about 6.6 s"
+    },
+    {
+      "atMs": 1200,
+      "kind": "state",
+      "from": "speaking",
+      "to": "wake",
+      "note": "wake word"
+    },
+    {
+      "atMs": 1200,
+      "kind": "state",
+      "from": "wake",
+      "to": "listening",
+      "note": "microphone open"
+    },
+    {
+      "atMs": 1200,
+      "kind": "heard",
+      "from": "listening",
+      "to": "processing",
+      "note": "heard “say that the usual way”"
+    },
+    {
+      "atMs": 1200,
+      "kind": "answer",
+      "from": "processing",
+      "to": "speaking",
+      "note": "36 words, about 13.4 s"
+    }
+  ],
+  "summary": {
+    "turns": 4,
+    "calls": 1,
+    "local_fallbacks": 0,
+    "elicits": 0,
+    "confirmations_asked": 0,
+    "confirmations_refused": 0,
+    "reminders_armed": 0,
+    "reminders": 0,
+    "delivery_turns": 3,
+    "speaker_turns": 0,
+    "claims_sent": 0,
+    "refusals": 0,
+    "dose_mask_events": 4,
+    "problems": 0
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "action": "ConfirmItem",
+  "annotations": {},
+  "description": "Record that the caregiver confirmed a flagged item with the clinician, clearing its confirm-needed flag. Synonyms: confirm, checked with the doctor, verified, that one is fine now.",
+  "guest_safe": false,
+  "inputSchema": {
+    "additionalProperties": false,
+    "properties": {
+      "ref": {
+        "maxLength": 40,
+        "type": "string"
+      }
+    },
+    "required": [
+      "ref"
+    ],
+    "type": "object"
+  },
+  "name": "confirm_instruction",
+  "outputSchema": {
+    "properties": {
+      "needs_confirm": {
+        "type": "boolean"
+      },
+      "ref": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "ref"
+    ],
+    "type": "object"
+  },
+  "ui": false
+}

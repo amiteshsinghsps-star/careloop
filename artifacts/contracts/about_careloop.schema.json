@@ -1,0 +1,39 @@
+{
+  "action": null,
+  "annotations": {
+    "readOnlyHint": true
+  },
+  "description": "Explain what CareLoop can do. Use when the customer asks what this service can help with, or for a first-run example of phrasing. Synonyms: help, capabilities, what can you do.",
+  "guest_safe": true,
+  "inputSchema": {
+    "additionalProperties": false,
+    "properties": {},
+    "type": "object"
+  },
+  "name": "about_careloop",
+  "outputSchema": {
+    "properties": {
+      "capabilities": {
+        "items": {
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "disclaimer": {
+        "type": "string"
+      },
+      "examples": {
+        "type": "array"
+      },
+      "first_run_notice": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "capabilities",
+      "disclaimer"
+    ],
+    "type": "object"
+  },
+  "ui": false
+}

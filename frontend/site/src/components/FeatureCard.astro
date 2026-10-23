@@ -1,0 +1,18 @@
+---
+/**
+ * FeatureCard — a single card in the feature grid.
+ * `glyph` is a short accessible character/word (decorative label); the real content
+ * is the title + body text.
+ */
+interface Props {
+  title: string;
+  body: string;
+  glyph?: string;
+}
+const { title, body, glyph } = Astro.props;
+---
+<article class="cl-feature">
+  {glyph && <span class="glyph" aria-hidden="true">{glyph}</span>}
+  <h3>{title}</h3>
+  <p>{body}</p>
+</article>

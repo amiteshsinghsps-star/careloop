@@ -1,0 +1,374 @@
+{
+  "addon": {
+    "category": "caregiving",
+    "description": "Family care plan for older adults. The assistant repeats the instructions a clinician already gave, as they were recorded. Medicine amounts are never spoken on the voice surface.",
+    "displayName": "CareLoop",
+    "id": "careloop",
+    "privacyPolicyUrl": "http://localhost:8080/privacy",
+    "publisher": "CareLoop",
+    "server": {
+      "name": "careloop",
+      "version": "6.0.0"
+    },
+    "termsOfUseUrl": "http://localhost:8080/terms"
+  },
+  "authentication": {
+    "client": {
+      "clientId": "alexa-client-placeholder",
+      "clientIdEnv": "ALEXA_CLIENT_ID",
+      "clientSecretEnv": "ALEXA_CLIENT_SECRET",
+      "clientSecretStoredHere": false,
+      "redirectMatch": "exact",
+      "redirectUris": [
+        "http://localhost:8080/callback"
+      ],
+      "secondClient": {
+        "clientIdEnv": "CARELOOP_CLIENT_ID",
+        "clientSecretEnv": "CARELOOP_CLIENT_SECRET",
+        "purpose": "the companion web page"
+      },
+      "tokenEndpointAuthMethod": "client_secret_basic"
+    },
+    "discoveryUrls": {
+      "oauthAuthorizationServer": "http://localhost:8080/.well-known/oauth-authorization-server",
+      "oauthProtectedResource": "http://localhost:8080/.well-known/oauth-protected-resource",
+      "openIdConfiguration": "http://localhost:8080/.well-known/openid-configuration"
+    },
+    "flows": {
+      "authorizationCodeWithPkce": {
+        "accessTokenTtlSeconds": 3600,
+        "authorizationEndpoint": "http://localhost:8080/oauth/authorize",
+        "callbackUrl": "http://localhost:8080/callback",
+        "codeChallengeMethods": [
+          "S256"
+        ],
+        "consentFactors": [
+          "household code",
+          "family PIN",
+          "one-time consent checkbox"
+        ],
+        "consentText": "By linking, CareLoop will share with the assistant you link: the care items, quotes and schedules you recorded for this household \u2014 never medicine amounts on the voice surface. You can unlink at any time from the companion page; unlinked credentials stop working immediately and relinking starts a fresh household session. CareLoop stores only what you record. This permission is asked once.",
+        "householdConsentScreen": true,
+        "refreshRequiresResource": false,
+        "refreshTokenRotation": true,
+        "refreshTokenTtlSeconds": 2592000,
+        "resourceIndicator": {
+          "mustEqual": "http://localhost:8080/mcp",
+          "note": "RFC 8707 resource is checked against the server's own public URL; a mismatch is an authorization error.",
+          "sent": true
+        },
+        "responseTypes": [
+          "code"
+        ],
+        "scopes": [
+          "mcp:tools"
+        ],
+        "tokenEndpoint": "http://localhost:8080/oauth/token",
+        "tokenEndpointAuthMethods": [
+          "client_secret_basic"
+        ]
+      },
+      "clientCredentials": {
+        "accessTokenTtlSeconds": 3600,
+        "canDo": [
+          "initialize",
+          "about_careloop"
+        ],
+        "note": "A service token may open a session and answer the guest-safe capability question only. Every other tool answers 401 with a WWW-Authenticate header pointing at the protected-resource metadata, which is what starts linking.",
+        "refreshTokenIssued": false,
+        "scope": "mcp:service",
+        "tokenEndpoint": "http://localhost:8080/oauth/token"
+      }
+    },
+    "note": "The server ships a fixed client credential pair per environment (careloop/oauth.py): no dynamic registration endpoint exists, so the add-on is configured with the client id below and the secret is held by the platform. Only the environment variable name is recorded here, never a secret value.",
+    "registrationModel": "static-client-credentials",
+    "scopes": {
+      "mcp:service": "unsigned service identity, guest-safe surface only",
+      "mcp:tools": "household-linked caregiver identity, needed for any plan answer"
+    },
+    "tokenBinding": {
+      "audience": "http://localhost:8080/mcp",
+      "unlinkBehaviour": "revoked links stop refresh tokens immediately"
+    },
+    "type": "oauth2.1-authorization-code-pkce"
+  },
+  "blockers": [
+    "CARELOOP_PUBLIC_URL is still a development URL (http://localhost:8080); the add-on needs a public HTTPS origin before submission.",
+    "privacyPolicyUrl and termsOfUseUrl point at that same development origin and must be replaced with the published pages.",
+    "ALEXA_CLIENT_ID is still the value shipped in .env.example; register a real client credential pair and rotate it.",
+    "Protocol versions were read from careloop.mcp_server.PROTOCOLS. Re-run with --from-server against the deployed URL to confirm what the live server negotiates.",
+    "Secrets are never written into these files; the values shipped in .env.example are placeholders and must be rotated before submission."
+  ],
+  "capabilities": {
+    "elicitation": {
+      "note": "Ambiguity comes back as a short question so the voice surface can ask 'Who is this about?' and continue.",
+      "shape": {
+        "needs_clarification": "boolean",
+        "question": "string"
+      },
+      "supported": true
+    },
+    "extensions": {
+      "mcp-apps": "2026-01-26"
+    },
+    "mcpAppCard": {
+      "description": "Large-text care plan card with Done buttons.",
+      "mimeType": "text/html;profile=mcp-app",
+      "name": "Care plan card",
+      "protocolExtension": "2026-01-26",
+      "readMethod": "resources/read",
+      "resultMeta": {
+        "_meta.ui.resourceUri": "ui://careloop/card"
+      },
+      "surfaceRules": "The card is the large-text view of the same dose-free answer. Amounts appear only on the household companion page, never in the card.",
+      "toolsThatRenderIt": [
+        "get_care_plan",
+        "list_people",
+        "todays_plan"
+      ],
+      "uri": "ui://careloop/card"
+    },
+    "resources": {
+      "listChanged": false,
+      "subscribe": false
+    },
+    "tools": {
+      "listChanged": true
+    }
+  },
+  "discovery": {
+    "authorizationServerMetadata": {
+      "authorization_endpoint": "http://localhost:8080/oauth/authorize",
+      "code_challenge_methods_supported": [
+        "S256"
+      ],
+      "grant_types_supported": [
+        "authorization_code",
+        "refresh_token",
+        "client_credentials"
+      ],
+      "issuer": "http://localhost:8080",
+      "response_types_supported": [
+        "code"
+      ],
+      "scopes_supported": [
+        "mcp:tools",
+        "mcp:service"
+      ],
+      "token_endpoint": "http://localhost:8080/oauth/token",
+      "token_endpoint_auth_methods_supported": [
+        "client_secret_basic"
+      ]
+    },
+    "consistency": {
+      "authorizationServersContainPublic": true,
+      "endpointIsPublicUrlPlusMcp": true,
+      "issuerMatchesPublicUrl": true,
+      "negotiatedVersionIsSupported": true,
+      "protectedResourceMatchesEndpoint": true,
+      "scopesAgree": true,
+      "tokenEndpointMatchesPublicUrl": true
+    },
+    "initializeResult": {
+      "capabilities": {
+        "extensions": {
+          "mcp-apps": "2026-01-26"
+        },
+        "resources": {
+          "listChanged": false,
+          "subscribe": false
+        },
+        "tools": {
+          "listChanged": true
+        }
+      },
+      "protocolVersion": "2025-11-25",
+      "serverInfo": {
+        "name": "careloop",
+        "version": "6.0.0"
+      }
+    },
+    "mode": "offline",
+    "observedFrom": null,
+    "protectedResourceMetadata": {
+      "authorization_servers": [
+        "http://localhost:8080"
+      ],
+      "bearer_methods_supported": [
+        "header"
+      ],
+      "resource": "http://localhost:8080/mcp",
+      "scopes_supported": [
+        "mcp:tools",
+        "mcp:service"
+      ]
+    },
+    "protocolProbeResults": null,
+    "readiness": {
+      "auth": "oauth",
+      "status": "ready"
+    },
+    "resourcesList": [
+      {
+        "description": "Large-text care plan card with Done buttons.",
+        "mimeType": "text/html;profile=mcp-app",
+        "name": "Care plan card",
+        "uri": "ui://careloop/card"
+      }
+    ],
+    "toolsListCount": 12
+  },
+  "generatedBy": "scripts/make_addon.py",
+  "notes": [
+    "Field names here follow this repo's server contract. Match them to the live developer console schema before publication - see alexa/README.md."
+  ],
+  "protocol": {
+    "acceptTypes": [
+      "application/json"
+    ],
+    "batchRequestsSupported": false,
+    "credentialTransport": "http-header-only; credentials in a query string are rejected",
+    "endpoint": "http://localhost:8080/mcp",
+    "getStatusOnEndpoint": 405,
+    "healthChecks": [
+      "http://localhost:8080/healthz",
+      "http://localhost:8080/readyz"
+    ],
+    "maxRequestBodyBytes": 1000000,
+    "notificationsExpectedStatus": 202,
+    "originValidationStatus": 403,
+    "preferredProtocolVersion": "2025-11-25",
+    "protocolVersionHeader": "MCP-Protocol-Version",
+    "serverInitiatedSseSupported": false,
+    "sessionHeader": "MCP-Session-Id",
+    "sessionIssuedBy": "the initialize response",
+    "supportedProtocolVersions": [
+      "2025-11-25",
+      "2025-06-18",
+      "2025-03-26"
+    ],
+    "telemetry": {
+      "metricsEndpoint": "http://localhost:8080/metrics",
+      "p95TargetMs": 500
+    },
+    "transport": "mcp-streamable-http",
+    "unknownProtocolVersionStatus": 400
+  },
+  "schemaVersion": "careloop-addon-manifest/1",
+  "toolPolicy": {
+    "annotations": {
+      "about_careloop": {
+        "readOnlyHint": true
+      },
+      "add_note": {},
+      "confirm_instruction": {},
+      "daily_digest": {
+        "readOnlyHint": true
+      },
+      "delete_instruction": {
+        "destructiveHint": true
+      },
+      "explain_instruction": {
+        "readOnlyHint": true
+      },
+      "get_care_plan": {
+        "readOnlyHint": true
+      },
+      "list_people": {
+        "readOnlyHint": true
+      },
+      "mark_done": {
+        "idempotentHint": true
+      },
+      "prepare_next_visit": {
+        "readOnlyHint": true
+      },
+      "todays_plan": {
+        "readOnlyHint": true
+      },
+      "what_changed": {
+        "readOnlyHint": true
+      }
+    },
+    "authorizationActions": {
+      "add_note": "AddNote",
+      "confirm_instruction": "ConfirmItem",
+      "daily_digest": "ViewPlan",
+      "delete_instruction": "DeleteItem",
+      "explain_instruction": "ViewPlan",
+      "get_care_plan": "ViewPlan",
+      "list_people": "ViewPlan",
+      "mark_done": "MarkDone",
+      "prepare_next_visit": "ViewPlan",
+      "todays_plan": "ViewPlan",
+      "what_changed": "ViewPlan"
+    },
+    "cardTools": [
+      "get_care_plan",
+      "list_people",
+      "todays_plan"
+    ],
+    "destructive": {
+      "tool": "delete_instruction",
+      "twoStep": "the first call only reads the item back with a confirmation question; the removal happens on the second call after the customer confirms",
+      "userConfirmationRequired": true
+    },
+    "guestSafe": [
+      "about_careloop"
+    ],
+    "intentMap": {
+      "about_careloop": "AboutCareLoopIntent",
+      "add_note": "AddVerbalNoteIntent",
+      "daily_digest": "DailyDigestIntent",
+      "delete_instruction": "RemoveInstructionIntent",
+      "explain_instruction": "ExplainInstructionIntent",
+      "get_care_plan": "WhatsMyPlanIntent",
+      "list_people": "ListPeopleIntent",
+      "mark_done": "MarkDoneIntent",
+      "prepare_next_visit": "PrepareVisitQuestionsIntent",
+      "todays_plan": "TodaysPlanIntent",
+      "what_changed": "WhatChangedIntent"
+    },
+    "neverExpose": [
+      "any medicine amount",
+      "the raw visit transcript",
+      "another household's data",
+      "the export route",
+      "suggestions about medicines"
+    ],
+    "outputGuarantees": {
+      "attributionOnEveryCareAnswer": true,
+      "disclaimerOnEveryAnswer": true,
+      "doseMaskingOnEveryStringField": true,
+      "leakCheck": "the response is scanned for a residual amount before it is emitted; a hit is re-masked and counted as an incident",
+      "maskToken": "your prescribed amount",
+      "nothingInvented": "extraction is extractive: every character is either a verbatim substring of what was recorded or a constant from a closed vocabulary",
+      "spokenTextBuiltByTheServer": true,
+      "structuredContentOnly": true
+    },
+    "refusalRules": {
+      "childContent": "adult care plans only - a note naming a child is refused",
+      "crisisContent": "the emergency redirect is spoken and nothing is stored",
+      "promptInjection": "text that reads like instructions for a system is refused"
+    },
+    "surface": "voice",
+    "toolContractHash": "ab35a9c207d12e4f504e527b726c78dc6253dc50782a3743ba9cd400b1e96c31",
+    "toolsDeclared": 12,
+    "voiceExposed": [
+      "get_care_plan",
+      "todays_plan",
+      "mark_done",
+      "explain_instruction",
+      "add_note",
+      "list_people",
+      "what_changed",
+      "daily_digest",
+      "prepare_next_visit",
+      "delete_instruction",
+      "about_careloop"
+    ],
+    "voiceWithheld": {
+      "confirm_instruction": "no voice intent maps onto it: it is only meaningful where the caregiver can see the whole record on the household companion page"
+    }
+  }
+}

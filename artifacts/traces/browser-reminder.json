@@ -1,0 +1,365 @@
+{
+  "kind": "careloop-alexa-device-trace",
+  "version": 1,
+  "scenario": "reminder",
+  "created_at": "2026-10-23T14:51:49.828Z",
+  "device": {
+    "locale": "en-US",
+    "model": "simulated-browser-device"
+  },
+  "turns": [
+    {
+      "index": 0,
+      "utterance": "what is on today for Papa",
+      "at_ms": 0,
+      "state": "speaking",
+      "slu": {
+        "intent": "TodaysPlanIntent",
+        "builtIn": null,
+        "matched": "literal",
+        "confidence": 0.95,
+        "slots": [
+          {
+            "name": "Person",
+            "spoken": "Papa",
+            "resolved": "Papa",
+            "id": "Papa",
+            "state": "success",
+            "confidence": 1
+          }
+        ]
+      },
+      "routed": {
+        "tool": "todays_plan",
+        "args": {
+          "person": "Papa"
+        }
+      },
+      "agrees": true,
+      "local": false,
+      "called": true,
+      "dialog": null,
+      "connection": {
+        "token": "careloop-reminder-1",
+        "uri": "connection://CareLoop.CareReminder/1",
+        "afterMs": 8000
+      },
+      "proactive": false,
+      "delivery": null,
+      "meta": null,
+      "refused": null,
+      "request_envelope": {
+        "version": "1.0",
+        "session": {
+          "new": false,
+          "sessionId": "cl-9484491fc61c477b",
+          "application": {
+            "applicationId": "amzn1.ask.skill.careloop-simulated"
+          },
+          "user": {
+            "userId": "amzn1.ask.account.CARELOOP-SIMULATED"
+          },
+          "attributes": {
+            "lastUtterance": "what is on today for Papa"
+          }
+        },
+        "context": {
+          "System": {
+            "application": {
+              "applicationId": "amzn1.ask.skill.careloop-simulated"
+            },
+            "user": {
+              "userId": "amzn1.ask.account.CARELOOP-SIMULATED"
+            },
+            "device": {
+              "deviceId": "careloop-simulated-device-0001",
+              "supportedInterfaces": {}
+            },
+            "apiEndpoint": "https://api.amazonalexa.com/v2/accounts/",
+            "apiAccessToken": "simulated-access-token-never-sent"
+          }
+        },
+        "request": {
+          "type": "IntentRequest",
+          "requestId": "simreq-mvl38y6u-1",
+          "timestamp": "2026-10-23T14:51:48Z",
+          "locale": "en-US",
+          "dialogState": "COMPLETED",
+          "intent": {
+            "name": "TodaysPlanIntent",
+            "confirmationStatus": "NONE",
+            "slots": {
+              "Person": {
+                "name": "Person",
+                "value": "Papa",
+                "confirmationStatus": "NONE",
+                "slotValue": {
+                  "type": "Simple",
+                  "value": "Papa"
+                },
+                "resolutions": {
+                  "resolutionsPerAuthority": [
+                    {
+                      "authority": "CareLoopPerson",
+                      "status": {
+                        "code": "ER_SUCCESS_MATCH"
+                      },
+                      "values": [
+                        {
+                          "value": {
+                            "name": "Papa",
+                            "id": "Papa"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "response_envelope": {
+        "version": "1.0",
+        "sessionAttributes": {
+          "lastUtterance": "what is on today for Papa",
+          "careloop": {
+            "model": "ec4b62d616b3",
+            "tool": "todays_plan",
+            "intent": "TodaysPlanIntent",
+            "view": "agenda",
+            "state": "await"
+          }
+        },
+        "response": {
+          "shouldEndSession": false,
+          "outputSpeech": {
+            "type": "SSML",
+            "ssml": "<speak>Today: morning — Check the blood pressure every morning and write it down. <break strength=\"x-weak\"/> , and 3 more times of day.</speak>"
+          },
+          "card": {
+            "type": "Simple",
+            "title": "Today",
+            "content": "Today: morning — Check the blood pressure every morning and write it down., and 3 more times of day."
+          },
+          "reprompt": {
+            "outputSpeech": {
+              "type": "SSML",
+              "ssml": "<speak>I only repeat what your clinician recorded for this household. I can tell you what is next, why something was said, what changed, and what is still to do.</speak>"
+            }
+          },
+          "directives": [
+            {
+              "type": "Connections.StartConnection",
+              "uri": "connection://CareLoop.CareReminder/1",
+              "onCompletion": "RESUME_SESSION",
+              "token": "careloop-reminder-1"
+            }
+          ]
+        }
+      },
+      "spoken_text": "Today: morning — Check the blood pressure every morning and write it down., and 3 more times of day.",
+      "words": 20,
+      "estimate_ms": 7373,
+      "masked_fields": [
+        "slots[1].items[0].text",
+        "slots[2].items[0].text"
+      ],
+      "problems": [],
+      "tool_ms": 35
+    },
+    {
+      "index": 1,
+      "utterance": "(the device resumed its own session)",
+      "at_ms": 8000,
+      "state": "speaking",
+      "slu": {
+        "intent": null,
+        "builtIn": null,
+        "matched": "none",
+        "confidence": 0,
+        "slots": []
+      },
+      "routed": {
+        "tool": "todays_plan",
+        "args": {
+          "person": "Papa"
+        }
+      },
+      "agrees": true,
+      "local": false,
+      "called": true,
+      "dialog": null,
+      "connection": null,
+      "proactive": true,
+      "delivery": null,
+      "meta": null,
+      "refused": null,
+      "request_envelope": {
+        "version": "1.0",
+        "session": {
+          "new": false,
+          "sessionId": "cl-9484491fc61c477b",
+          "application": {
+            "applicationId": "amzn1.ask.skill.careloop-simulated"
+          },
+          "user": {
+            "userId": "amzn1.ask.account.CARELOOP-SIMULATED"
+          },
+          "attributes": {}
+        },
+        "context": {
+          "System": {
+            "application": {
+              "applicationId": "amzn1.ask.skill.careloop-simulated"
+            },
+            "user": {
+              "userId": "amzn1.ask.account.CARELOOP-SIMULATED"
+            },
+            "device": {
+              "deviceId": "careloop-simulated-device-0001",
+              "supportedInterfaces": {}
+            },
+            "apiEndpoint": "https://api.amazonalexa.com/v2/accounts/",
+            "apiAccessToken": "simulated-access-token-never-sent"
+          }
+        },
+        "request": {
+          "type": "SessionResumedRequest",
+          "requestId": "simreq-mvl38yk0-2",
+          "timestamp": "2026-10-23T14:51:49Z",
+          "locale": "en-US",
+          "cause": {
+            "type": "ConnectionCompleted",
+            "token": "careloop-reminder-1",
+            "status": {
+              "code": "SUCCESS"
+            }
+          }
+        }
+      },
+      "response_envelope": {
+        "version": "1.0",
+        "sessionAttributes": {
+          "resumedToken": "careloop-reminder-1",
+          "careloop": {
+            "model": "ec4b62d616b3",
+            "tool": "todays_plan",
+            "intent": "TodaysPlanIntent",
+            "view": "agenda",
+            "state": "await"
+          }
+        },
+        "response": {
+          "shouldEndSession": false,
+          "outputSpeech": {
+            "type": "SSML",
+            "ssml": "<speak>CareLoop is reading today&apos;s plan back to you.  <break strength=\"x-weak\"/> Today: morning — Check the blood pressure every morning and write it down. <break strength=\"x-weak\"/> , and 3 more times of day.</speak>"
+          },
+          "card": {
+            "type": "Simple",
+            "title": "Today",
+            "content": "CareLoop is reading today's plan back to you. Today: morning — Check the blood pressure every morning and write it down., and 3 more times of day."
+          },
+          "reprompt": {
+            "outputSpeech": {
+              "type": "SSML",
+              "ssml": "<speak>I only repeat what your clinician recorded for this household. I can tell you what is next, why something was said, what changed, and what is still to do.</speak>"
+            }
+          }
+        }
+      },
+      "spoken_text": "CareLoop is reading today's plan back to you. Today: morning — Check the blood pressure every morning and write it down., and 3 more times of day.",
+      "words": 28,
+      "estimate_ms": 10382,
+      "masked_fields": [
+        "slots[1].items[0].text",
+        "slots[2].items[0].text"
+      ],
+      "problems": [],
+      "tool_ms": 44
+    }
+  ],
+  "events": [
+    {
+      "atMs": 0,
+      "kind": "state",
+      "from": "idle",
+      "to": "wake",
+      "note": "wake word"
+    },
+    {
+      "atMs": 0,
+      "kind": "state",
+      "from": "wake",
+      "to": "listening",
+      "note": "microphone open"
+    },
+    {
+      "atMs": 0,
+      "kind": "state",
+      "from": "listening",
+      "to": "wake",
+      "note": "wake word"
+    },
+    {
+      "atMs": 0,
+      "kind": "state",
+      "from": "wake",
+      "to": "listening",
+      "note": "microphone open"
+    },
+    {
+      "atMs": 0,
+      "kind": "heard",
+      "from": "listening",
+      "to": "processing",
+      "note": "heard “what is on today for Papa”"
+    },
+    {
+      "atMs": 0,
+      "kind": "answer",
+      "from": "processing",
+      "to": "speaking",
+      "note": "20 words, about 7.4 s"
+    },
+    {
+      "atMs": 8000,
+      "kind": "state",
+      "from": "speaking",
+      "to": "awaiting",
+      "note": "answer finished, waiting for a follow-up"
+    },
+    {
+      "atMs": 8000,
+      "kind": "resume",
+      "from": "awaiting",
+      "to": "processing",
+      "note": "the device resumed its own session: a connection it started completed"
+    },
+    {
+      "atMs": 8000,
+      "kind": "answer",
+      "from": "processing",
+      "to": "speaking",
+      "note": "28 words, about 10.4 s"
+    }
+  ],
+  "summary": {
+    "turns": 2,
+    "calls": 2,
+    "local_fallbacks": 0,
+    "elicits": 0,
+    "confirmations_asked": 0,
+    "confirmations_refused": 0,
+    "reminders_armed": 1,
+    "reminders": 1,
+    "delivery_turns": 0,
+    "speaker_turns": 0,
+    "claims_sent": 0,
+    "refusals": 0,
+    "dose_mask_events": 4,
+    "problems": 0
+  }
+}

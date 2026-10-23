@@ -1,0 +1,34 @@
+
+> careloop@6.0.0 typecheck
+> npm run typecheck -w frontend/simulator && npm run typecheck -w frontend/companion
+
+
+> @careloop/simulator@6.0.0 typecheck
+> svelte-check --tsconfig ./tsconfig.json --fail-on-warnings --output human
+
+[32msvelte-check found 0 errors and 0 warnings
+[39m
+> @careloop/companion@6.0.0 typecheck
+> ng build --configuration development --output-path dist/.typecheck
+
+[33m❯[39m Building...
+[32m✔[39m Building...
+[1mInitial chunk files[22m            [2m | [22m[1mNames[22m              [2m | [22m [1mRaw size[22m
+[32mchunk-OIEETHCF.js[39m              [2m | [22m[2m-[22m                  [2m | [22m  [36m1.07 MB[39m[2m | [22m
+[32mchunk-4HK6JKE7.js[39m              [2m | [22m[2m-[22m                  [2m | [22m[36m276.19 kB[39m[2m | [22m
+[32mpolyfills.js[39m                   [2m | [22m[2mpolyfills[22m          [2m | [22m [36m89.78 kB[39m[2m | [22m
+[32mstyles.css[39m                     [2m | [22m[2mstyles[22m             [2m | [22m [36m16.03 kB[39m[2m | [22m
+[32mmain.js[39m                        [2m | [22m[2mmain[22m               [2m | [22m [36m13.59 kB[39m[2m | [22m
+[32mchunk-SLVOFHJM.js[39m              [2m | [22m[2m-[22m                  [2m | [22m [36m11.11 kB[39m[2m | [22m
+
+[1m [22m                              [2m | [22m[1mInitial total[22m      [2m | [22m  [1m1.48 MB[22m
+
+[1mLazy chunk files[22m               [2m | [22m[1mNames[22m              [2m | [22m [1mRaw size[22m
+[32mplan.component-4NQJTIVY.js[39m     [2m | [22m[2mplan-component[22m     [2m | [22m[36m167.59 kB[39m[2m | [22m
+[32mlogin.component-FT6KFKVC.js[39m    [2m | [22m[2mlogin-component[22m    [2m | [22m [36m12.90 kB[39m[2m | [22m
+[32mnot-found.component-CGB34DDF.js[39m[2m | [22m[2mnot-found-component[22m[2m | [22m  [36m2.12 kB[39m[2m | [22m
+
+Application bundle generation complete. [3.782 seconds] - 2026-10-23T14:56:32.296Z
+
+Output location: C:\Users\vijay\OneDrive\Desktop\CARELOOP\frontend\companion\dist\.typecheck
+

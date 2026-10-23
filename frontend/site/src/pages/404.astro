@@ -1,0 +1,20 @@
+---
+import Base from '../layouts/Base.astro';
+
+const title = 'Page not found — CareLoop';
+const description = 'The page you were looking for is not here. Back to the CareLoop overview.';
+---
+<Base title={title} description={description}>
+  <div class="cl-notfound">
+    <p class="big" aria-hidden="true">404</p>
+    <h1>That page isn&rsquo;t in the plan</h1>
+    <p class="u-mute">
+      We couldn&rsquo;t find what you were looking for. It may have moved, or the link may be
+      mistyped. Nothing here is medical advice &mdash; and nothing here stores real patient data.
+    </p>
+    <p class="cta" style="display:flex;flex-wrap:wrap;gap:var(--cl-sp-3);justify-content:center;">
+      <a class="cl-btn" href="/">Back to overview</a>
+      <a class="cl-btn ghost" href="/docs/">Read the docs</a>
+    </p>
+  </div>
+</Base>

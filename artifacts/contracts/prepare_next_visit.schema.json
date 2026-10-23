@@ -1,0 +1,37 @@
+{
+  "action": "ViewPlan",
+  "annotations": {
+    "readOnlyHint": true
+  },
+  "description": "Build the caregiver's question list for the next visit: items still flagged for confirmation, superseded items, and recent notes. Contains no advice. Synonyms: what to ask the doctor, prepare for the appointment, questions to take along.",
+  "guest_safe": false,
+  "inputSchema": {
+    "additionalProperties": false,
+    "properties": {
+      "person": {
+        "maxLength": 40,
+        "type": "string"
+      }
+    },
+    "type": "object"
+  },
+  "name": "prepare_next_visit",
+  "outputSchema": {
+    "properties": {
+      "notes": {
+        "type": "array"
+      },
+      "open_flags": {
+        "type": "array"
+      },
+      "skipped": {
+        "type": "array"
+      }
+    },
+    "required": [
+      "open_flags"
+    ],
+    "type": "object"
+  },
+  "ui": false
+}

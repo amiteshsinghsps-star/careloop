@@ -1,0 +1,16 @@
+{
+  "name": "@careloop/client",
+  "version": "6.0.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "sideEffects": false,
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@careloop/ui": "6.0.0"
+  }
+}

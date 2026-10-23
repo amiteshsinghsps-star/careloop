@@ -1,0 +1,65 @@
+# Weekly preflight against a locally started server: catches MCP/voice contract drift
+# (protocol, safety surface, card self-containment, latency budget) even when no feature
+# push has touched the code. The card check needs the synced frontends, so we build+sync
+# first; the server runs with auth off so the run needs no secrets.
+name: Preflight (weekly)
+
+on:
+  schedule:
+    - cron: "0 6 * * 1"   # Mondays 06:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  preflight:
+    name: preflight (ubuntu-latest)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.14"
+          cache: pip
+          cache-dependency-path: requirements.txt
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          npm ci
+
+      - name: Build + sync the frontends (the card is served from careloop/web)
+        run: |
+          npm run build
+          npm run sync
+
+      - name: Start the server and run preflight
+        run: |
+          python scripts/serve.py --port 8080 --auth off > serve.log 2>&1 &
+          echo "$!" > serve.pid
+          for i in $(seq 1 30); do
+            if curl -s -o /dev/null "http://127.0.0.1:8080/simulator"; then break; fi
+            sleep 1
+            if [ "$i" = "30" ]; then echo "server did not come up"; cat serve.log; exit 1; fi
+          done
+          python -m preflight http://127.0.0.1:8080/mcp --skip-auth
+          rc=$?
+          kill "$(cat serve.pid)" 2>/dev/null || true
+          exit $rc
+
+      - name: Show server log on failure
+        if: failure()
+        run: cat serve.log || true

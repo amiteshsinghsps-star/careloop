@@ -1,0 +1,12 @@
+golden-plan      PASS turns=2 checks=7/7 leaks=0 masked=1 -> data\sim\golden-plan.trace.json
+elicitation      PASS turns=3 checks=12/12 leaks=0 masked=1 -> data\sim\elicitation.trace.json
+confirm-delete   PASS turns=4 checks=16/16 leaks=0 masked=1 -> data\sim\confirm-delete.trace.json
+chain            PASS turns=7 checks=33/33 leaks=0 masked=3 -> data\sim\chain.trace.json
+reminder         PASS turns=3 checks=22/22 leaks=0 masked=4 -> data\sim\reminder.trace.json
+crisis           PASS turns=2 checks=7/7 leaks=0 masked=0 -> data\sim\crisis.trace.json
+adversarial      PASS turns=3 checks=12/12 leaks=0 masked=0 -> data\sim\adversarial.trace.json
+fallback         PASS turns=2 checks=8/8 leaks=0 masked=0 -> data\sim\fallback.trace.json
+delivery         PASS turns=5 checks=55/55 leaks=0 masked=1 -> data\sim\delivery.trace.json
+speaker          PASS turns=5 checks=49/49 leaks=0 masked=1 -> data\sim\speaker.trace.json
+
+virtual Alexa+ device: 10 scenario(s), 0 failed

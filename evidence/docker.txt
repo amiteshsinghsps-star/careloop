@@ -1,0 +1,132 @@
+# CareLoop container image — built and audited on this machine, 2026-10-23
+
+$ docker version -> Client 29.x / Server 29.8.2 (Docker Desktop, linux engine)
+$ docker build -t careloop .
+  exit 0; image careloop:latest, 184 MB disk usage / 44.7 MB content size
+  (1 build warning: SecretsUsedInArgOrEnv on ENV CARELOOP_AUTH=off — a demo flag, not a secret)
+
+$ docker run --rm -d --name careloop-test -p 127.0.0.1:8080:8080 -v careloop-data:/data careloop
+  server log:
+    CareLoop  http://0.0.0.0:8080
+      site        http://0.0.0.0:8080/
+      simulator   http://0.0.0.0:8080/simulator
+      companion   http://0.0.0.0:8080/companion
+      judge       http://0.0.0.0:8080/judge
+      MCP         http://0.0.0.0:8080/mcp   (auth=off, chaos=none)
+    {"evt": "tool", "tool": "list_people", "ms": 2, "rid": "3dbe9a62", "ts": 1792769025.11}
+    {"evt": "tool", "tool": "get_care_plan", "ms": 15, "rid": "cf1575ea", "ts": 1792769025.134}
+    {"evt": "tool", "tool": "get_care_plan", "ms": 18, "rid": "2b95e3db", "ts": 1792769025.165}
+    {"evt": "tool", "tool": "todays_plan", "ms": 5, "rid": "87ea6df9", "ts": 1792769025.183}
+    {"evt": "tool", "tool": "get_care_plan", "ms": 15, "rid": "307c4380", "ts": 1792769025.208}
+    {"evt": "tool", "tool": "explain_instruction", "ms": 2, "rid": "78f6193a", "ts": 1792769025.22}
+    {"evt": "tool", "tool": "get_care_plan", "ms": 15, "rid": "d31d30d0", "ts": 1792769025.243}
+    {"evt": "tool", "tool": "todays_plan", "ms": 5, "rid": "bd1d86a5", "ts": 1792769025.276}
+    {"evt": "tool", "tool": "list_people", "ms": 2, "rid": "9d6575ad", "ts": 1792769025.3}
+    {"evt": "tool", "tool": "daily_digest", "ms": 2, "rid": "23bd0353", "ts": 1792769025.316}
+    {"evt": "tool", "tool": "what_changed", "ms": 1, "rid": "802588e6", "ts": 1792769025.339}
+    {"evt": "tool", "tool": "prepare_next_visit", "ms": 1, "rid": "5407216f", "ts": 1792769025.361}
+    {"evt": "tool", "tool": "about_careloop", "ms": 2, "rid": "1f9471f2", "ts": 1792769025.376}
+    {"evt": "tool", "tool": "about_careloop", "ms": 3, "rid": "70211307", "ts": 1792769025.387}
+    {"evt": "tool", "tool": "get_care_plan", "ms": 22, "rid": "10e5c610", "ts": 1792769025.419}
+    {"evt": "tool", "tool": "todays_plan", "ms": 5, "rid": "f1b5a993", "ts": 1792769025.442}
+    {"evt": "tool", "tool": "list_people", "ms": 1, "rid": "9e48dc23", "ts": 1792769025.467}
+    {"evt": "tool", "tool": "daily_digest", "ms": 0, "rid": "fc6cb680", "ts": 1792769025.472}
+    {"evt": "tool", "tool": "what_changed", "ms": 1, "rid": "4f810abd", "ts": 1792769025.479}
+    {"evt": "tool", "tool": "prepare_next_visit", "ms": 1, "rid": "2e3c7967", "ts": 1792769025.488}
+    {"evt": "tool", "tool": "about_careloop", "ms": 2, "rid": "37ef618b", "ts": 1792769025.525}
+    {"evt": "tool", "tool": "add_note", "ms": 2, "rid": "d9a39c51", "ts": 1792769025.549}
+    {"evt": "tool", "tool": "add_note", "ms": 1, "rid": "62309ddb", "ts": 1792769025.562}
+    {"evt": "tool", "tool": "get_care_plan", "ms": 26, "rid": "e5b1fe09", "ts": 1792769025.62}
+    {"evt": "tool", "tool": "todays_plan", "ms": 6, "rid": "9e74888e", "ts": 1792769025.641}
+    {"evt": "tool", "tool": "prepare_next_visit", "ms": 2, "rid": "68315e4d", "ts": 1792769025.657}
+    {"evt": "tool", "tool": "about_careloop", "ms": 2, "rid": "701a4d43", "ts": 1792769025.743}
+    {"evt": "tool", "tool": "get_care_plan", "ms": 18, "rid": "9ec9e707", "ts": 1792769025.79}
+    {"evt": "tool", "tool": "todays_plan", "ms": 5, "rid": "615be3d2", "ts": 1792769025.808}
+    {"evt": "tool", "tool": "list_people", "ms": 2, "rid": "8955a65f", "ts": 1792769025.826}
+    {"evt": "tool", "tool": "daily_digest", "ms": 0, "rid": "e7eec82a", "ts": 1792769025.845}
+    {"evt": "tool", "tool": "what_changed", "ms": 1, "rid": "501cec01", "ts": 1792769025.855}
+    {"evt": "tool", "tool": "prepare_next_visit", "ms": 0, "rid": "1c8f4b4e", "ts": 1792769025.862}
+    {"evt": "tool", "tool": "get_care_plan", "ms": 22, "rid": "e35c5ff4", "ts": 1792769025.892}
+    {"evt": "tool", "tool": "get_care_plan", "ms": 19, "rid": "1fe4eebe", "ts": 1792769025.923}
+    {"evt": "tool", "tool": "get_care_plan", "ms": 21, "rid": "948a3bd2", "ts": 1792769025.964}
+    {"evt": "tool", "tool": "get_care_plan", "ms": 19, "rid": "6720a15c", "ts": 1792769025.995}
+    {"evt": "tool", "tool": "get_care_plan", "ms": 19, "rid": "62a9bc05", "ts": 1792769026.028}
+    {"evt": "tool", "tool": "get_care_plan", "ms": 17, "rid": "8a9151c9", "ts": 1792769026.064}
+    {"evt": "tool", "tool": "get_care_plan", "ms": 17, "rid": "a0390aed", "ts": 1792769026.093}
+    {"evt": "tool", "tool": "get_care_plan", "ms": 17, "rid": "8a387e74", "ts": 1792769026.12}
+    {"evt": "tool", "tool": "get_care_plan", "ms": 21, "rid": "0042180d", "ts": 1792769026.152}
+    {"evt": "tool", "tool": "get_care_plan", "ms": 25, "rid": "f9db5531", "ts": 1792769026.191}
+    {"evt": "tool", "tool": "get_care_plan", "ms": 16, "rid": "88d7f324", "ts": 1792769026.219}
+    {"evt": "tool", "tool": "get_care_plan", "ms": 24, "rid": "c70c3650", "ts": 1792769026.257}
+    {"evt": "tool", "tool": "get_care_plan", "ms": 14, "rid": "5a7e087d", "ts": 1792769026.278}
+    {"evt": "tool", "tool": "get_care_plan", "ms": 18, "rid": "5ea69454", "ts": 1792769026.307}
+    {"evt": "tool", "tool": "get_care_plan", "ms": 17, "rid": "256153c0", "ts": 1792769026.339}
+    {"evt": "tool", "tool": "get_care_plan", "ms": 23, "rid": "bda44e38", "ts": 1792769026.375}
+    {"evt": "tool", "tool": "get_care_plan", "ms": 20, "rid": "8818e8d3", "ts": 1792769026.415}
+    {"evt": "tool", "tool": "get_care_plan", "ms": 17, "rid": "965f7921", "ts": 1792769026.445}
+    {"evt": "tool", "tool": "get_care_plan", "ms": 19, "rid": "8c46b98d", "ts": 1792769026.482}
+    {"evt": "tool", "tool": "get_care_plan", "ms": 13, "rid": "c6eeae7d", "ts": 1792769026.506}
+    {"evt": "tool", "tool": "about_careloop", "ms": 1, "rid": "349e9046", "ts": 1792769034.436}
+    {"evt": "tool", "tool": "get_care_plan", "ms": 15, "rid": "985c79e6", "ts": 1792769034.492}
+    {"evt": "tool", "tool": "list_people", "ms": 1, "rid": "48b81322", "ts": 1792769037.01}
+    {"evt": "tool", "tool": "get_care_plan", "ms": 22, "rid": "50545222", "ts": 1792769037.048}
+    {"evt": "tool", "tool": "list_people", "ms": 2, "rid": "1d0ceaf3", "ts": 1792769037.173}
+    {"evt": "tool", "tool": "get_care_plan", "ms": 1, "rid": "5bc8c3d6", "ts": 1792769037.204}
+    {"evt": "tool", "tool": "get_care_plan", "ms": 18, "rid": "f3ed3617", "ts": 1792769037.237}
+    {"evt": "tool", "tool": "list_people", "ms": 2, "rid": "25bfcc7d", "ts": 1792769037.346}
+    {"evt": "tool", "tool": "get_care_plan", "ms": 28, "rid": "45b93a50", "ts": 1792769037.416}
+    {"evt": "tool", "tool": "delete_instruction", "ms": 1, "rid": "653968f4", "ts": 1792769037.447}
+    {"evt": "tool", "tool": "delete_instruction", "ms": 12, "rid": "4fd118f1", "ts": 1792769037.467}
+    {"evt": "tool", "tool": "list_people", "ms": 1, "rid": "eef81a67", "ts": 1792769037.558}
+    {"evt": "tool", "tool": "get_care_plan", "ms": 23, "rid": "9a1b9f5c", "ts": 1792769037.614}
+    {"evt": "tool", "tool": "delete_instruction", "ms": 1, "rid": "f1de9f3d", "ts": 1792769037.658}
+    {"evt": "tool", "tool": "delete_instruction", "ms": 3, "rid": "d6bf62a6", "ts": 1792769037.693}
+    {"evt": "tool", "tool": "delete_instruction", "ms": 19, "rid": "46dffff9", "ts": 1792769037.732}
+    {"evt": "tool", "tool": "list_people", "ms": 2, "rid": "29963fd6", "ts": 1792769037.83}
+    {"evt": "tool", "tool": "todays_plan", "ms": 5, "rid": "94468977", "ts": 1792769037.847}
+    {"evt": "tool", "tool": "todays_plan", "ms": 6, "rid": "6df9804b", "ts": 1792769037.87}
+    {"evt": "tool", "tool": "list_people", "ms": 1, "rid": "f9f83f8a", "ts": 1792769037.961}
+    {"evt": "tool", "tool": "add_note", "ms": 0, "rid": "00bb7b18", "ts": 1792769037.976}
+    {"evt": "tool", "tool": "list_people", "ms": 2, "rid": "11cfbefa", "ts": 1792769038.043}
+    {"evt": "tool", "tool": "list_people", "ms": 1, "rid": "659e181a", "ts": 1792769038.094}
+    {"evt": "tool", "tool": "get_care_plan", "ms": 10, "rid": "823a5509", "ts": 1792769038.114}
+    {"evt": "tool", "tool": "list_people", "ms": 1, "rid": "4cdd6173", "ts": 1792769038.203}
+    {"evt": "tool", "tool": "get_care_plan", "ms": 10, "rid": "e7c9d7c1", "ts": 1792769038.264}
+
+$ docker inspect --format {{.State.Health.Status}} careloop-test -> healthy
+
+# surfaces through the published port (auth=off):
+  /           -> 200
+  /simulator  -> 200
+  /card       -> 200
+  /companion  -> 200
+  /judge      -> 200
+  /mcp        -> 405 (GET on the MCP endpoint is refused by design)
+
+$ python -m preflight http://127.0.0.1:8080/mcp --skip-auth
+  
+  ------------------------------------------------------------------------
+  checks: 39   pass: 35   fail: 0   skip: 4   ->  exit 0
+
+$ python scripts/smoke.py http://127.0.0.1:8080/mcp
+  handshake  2025-11-25 from {'name': 'careloop', 'version': '6.0.0'}, session cl-fe1c0f639d2fc95f
+  tools      12 declared, manifest hash ab35a9c207d12e4f504e527b726c78dc6253dc50782a3743ba9cd400b1e96c31
+  about      5 capabilities, spoken: CareLoop remembers what your clinician said. Ask what is next for some
+  care plan  3 item(s), dose-masked YES (no quantity found in answer, masked phrase present)
+  smoke: PASS
+
+$ python -m scripts.alexa_device --url http://127.0.0.1:8080/mcp --scenario all --strict
+  golden-plan      PASS turns=2 checks=7/7 leaks=0 masked=1 -> data\sim\golden-plan.trace.json
+  elicitation      PASS turns=3 checks=12/12 leaks=0 masked=1 -> data\sim\elicitation.trace.json
+  confirm-delete   PASS turns=4 checks=16/16 leaks=0 masked=1 -> data\sim\confirm-delete.trace.json
+  chain            PASS turns=7 checks=33/33 leaks=0 masked=3 -> data\sim\chain.trace.json
+  reminder         PASS turns=3 checks=22/22 leaks=0 masked=4 -> data\sim\reminder.trace.json
+  crisis           PASS turns=2 checks=7/7 leaks=0 masked=0 -> data\sim\crisis.trace.json
+  adversarial      PASS turns=3 checks=12/12 leaks=0 masked=0 -> data\sim\adversarial.trace.json
+  fallback         PASS turns=2 checks=8/8 leaks=0 masked=0 -> data\sim\fallback.trace.json
+  delivery         PASS turns=5 checks=55/55 leaks=0 masked=1 -> data\sim\delivery.trace.json
+  speaker          PASS turns=5 checks=49/49 leaks=0 masked=1 -> data\sim\speaker.trace.json
+  
+  virtual Alexa+ device: 10 scenario(s), 0 failed
+
+$ docker run ... -e CARELOOP_PUBLIC_URL=https://<host> -e CARELOOP_AUTH=on  # what a real host does, not run here

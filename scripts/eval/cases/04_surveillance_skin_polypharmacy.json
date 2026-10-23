@@ -1,0 +1,113 @@
+{
+  "version": "2026.10.21",
+  "notes": "Dermatology follow-up, oncology surveillance and a polypharmacy deprescribing visit.",
+  "cases": [
+    {
+      "id": "derm-01",
+      "title": "Skin lesion excision: dressings, steroid avoidance, suture removal",
+      "person": "Narayan",
+      "tags": ["dermatology", "wound care", "follow-up"],
+      "lines": [
+        "Doctor: The mole on his back was removed cleanly, the report is benign.",
+        "Doctor: Apply the antibiotic ointment on the dressing twice a day for seven days.",
+        "Nurse: Change the dressing every two days, and clean the wound with normal saline.",
+        "Doctor: Do not use the old steroid ointment on this rash, it thins the healing skin.",
+        "Doctor: Keep the graft away from the sun, and do not use the swimming pool for a month.",
+        "Doctor: The stitches come out on Friday, the nurse will do them here.",
+        "Doctor: Use the silicone ointment on the scar at night, for fourteen nights in a row.",
+        "Nurse: Make sure to call us sooner if the area turns red, hot or starts discharging."
+      ],
+      "items": [
+        {"kind": "medication", "quote": "Apply the antibiotic ointment on the dressing twice a day for seven days.",
+         "schedule": {"kind": "RECURRENCE", "day_parts": ["MORNING", "EVENING"], "times_per_day": 2}},
+        {"kind": "task", "quote": "Change the dressing every two days, and clean the wound with normal saline.",
+         "schedule": {"kind": "INTERVAL"}},
+        {"kind": "avoid", "quote": "Do not use the old steroid ointment on this rash, it thins the healing skin.",
+         "schedule": null},
+        {"kind": "task", "quote": "Keep the graft away from the sun, and do not use the swimming pool for a month.",
+         "schedule": null},
+        {"kind": "appointment", "quote": "The stitches come out on Friday, the nurse will do them here.",
+         "schedule": {"kind": "ONCE"},
+         "note": "a bare weekday is only read when it says 'every Friday', so this date is dropped"},
+        {"kind": "medication", "quote": "Use the silicone ointment on the scar at night, for fourteen nights in a row.",
+         "schedule": {"kind": "RECURRENCE", "day_parts": ["BEDTIME"]}},
+        {"kind": "task", "quote": "Make sure to call us sooner if the area turns red, hot or starts discharging.",
+         "schedule": null}
+      ]
+    },
+    {
+      "id": "onco-01",
+      "title": "Breast cancer surveillance: tamoxifen, bleeding warnings, mammogram",
+      "person": "Grace",
+      "tags": ["oncology", "surveillance", "tamoxifen"],
+      "lines": [
+        "Doctor: The markers are quiet and the report is clear, so we keep watching.",
+        "Doctor: Continue tamoxifen 20 mg every morning for the third year now.",
+        "Nurse: Make sure to report any vaginal bleeding or a new headache the same week.",
+        "Doctor: Do not start a hormone tablet from the internet, the tamoxifen does that job.",
+        "Doctor: The mammogram is due in nine months, book it before the next visit ends.",
+        "Nurse: Please arrange the appointment slot at the cancer centre, and note the date here.",
+        "Doctor: No alcohol during the tamoxifen, it adds to the liver load.",
+        "Doctor: Keep a chart of the hot flushes and bring it every Friday."
+      ],
+      "items": [
+        {"kind": "medication", "quote": "Continue tamoxifen 20 mg every morning for the third year now.",
+         "schedule": {"kind": "RECURRENCE", "day_parts": ["MORNING"]}},
+        {"kind": "task", "quote": "Make sure to report any vaginal bleeding or a new headache the same week.",
+         "schedule": null},
+        {"kind": "avoid", "quote": "Do not start a hormone tablet from the internet, the tamoxifen does that job.",
+         "schedule": null},
+        {"kind": "appointment", "quote": "The mammogram is due in nine months, book it before the next visit ends.",
+         "schedule": {"kind": "ONCE", "has_date": true},
+         "note": "spelled numbers above six and month intervals are outside the schedule grammar"},
+        {"kind": "task", "quote": "Please arrange the appointment slot at the cancer centre, and note the date here.",
+         "schedule": null},
+        {"kind": "avoid", "quote": "No alcohol during the tamoxifen, it adds to the liver load.",
+         "schedule": null,
+         "note": "a bare 'No <thing>' negation is not in the avoid rules"},
+        {"kind": "monitor", "quote": "Keep a chart of the hot flushes and bring it every Friday.",
+         "schedule": {"kind": "WEEKLY", "weekdays": [4]}}
+      ]
+    },
+    {
+      "id": "deprescribe-01",
+      "title": "Polypharmacy: two medicines stopped, one tapered, prn antacid",
+      "person": "Iyer",
+      "tags": ["polypharmacy", "deprescribing", "prn"],
+      "lines": [
+        "Doctor: Nine tablets is too many, so today we take three of them away.",
+        "Doctor: Stop the omeprazole, the reflux has settled.",
+        "Doctor: Use one antacid tablet if the burning comes back at night.",
+        "Doctor: Take one gabapentin tablet at night for the next ten days.",
+        "Doctor: Then stop the gabapentin completely, the nerve pain has settled.",
+        "Nurse: Keep the pilbox locked, and please note which tablets were taken yesterday.",
+        "Doctor: Do not stop the blood thinner on your own, that is how strokes happen.",
+        "Doctor: We will review the whole list at the next appointment, bring every strip.",
+        "Nurse: If she feels drowsier, make sure to tell us before adding any new tablet.",
+        "Doctor: No herbal powders, no more sedatives from the last doctor.",
+        "Nurse: Bring the old strips to the clinic so we can count what is left."
+      ],
+      "items": [
+        {"kind": "avoid", "quote": "Stop the omeprazole, the reflux has settled.", "schedule": null},
+        {"kind": "medication", "quote": "Use one antacid tablet if the burning comes back at night.",
+         "schedule": {"kind": "RECURRENCE", "day_parts": ["BEDTIME"]}},
+        {"kind": "medication", "quote": "Take one gabapentin tablet at night for the next ten days.",
+         "schedule": {"kind": "RECURRENCE", "day_parts": ["BEDTIME"]}},
+        {"kind": "avoid", "quote": "Then stop the gabapentin completely, the nerve pain has settled.",
+         "schedule": null,
+         "note": "'stop' is a negation but 'gabapentin' is not one of the drug hint words, so no avoid item"},
+        {"kind": "task", "quote": "Keep the pilbox locked, and please note which tablets were taken yesterday.",
+         "schedule": null},
+        {"kind": "avoid", "quote": "Do not stop the blood thinner on your own, that is how strokes happen.",
+         "schedule": null},
+        {"kind": "appointment", "quote": "We will review the whole list at the next appointment, bring every strip.",
+         "schedule": null},
+        {"kind": "task", "quote": "If she feels drowsier, make sure to tell us before adding any new tablet.",
+         "schedule": null},
+        {"kind": "avoid", "quote": "No herbal powders, no more sedatives from the last doctor.",
+         "schedule": null,
+         "note": "'no more' is a negation but 'sedatives' is not a recognised medicine word, so avoid never fires"}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+
+> careloop@6.0.0 model:check
+> node scripts/gen_device_model.mjs --check
+
+model:check OK - 13 intents, 5 slot types, sha256 ec4b62d616b3f4b6...

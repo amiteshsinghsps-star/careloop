@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="CareLoop">
+  <title>CareLoop</title>
+  <defs>
+    <linearGradient id="clg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0d6e6b"/>
+      <stop offset="1" stop-color="#1b5a8a"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="#f6f4ef"/>
+  <path d="M44 20a16 16 0 1 0 6 12" fill="none" stroke="url(#clg)" stroke-width="6" stroke-linecap="round"/>
+  <circle cx="48" cy="20" r="5" fill="#0d6e6b"/>
+</svg>

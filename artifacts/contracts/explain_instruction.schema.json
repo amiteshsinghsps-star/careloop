@@ -1,0 +1,46 @@
+{
+  "action": "ViewPlan",
+  "annotations": {
+    "readOnlyHint": true
+  },
+  "description": "Show the clinician's original recorded words for one item from the last care plan, and when it was recorded. Synonyms: why, source, proof.",
+  "guest_safe": false,
+  "inputSchema": {
+    "additionalProperties": false,
+    "properties": {
+      "ref": {
+        "description": "The item from the previous list: its id, or an ordinal like 'second'.",
+        "maxLength": 40,
+        "type": "string"
+      }
+    },
+    "required": [
+      "ref"
+    ],
+    "type": "object"
+  },
+  "name": "explain_instruction",
+  "outputSchema": {
+    "properties": {
+      "disclaimer": {
+        "type": "string"
+      },
+      "quote": {
+        "type": "string"
+      },
+      "recorded_on": {
+        "type": "string"
+      },
+      "source": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "quote",
+      "recorded_on",
+      "source"
+    ],
+    "type": "object"
+  },
+  "ui": false
+}

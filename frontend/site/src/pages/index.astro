@@ -1,0 +1,182 @@
+---
+import Base from '../layouts/Base.astro';
+import Section from '../components/Section.astro';
+import FeatureCard from '../components/FeatureCard.astro';
+import Pill from '../components/Pill.astro';
+
+const title = 'CareLoop — what the doctor said, remembered for the whole family';
+const description =
+  'A grounded care-plan agent for Alexa+. CareLoop only repeats what your clinician said, always shows the original words, and never speaks a medicine dose.';
+
+const steps = [
+  { h: 'Record or paste the visit',
+    p: 'Capture what the clinician said — paste the notes, upload a text transcript, or dictate it. The transcript is treated strictly as data, never as instructions.' },
+  { h: 'Two-pass extraction with a quote guard',
+    p: 'A deterministic rules pass and a language-model pointer pass are cross-checked. Every candidate must be a verbatim substring of the transcript, so nothing is invented.' },
+  { h: 'Dose-masked voice surface, full-dose companion page',
+    p: 'The assistant hears a dose-free summary; exact medicine amounts live only on the password-protected companion page behind a household login.' },
+  { h: 'Ask by voice',
+    p: '“What is next for Papa?” “Why was this said?” “What changed since last time?” CareLoop answers from the recorded words and cites them.' },
+];
+---
+<Base title={title} description={description}>
+
+  <section class="cl-hero" aria-labelledby="hero-title">
+    <span class="eyebrow">Grounded family care-plan agent</span>
+    <h1 id="hero-title">CareLoop — what the doctor said, remembered for the whole family.</h1>
+    <p class="sub">
+      A grounded care-plan agent for Alexa+. It only repeats what your clinician said,
+      always shows the original words, and never speaks a medicine dose.
+    </p>
+    <p class="cta">
+      <a class="cl-btn" href="/companion/">Open the CareLoop companion</a>
+      <a class="cl-btn ghost" href="/simulator">Try the simulated Alexa+</a>
+      <a class="cl-btn quiet" href="/judge">Ask what CareLoop can do</a>
+    </p>
+  </section>
+
+  <Section id="problem" eyebrow="The problem" title="After the appointment, the details fade">
+    <p class="lede">
+      A fifteen-minute consultation generates a stream of instructions: which tablet,
+      when, what to avoid, when to come back. By the time you are home and back at work,
+      the exact wording is already slipping — and the person who needs it most is often
+      not the person who was in the room.
+    </p>
+    <p>
+      Across India and in many other places, most day-to-day care falls on family members
+      rather than on institutions. Adult children coordinate a parent&rsquo;s medicines, spouses
+      track follow-up tests, and relatives who were not present at the visit are handed a
+      half-remembered summary. The stakes are high, the memory is human, and the written
+      discharge slip is easy to lose.
+    </p>
+    <p class="u-mute">
+      CareLoop does not diagnose, advise or decide doses. It is a careful memory: it holds on
+      to what your clinician actually said, grounds every item in that exact sentence, and hands
+      the right slice of it to the right person in the household.
+    </p>
+  </Section>
+
+  <Section id="how" eyebrow="How it works" title="Four steps, from clinic to kitchen table">
+    <div class="cl-flow" style="margin-bottom:var(--cl-sp-5);">
+      <span class="step">Record or paste</span>
+      <span class="arrow" aria-hidden="true">&rarr;</span>
+      <span class="step">Two-pass extraction + quote guard</span>
+      <span class="arrow" aria-hidden="true">&rarr;</span>
+      <span class="step">Dose-free voice / full-dose companion</span>
+      <span class="arrow" aria-hidden="true">&rarr;</span>
+      <span class="step">Ask by voice</span>
+    </div>
+    <div class="cl-steps">
+      {steps.map((s) => (
+        <div class="cl-step">
+          <span class="n" aria-hidden="true"></span>
+          <div>
+            <h3>{s.h}</h3>
+            <p>{s.p}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </Section>
+
+  <Section id="surfaces" eyebrow="Two surfaces, one plan" title="The same data, shown safely in two places">
+    <p class="lede">
+      CareLoop deliberately splits what the household sees. The voice surface is useful but
+      conservative; the full clinical detail is available, but only where it is protected.
+    </p>
+    <div class="cl-panel" style="padding-inline:0;overflow:hidden;">
+      <table class="cl-table">
+        <caption class="sr-only">Comparison of the Alexa voice surface and the companion page</caption>
+        <thead>
+          <tr>
+            <th scope="col">Aspect</th>
+            <th scope="col">Alexa voice surface</th>
+            <th scope="col">CareLoop companion page</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Medicine doses</th>
+            <td>Dose-free by policy &mdash; every outbound string is masked</td>
+            <td>Full exact amounts, shown to the household</td>
+          </tr>
+          <tr>
+            <th scope="row">Access</th>
+            <td>Linked assistant; guest can only ask what CareLoop does</td>
+            <td>Behind a household login (code + PIN)</td>
+          </tr>
+          <tr>
+            <th scope="row">Reading the source</th>
+            <td>Plain-language line, dose-masked, with attribution</td>
+            <td>The clinician&rsquo;s original quoted sentence, verbatim</td>
+          </tr>
+          <tr>
+            <th scope="row">Typical use</th>
+            <td>Hands-free: “what is next?”, “mark it done”</td>
+            <td>Review, edit, confirm flagged items, export</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="cl-callout" style="margin-top:var(--cl-sp-5);">
+      <strong>Why the split?</strong> A shared speaker in a living room is not a private place.
+      CareLoop keeps the voice surface safe for anyone nearby while preserving full detail where
+      it belongs &mdash; behind the household&rsquo;s own login.
+    </div>
+  </Section>
+
+  <Section id="trust" eyebrow="Trust and safety" title="Built so the model cannot make things up">
+    <div class="cl-features">
+      <FeatureCard glyph="&ldquo;&rdquo;"
+        title="Extractive-by-construction grounding"
+        body="The extractor outputs only pointers into the transcript — there is no free-text field. Anything shown or spoken is a verbatim substring or a value from a closed vocabulary, so fabricated care content is impossible by construction, not merely unlikely." />
+      <FeatureCard glyph="&#9670;"
+        title="Per-household encrypted cells"
+        body="Each household gets its own encrypted SQLite cell; a bug or a stolen query can reach at most one cell. Deleting everything is crypto-shredding: destroy the data key and the file, then write an erasure receipt." />
+      <FeatureCard glyph="&#9878;"
+        title="Cedar-style authorization, differential testing"
+        body="One decision point guards every read and write. A runtime authorizer and a Cedar policy evaluator are checked against each other with randomised differential tests — we say “differentially tested”, never “proved”." />
+      <FeatureCard glyph="&#9107;"
+        title="Tamper-evident ledger"
+        body="Every add, done, confirm, supersede and delete is an append-only event chained by hash. The ledger can be verified and replayed to any past moment; a broken hash is surfaced, not hidden." />
+      <FeatureCard glyph="%'"
+        title="Policy self-test metrics"
+        body="Dose masking, crisis redirect, child-data rejection and prompt-injection blocking are unit-tested and reported as self-test metrics, so a regression in a safety rule is visible immediately." />
+      <FeatureCard glyph="&#8635;"
+        title="Offline replay"
+        body="Model calls can be recorded and replayed deterministically, and the whole pipeline falls back to rules if the model is throttled or unreachable — the demo never needs the network to be trustworthy." />
+    </div>
+  </Section>
+
+  <Section id="access" eyebrow="Accessibility" title="Legible, big, and the same by voice or by touch">
+    <div class="cl-grid cols-2">
+      <div class="cl-panel">
+        <h3>Designed for real hands and eyes</h3>
+        <ul class="cl-list">
+          <li>Touch targets are at least 48&nbsp;px, matching voice-device guidance.</li>
+          <li>Large-text mode raises body type for elder-facing surfaces.</li>
+          <li>Colour is AA-tuned in light and dark, and never carries meaning on its own.</li>
+          <li>Focus is always visible; a skip link jumps straight to the content.</li>
+        </ul>
+      </div>
+      <div class="cl-panel">
+        <h3>Voice and touch, at parity</h3>
+        <p>
+          Anything you can ask the assistant to do — read the plan, explain a quote, mark an
+          item done — you can also do with a tap on the companion page, and the other way round.
+          Neither surface is the only way to reach the care plan.
+        </p>
+        <p class="u-tiny u-mute" style="margin-bottom:0;">
+          <Pill tone="ok">Voice-only</Pill> <Pill tone="info">Touch-only</Pill> <Pill tone="done">Both work</Pill>
+        </p>
+      </div>
+    </div>
+  </Section>
+
+  <div class="cl-disclaimer">
+    <strong>Not medical advice.</strong> CareLoop only repeats what your clinician said and is
+    intended for adults. It stores no real patient data — everything shown runs on synthetic demo
+    data. Confirm anything you are unsure about with your clinician or pharmacist.
+  </div>
+
+</Base>

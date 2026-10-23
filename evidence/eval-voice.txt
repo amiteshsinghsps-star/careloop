@@ -1,0 +1,51 @@
+
+> careloop@6.0.0 eval:voice
+> npm run test -w frontend/simulator -- src/lib/alexa/accuracy.test.ts
+
+
+> @careloop/simulator@6.0.0 test
+> vitest run src/lib/alexa/accuracy.test.ts
+
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/vijay/OneDrive/Desktop/CARELOOP/frontend/simulator[39m
+
+[90mstdout[2m | src/lib/alexa/accuracy.test.ts[2m > [22m[2mthe shipped model, resolved by our own matcher[2m > [22m[2mreads out the five measured numbers
+[22m[39m
+  voice resolution, measured against alexa/interaction-model.json
+model’s own samples             80 cases   intent 100.0 %   slots 100.0 % (45)
+human paraphrases               33 cases   intent 42.4 %
+slot resolution                 14 cases   intent 92.9 %   slots 92.9 % (14)
+out of domain (must not match)  12 cases   intent 100.0 %
+platform built-ins               6 cases   intent 100.0 %
+  did not generalise:
+    “so what does mum have to do now” → nothing
+    “what's left for me to do” → nothing
+    “anything pending for meera” → nothing [Person: no slot returned]
+    “read me the plan” → nothing
+    “what did the doctor say about the tablets” → nothing
+    “whats on today” → nothing
+    “what have i got today” → nothing
+    “what is the schedule for ravi today” → nothing
+    “mark the pills as taken” → nothing
+    “mum's done the first item” → nothing
+    “why is that one on the plan” → RemoveInstructionIntent
+    “what did she actually say” → nothing
+    “jot down that the blood pressure was high” → nothing
+    “who do we have here” → nothing
+    “did the plan change for ravi” → nothing
+    “what is unresolved for meera” → nothing
+    “get rid of the second item” → nothing
+    “what do you actually do” → nothing
+    “what is this thing for” → nothing
+  slot misses (1 of 14):
+    “anything pending for meera” → nothing [Person: no slot returned]
+  match path on the paraphrases: 1 by a shipped sample, 14 only by the scored fallback
+  zero false matches on out-of-domain speech
+
+ [32m✓[39m src/lib/alexa/accuracy.test.ts [2m([22m[2m13 tests[22m[2m)[22m[32m 32[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m13 passed[39m[22m[90m (13)[39m
+[2m   Start at [22m 22:08:44
+[2m   Duration [22m 1.28s[2m (transform 219ms, setup 0ms, collect 486ms, tests 32ms, environment 0ms, prepare 205ms)[22m
+

@@ -1,0 +1,41 @@
+{
+  "action": "ViewPlan",
+  "annotations": {
+    "readOnlyHint": true
+  },
+  "description": "How much of today's plan is done versus pending. Synonyms: progress, how am I doing.",
+  "guest_safe": false,
+  "inputSchema": {
+    "additionalProperties": false,
+    "properties": {
+      "person": {
+        "maxLength": 40,
+        "type": "string"
+      }
+    },
+    "type": "object"
+  },
+  "name": "daily_digest",
+  "outputSchema": {
+    "properties": {
+      "done": {
+        "type": "integer"
+      },
+      "last_done_at": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "pending": {
+        "type": "integer"
+      }
+    },
+    "required": [
+      "done",
+      "pending"
+    ],
+    "type": "object"
+  },
+  "ui": false
+}

@@ -1,0 +1,20 @@
+---
+/**
+ * Section — a titled page section with an optional eyebrow and id (for skip anchors).
+ * Renders as a landmark `<section>` labelled by its heading.
+ */
+interface Props {
+  eyebrow?: string;
+  title: string;
+  id?: string;
+}
+const { eyebrow, title, id } = Astro.props;
+const hid = id ? `${id}-title` : undefined;
+---
+<section class="cl-section" {...(id ? { id } : {})}>
+  <div class="head">
+    {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+    <h2 id={hid}>{title}</h2>
+  </div>
+  <slot />
+</section>

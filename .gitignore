@@ -1,0 +1,49 @@
+# --- secrets: never commit .env ---
+.env
+.env.*
+!.env.example
+
+# --- runtime state: households' cells, keys, receipts, logs (NEVER commit) ---
+data/
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+build/
+*.egg-info/
+.pytest_cache/
+.tmp/
+.hypothesis/
+venv/
+.venv/
+
+# --- Node / build outputs (regenerate with: npm run build && npm run sync) ---
+node_modules/
+frontend/simulator/dist/
+frontend/simulator/dist-card/
+frontend/companion/dist/
+frontend/companion/.angular/
+frontend/site/dist/
+frontend/site/.astro/
+careloop/web/site/
+careloop/web/simulator/
+careloop/web/companion/
+careloop/web/card.html
+*.tsbuildinfo
+
+# --- fixtures recorded against live AWS (may contain real provider speech) ---
+*.record.json
+fixtures/live/
+
+# --- editors / OS ---
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.swp
+
+# --- eval / preflight output artifacts ---
+scripts/eval/report.json
+preflight_report.json
+*.preflight.json
+list.json

@@ -1,0 +1,80 @@
+---
+import Base from '../../layouts/Base.astro';
+
+const title = 'Docs — CareLoop quickstart';
+const description =
+  'Run CareLoop locally: start the self-hosted MCP server, build the web surfaces, then open the simulator, companion, judge panel and metrics endpoints.';
+---
+<Base title={title} description={description}>
+  <article class="cl-prose">
+    <h1>Quickstart</h1>
+    <p class="u-mute">
+      CareLoop is a self-hosted MCP server plus a small set of static web surfaces. There is no
+      cloud dependency to run the demo: the extraction pipeline falls back to deterministic rules
+      when no model is configured.
+    </p>
+
+    <h2>Prerequisites</h2>
+    <ul>
+      <li>Python 3.11+ on your path.</li>
+      <li>Node.js 20+ and npm for the web surfaces.</li>
+      <li>Optional: AWS credentials and a Bedrock model id for the two-pass LLM extraction. Without
+        them the rules-only path is used automatically.</li>
+    </ul>
+
+    <h2>1. Start the MCP server</h2>
+    <p>
+      The server exposes the MCP endpoint, the companion capture API, the OAuth endpoints, the
+      simulated assistant page, the judge panel and metrics:
+    </p>
+    <pre class="cl-pre"><code>python -m careloop.mcp_server</code></pre>
+    <p class="cl-note">
+      It listens on <span class="cl-kbd">http://127.0.0.1:8080</span> by default (override with
+      <span class="cl-kbd">HOST</span> / <span class="cl-kbd">PORT</span>). Set
+      <span class="cl-kbd">CARELOOP_AUTH=off</span> for the no-credentials demo, or leave the
+      default <span class="cl-kbd">oauth</span> mode to exercise the full linking flow.
+    </p>
+
+    <h2>2. Build the web surfaces</h2>
+    <p>Install workspace dependencies, then build the simulator, the companion and this site:</p>
+    <pre class="cl-pre"><code>npm install
+npm run dist</code></pre>
+    <p class="cl-note">
+      <span class="cl-kbd">npm run dist</span> builds each app and syncs the output into the
+      server&rsquo;s <span class="cl-kbd">careloop/web</span> directory so it can serve them.
+    </p>
+
+    <h2>3. Run the guided demo</h2>
+    <p>
+      The Makefile wires the pieces into one reproducible demo (seed the demo household, run the
+      checks, and exercise the capture-and-ask loop):
+    </p>
+    <pre class="cl-pre"><code>make demo</code></pre>
+
+    <h2>URL map</h2>
+    <p>Once the server is running, these are the routes to know:</p>
+    <div class="cl-panel" style="padding-inline:0;overflow:hidden;margin-top:var(--cl-sp-4);">
+      <table class="cl-table">
+        <caption class="sr-only">CareLoop URL map</caption>
+        <thead>
+          <tr><th scope="col">Path</th><th scope="col">What it is</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row"><span class="cl-kbd">/</span></th><td>Simulated Alexa+ surface (the default landing view).</td></tr>
+          <tr><th scope="row"><span class="cl-kbd">/simulator</span></th><td>The assistant simulator — talk to the MCP tools without a device.</td></tr>
+          <tr><th scope="row"><span class="cl-kbd">/judge</span></th><td>Judge panel: policy self-tests, ledger health, latency and cost.</td></tr>
+          <tr><th scope="row"><span class="cl-kbd">/companion/</span></th><td>Full-dose companion page, behind the household login.</td></tr>
+          <tr><th scope="row"><span class="cl-kbd">/mcp</span></th><td>The MCP endpoint (Streamable HTTP, POST).</td></tr>
+          <tr><th scope="row"><span class="cl-kbd">/metrics</span></th><td>Per-tool latency percentiles and request/error counts.</td></tr>
+          <tr><th scope="row"><span class="cl-kbd">/api/judge-data</span></th><td>JSON backing the judge panel (protocol, tools, ledger, self-tests).</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="cl-note" style="margin-top:var(--cl-sp-5);">
+      Next: <a href="/docs/architecture">read the architecture</a> for the data flow and the twelve
+      MCP tools, or <a href="/docs/judging">the judging map</a> for where each claim is evidenced in
+      the repository.
+    </p>
+  </article>
+</Base>

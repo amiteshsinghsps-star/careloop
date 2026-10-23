@@ -1,0 +1,6 @@
+WARNING  --check regenerates offline (careloop package in process); commit the offline output
+make_addon --check OK
+  committed files match a fresh generation: 10 files
+  validate_store_listing -> []  (zero errors)
+  artwork verified against IHDR: carousel-600x900.png IHDR 600x900, icon-126x126.png IHDR 126x126, icon-180x180.png IHDR 180x180, icon-241x241.png IHDR 241x241, icon-64x64.png IHDR 64x64, icon-72x72.png IHDR 72x72, icon-88x88.png IHDR 88x88
+  publication origin http://localhost:8080  publicationReady=False

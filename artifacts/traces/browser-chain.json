@@ -1,0 +1,1222 @@
+{
+  "kind": "careloop-alexa-device-trace",
+  "version": 1,
+  "scenario": "chain",
+  "created_at": "2026-10-23T14:51:44.640Z",
+  "device": {
+    "locale": "en-US",
+    "model": "simulated-browser-device"
+  },
+  "turns": [
+    {
+      "index": 0,
+      "utterance": "what is next for Papa",
+      "at_ms": 0,
+      "state": "speaking",
+      "slu": {
+        "intent": "WhatsMyPlanIntent",
+        "builtIn": null,
+        "matched": "literal",
+        "confidence": 0.95,
+        "slots": [
+          {
+            "name": "Person",
+            "spoken": "Papa",
+            "resolved": "Papa",
+            "id": "Papa",
+            "state": "success",
+            "confidence": 1
+          }
+        ]
+      },
+      "routed": {
+        "tool": "get_care_plan",
+        "args": {
+          "person": "Papa"
+        }
+      },
+      "agrees": true,
+      "local": false,
+      "called": true,
+      "dialog": null,
+      "connection": null,
+      "proactive": false,
+      "delivery": null,
+      "meta": null,
+      "refused": null,
+      "request_envelope": {
+        "version": "1.0",
+        "session": {
+          "new": false,
+          "sessionId": "cl-5044bb5c194b4171",
+          "application": {
+            "applicationId": "amzn1.ask.skill.careloop-simulated"
+          },
+          "user": {
+            "userId": "amzn1.ask.account.CARELOOP-SIMULATED"
+          },
+          "attributes": {
+            "lastUtterance": "what is next for Papa"
+          }
+        },
+        "context": {
+          "System": {
+            "application": {
+              "applicationId": "amzn1.ask.skill.careloop-simulated"
+            },
+            "user": {
+              "userId": "amzn1.ask.account.CARELOOP-SIMULATED"
+            },
+            "device": {
+              "deviceId": "careloop-simulated-device-0001",
+              "supportedInterfaces": {}
+            },
+            "apiEndpoint": "https://api.amazonalexa.com/v2/accounts/",
+            "apiAccessToken": "simulated-access-token-never-sent"
+          }
+        },
+        "request": {
+          "type": "IntentRequest",
+          "requestId": "simreq-mvl38szi-1",
+          "timestamp": "2026-10-23T14:51:41Z",
+          "locale": "en-US",
+          "dialogState": "COMPLETED",
+          "intent": {
+            "name": "WhatsMyPlanIntent",
+            "confirmationStatus": "NONE",
+            "slots": {
+              "Person": {
+                "name": "Person",
+                "value": "Papa",
+                "confirmationStatus": "NONE",
+                "slotValue": {
+                  "type": "Simple",
+                  "value": "Papa"
+                },
+                "resolutions": {
+                  "resolutionsPerAuthority": [
+                    {
+                      "authority": "CareLoopPerson",
+                      "status": {
+                        "code": "ER_SUCCESS_MATCH"
+                      },
+                      "values": [
+                        {
+                          "value": {
+                            "name": "Papa",
+                            "id": "Papa"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "response_envelope": {
+        "version": "1.0",
+        "sessionAttributes": {
+          "lastUtterance": "what is next for Papa",
+          "careloop": {
+            "model": "ec4b62d616b3",
+            "tool": "get_care_plan",
+            "intent": "WhatsMyPlanIntent",
+            "view": "plan",
+            "state": "await"
+          }
+        },
+        "response": {
+          "shouldEndSession": false,
+          "outputSpeech": {
+            "type": "SSML",
+            "ssml": "<speak>For Papa: the first item — Check the blood pressure every morning and write it down.  <break strength=\"x-weak\"/> plus 2 more.  <break strength=\"x-weak\"/> According to your clinician, as recorded on 23 October 2026.</speak>"
+          },
+          "card": {
+            "type": "Simple",
+            "title": "Care plan",
+            "content": "For Papa: the first item — Check the blood pressure every morning and write it down. plus 2 more. According to your clinician, as recorded on 23 October 2026."
+          },
+          "reprompt": {
+            "outputSpeech": {
+              "type": "SSML",
+              "ssml": "<speak>I only repeat what your clinician recorded for this household. I can tell you what is next, why something was said, what changed, and what is still to do.</speak>"
+            }
+          }
+        }
+      },
+      "spoken_text": "For Papa: the first item — Check the blood pressure every morning and write it down. plus 2 more. According to your clinician, as recorded on 23 October 2026.",
+      "words": 29,
+      "estimate_ms": 10745,
+      "masked_fields": [
+        "items[1].text"
+      ],
+      "problems": [],
+      "tool_ms": 37
+    },
+    {
+      "index": 1,
+      "utterance": "remove that instruction",
+      "at_ms": 400,
+      "state": "speaking",
+      "slu": {
+        "intent": "RemoveInstructionIntent",
+        "builtIn": null,
+        "matched": "fuzzy",
+        "confidence": 0.8,
+        "slots": [
+          {
+            "name": "ItemPosition",
+            "spoken": "",
+            "resolved": null,
+            "id": null,
+            "state": "no-match",
+            "confidence": 0
+          }
+        ]
+      },
+      "routed": {
+        "tool": "delete_instruction",
+        "args": {}
+      },
+      "agrees": true,
+      "local": false,
+      "called": false,
+      "dialog": {
+        "stage": "elicit",
+        "slot": "ItemPosition",
+        "promptId": "ElicitItemPrompt"
+      },
+      "connection": null,
+      "proactive": false,
+      "delivery": null,
+      "meta": null,
+      "refused": null,
+      "request_envelope": {
+        "version": "1.0",
+        "session": {
+          "new": false,
+          "sessionId": "cl-5044bb5c194b4171",
+          "application": {
+            "applicationId": "amzn1.ask.skill.careloop-simulated"
+          },
+          "user": {
+            "userId": "amzn1.ask.account.CARELOOP-SIMULATED"
+          },
+          "attributes": {
+            "careloopPending": {
+              "intent": "RemoveInstructionIntent",
+              "collected": {}
+            }
+          }
+        },
+        "context": {
+          "System": {
+            "application": {
+              "applicationId": "amzn1.ask.skill.careloop-simulated"
+            },
+            "user": {
+              "userId": "amzn1.ask.account.CARELOOP-SIMULATED"
+            },
+            "device": {
+              "deviceId": "careloop-simulated-device-0001",
+              "supportedInterfaces": {}
+            },
+            "apiEndpoint": "https://api.amazonalexa.com/v2/accounts/",
+            "apiAccessToken": "simulated-access-token-never-sent"
+          }
+        },
+        "request": {
+          "type": "IntentRequest",
+          "requestId": "simreq-mvl38tb1-2",
+          "timestamp": "2026-10-23T14:51:42Z",
+          "locale": "en-US",
+          "dialogState": "IN_PROGRESS",
+          "intent": {
+            "name": "RemoveInstructionIntent",
+            "confirmationStatus": "NONE",
+            "slots": {
+              "ItemPosition": {
+                "name": "ItemPosition",
+                "value": "",
+                "confirmationStatus": "NONE",
+                "slotValue": {
+                  "type": "Simple",
+                  "value": ""
+                },
+                "resolutions": {
+                  "resolutionsPerAuthority": [
+                    {
+                      "authority": "CareLoopItemPosition",
+                      "status": {
+                        "code": "ER_SUCCESS_NO_MATCH"
+                      },
+                      "values": []
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "response_envelope": {
+        "version": "1.0",
+        "sessionAttributes": {
+          "lastUtterance": "remove that instruction",
+          "careloopPending": {
+            "intent": "RemoveInstructionIntent",
+            "collected": {}
+          },
+          "careloop": {
+            "model": "ec4b62d616b3",
+            "tool": null,
+            "intent": "RemoveInstructionIntent",
+            "view": "clarify",
+            "state": "elicit"
+          }
+        },
+        "response": {
+          "shouldEndSession": false,
+          "outputSpeech": {
+            "type": "SSML",
+            "ssml": "<speak>Which one on the list?  <break strength=\"x-weak\"/> Say the first, the second, the third, the fourth or the fifth.</speak>"
+          },
+          "card": {
+            "type": "Simple",
+            "title": "One more thing",
+            "content": "Which one on the list? Say the first, the second, the third, the fourth or the fifth."
+          },
+          "reprompt": {
+            "outputSpeech": {
+              "type": "SSML",
+              "ssml": "<speak>Which one on the list? Say the first, the second, the third, the fourth or the fifth.</speak>"
+            }
+          },
+          "directives": [
+            {
+              "type": "Dialog.ElicitSlot",
+              "slotToElicit": "ItemPosition",
+              "updatedIntent": {
+                "name": "RemoveInstructionIntent",
+                "confirmationStatus": "NONE",
+                "slots": {
+                  "ItemPosition": {
+                    "name": "ItemPosition",
+                    "value": "",
+                    "confirmationStatus": "NONE",
+                    "slotValue": {
+                      "type": "Simple",
+                      "value": ""
+                    },
+                    "resolutions": {
+                      "resolutionsPerAuthority": [
+                        {
+                          "authority": "CareLoopItemPosition",
+                          "status": {
+                            "code": "ER_SUCCESS_NO_MATCH"
+                          },
+                          "values": []
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "spoken_text": "Which one on the list? Say the first, the second, the third, the fourth or the fifth.",
+      "words": 17,
+      "estimate_ms": 6282,
+      "masked_fields": [],
+      "problems": [],
+      "tool_ms": 0
+    },
+    {
+      "index": 2,
+      "utterance": "the second one",
+      "at_ms": 800,
+      "state": "speaking",
+      "slu": {
+        "intent": null,
+        "builtIn": null,
+        "matched": "none",
+        "confidence": 0,
+        "slots": []
+      },
+      "routed": {
+        "tool": "delete_instruction",
+        "args": {
+          "ref": "second"
+        }
+      },
+      "agrees": true,
+      "local": false,
+      "called": true,
+      "dialog": {
+        "stage": "confirm",
+        "slot": null,
+        "promptId": "ConfirmRemovePrompt"
+      },
+      "connection": null,
+      "proactive": false,
+      "delivery": null,
+      "meta": null,
+      "refused": null,
+      "request_envelope": {
+        "version": "1.0",
+        "session": {
+          "new": false,
+          "sessionId": "cl-5044bb5c194b4171",
+          "application": {
+            "applicationId": "amzn1.ask.skill.careloop-simulated"
+          },
+          "user": {
+            "userId": "amzn1.ask.account.CARELOOP-SIMULATED"
+          },
+          "attributes": {
+            "careloopPending": {
+              "intent": "RemoveInstructionIntent",
+              "collected": {
+                "ItemPosition": "second"
+              }
+            }
+          }
+        },
+        "context": {
+          "System": {
+            "application": {
+              "applicationId": "amzn1.ask.skill.careloop-simulated"
+            },
+            "user": {
+              "userId": "amzn1.ask.account.CARELOOP-SIMULATED"
+            },
+            "device": {
+              "deviceId": "careloop-simulated-device-0001",
+              "supportedInterfaces": {}
+            },
+            "apiEndpoint": "https://api.amazonalexa.com/v2/accounts/",
+            "apiAccessToken": "simulated-access-token-never-sent"
+          }
+        },
+        "request": {
+          "type": "IntentRequest",
+          "requestId": "simreq-mvl38tn0-3",
+          "timestamp": "2026-10-23T14:51:42Z",
+          "locale": "en-US",
+          "dialogState": "COMPLETED",
+          "intent": {
+            "name": "RemoveInstructionIntent",
+            "confirmationStatus": "NONE",
+            "slots": {
+              "ItemPosition": {
+                "name": "ItemPosition",
+                "value": "second",
+                "confirmationStatus": "NONE",
+                "slotValue": {
+                  "type": "Simple",
+                  "value": "second"
+                },
+                "resolutions": {
+                  "resolutionsPerAuthority": [
+                    {
+                      "authority": "CareLoopItemPosition",
+                      "status": {
+                        "code": "ER_SUCCESS_MATCH"
+                      },
+                      "values": [
+                        {
+                          "value": {
+                            "name": "second",
+                            "id": "second"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "response_envelope": {
+        "version": "1.0",
+        "sessionAttributes": {
+          "lastUtterance": "the second one",
+          "careloopPending": {
+            "intent": "RemoveInstructionIntent",
+            "collected": {
+              "ItemPosition": "second"
+            }
+          },
+          "careloop": {
+            "model": "ec4b62d616b3",
+            "tool": "delete_instruction",
+            "intent": "RemoveInstructionIntent",
+            "view": "confirm-delete",
+            "state": "confirm"
+          }
+        },
+        "response": {
+          "shouldEndSession": false,
+          "outputSpeech": {
+            "type": "SSML",
+            "ssml": "<speak>Just to check — delete the medication item for Papa, about “Take your prescribed amount iron after dinner every day for two months. <break strength=\"x-weak\"/> ”?</speak>"
+          },
+          "card": {
+            "type": "Simple",
+            "title": "Confirm the removal",
+            "content": "Just to check — delete the medication item for Papa, about “Take your prescribed amount iron after dinner every day for two months.”?"
+          },
+          "reprompt": {
+            "outputSpeech": {
+              "type": "SSML",
+              "ssml": "<speak>Just to check — delete the medication item for Papa, about “Take your prescribed amount iron after dinner every day for two months.”?</speak>"
+            }
+          },
+          "directives": [
+            {
+              "type": "Dialog.ConfirmIntent",
+              "updatedIntent": {
+                "name": "RemoveInstructionIntent",
+                "confirmationStatus": "NONE",
+                "slots": {
+                  "ItemPosition": {
+                    "name": "ItemPosition",
+                    "value": "second",
+                    "confirmationStatus": "NONE",
+                    "slotValue": {
+                      "type": "Simple",
+                      "value": "second"
+                    },
+                    "resolutions": {
+                      "resolutionsPerAuthority": [
+                        {
+                          "authority": "CareLoopItemPosition",
+                          "status": {
+                            "code": "ER_SUCCESS_MATCH"
+                          },
+                          "values": [
+                            {
+                              "value": {
+                                "name": "second",
+                                "id": "second"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "spoken_text": "Just to check — delete the medication item for Papa, about “Take your prescribed amount iron after dinner every day for two months.”?",
+      "words": 24,
+      "estimate_ms": 8827,
+      "masked_fields": [
+        "summary.quote",
+        "question"
+      ],
+      "problems": [],
+      "tool_ms": 20
+    },
+    {
+      "index": 3,
+      "utterance": "no, keep it",
+      "at_ms": 1200,
+      "state": "speaking",
+      "slu": {
+        "intent": null,
+        "builtIn": "AMAZON.NoIntent",
+        "matched": "none",
+        "confidence": 1,
+        "slots": []
+      },
+      "routed": {
+        "tool": "delete_instruction",
+        "args": {
+          "ref": "second"
+        }
+      },
+      "agrees": true,
+      "local": false,
+      "called": false,
+      "dialog": {
+        "stage": "refused",
+        "slot": null,
+        "promptId": "KeptPrompt"
+      },
+      "connection": null,
+      "proactive": false,
+      "delivery": null,
+      "meta": null,
+      "refused": null,
+      "request_envelope": {
+        "version": "1.0",
+        "session": {
+          "new": false,
+          "sessionId": "cl-5044bb5c194b4171",
+          "application": {
+            "applicationId": "amzn1.ask.skill.careloop-simulated"
+          },
+          "user": {
+            "userId": "amzn1.ask.account.CARELOOP-SIMULATED"
+          },
+          "attributes": {
+            "careloopPending": {
+              "intent": "RemoveInstructionIntent",
+              "collected": {
+                "ItemPosition": "second"
+              }
+            }
+          }
+        },
+        "context": {
+          "System": {
+            "application": {
+              "applicationId": "amzn1.ask.skill.careloop-simulated"
+            },
+            "user": {
+              "userId": "amzn1.ask.account.CARELOOP-SIMULATED"
+            },
+            "device": {
+              "deviceId": "careloop-simulated-device-0001",
+              "supportedInterfaces": {}
+            },
+            "apiEndpoint": "https://api.amazonalexa.com/v2/accounts/",
+            "apiAccessToken": "simulated-access-token-never-sent"
+          }
+        },
+        "request": {
+          "type": "IntentRequest",
+          "requestId": "simreq-mvl38tyd-4",
+          "timestamp": "2026-10-23T14:51:43Z",
+          "locale": "en-US",
+          "dialogState": "IN_PROGRESS",
+          "intent": {
+            "name": "RemoveInstructionIntent",
+            "confirmationStatus": "NONE",
+            "slots": {
+              "ItemPosition": {
+                "name": "ItemPosition",
+                "value": "second",
+                "confirmationStatus": "NONE",
+                "slotValue": {
+                  "type": "Simple",
+                  "value": "second"
+                },
+                "resolutions": {
+                  "resolutionsPerAuthority": [
+                    {
+                      "authority": "CareLoopItemPosition",
+                      "status": {
+                        "code": "ER_SUCCESS_MATCH"
+                      },
+                      "values": [
+                        {
+                          "value": {
+                            "name": "second",
+                            "id": "second"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "response_envelope": {
+        "version": "1.0",
+        "sessionAttributes": {
+          "lastUtterance": "no, keep it",
+          "careloopPending": {
+            "intent": "RemoveInstructionIntent",
+            "collected": {
+              "ItemPosition": "second"
+            }
+          },
+          "careloop": {
+            "model": "ec4b62d616b3",
+            "tool": null,
+            "intent": "RemoveInstructionIntent",
+            "view": "deleted",
+            "state": "await"
+          }
+        },
+        "response": {
+          "shouldEndSession": false,
+          "outputSpeech": {
+            "type": "SSML",
+            "ssml": "<speak>Nothing was removed.  <break strength=\"x-weak\"/> It stays in the plan.</speak>"
+          },
+          "card": {
+            "type": "Simple",
+            "title": "Removed from the plan",
+            "content": "Nothing was removed. It stays in the plan."
+          },
+          "reprompt": {
+            "outputSpeech": {
+              "type": "SSML",
+              "ssml": "<speak>I only repeat what your clinician recorded for this household. I can tell you what is next, why something was said, what changed, and what is still to do.</speak>"
+            }
+          }
+        }
+      },
+      "spoken_text": "Nothing was removed. It stays in the plan.",
+      "words": 8,
+      "estimate_ms": 3009,
+      "masked_fields": [],
+      "problems": [],
+      "tool_ms": 0
+    },
+    {
+      "index": 4,
+      "utterance": "remove the third one",
+      "at_ms": 1600,
+      "state": "speaking",
+      "slu": {
+        "intent": "RemoveInstructionIntent",
+        "builtIn": null,
+        "matched": "fuzzy",
+        "confidence": 0.68,
+        "slots": [
+          {
+            "name": "ItemPosition",
+            "spoken": "third",
+            "resolved": "third",
+            "id": "third",
+            "state": "success",
+            "confidence": 0.85
+          }
+        ]
+      },
+      "routed": {
+        "tool": "delete_instruction",
+        "args": {
+          "ref": "third"
+        }
+      },
+      "agrees": true,
+      "local": false,
+      "called": true,
+      "dialog": {
+        "stage": "confirm",
+        "slot": null,
+        "promptId": "ConfirmRemovePrompt"
+      },
+      "connection": null,
+      "proactive": false,
+      "delivery": null,
+      "meta": null,
+      "refused": null,
+      "request_envelope": {
+        "version": "1.0",
+        "session": {
+          "new": false,
+          "sessionId": "cl-5044bb5c194b4171",
+          "application": {
+            "applicationId": "amzn1.ask.skill.careloop-simulated"
+          },
+          "user": {
+            "userId": "amzn1.ask.account.CARELOOP-SIMULATED"
+          },
+          "attributes": {
+            "lastUtterance": "remove the third one"
+          }
+        },
+        "context": {
+          "System": {
+            "application": {
+              "applicationId": "amzn1.ask.skill.careloop-simulated"
+            },
+            "user": {
+              "userId": "amzn1.ask.account.CARELOOP-SIMULATED"
+            },
+            "device": {
+              "deviceId": "careloop-simulated-device-0001",
+              "supportedInterfaces": {}
+            },
+            "apiEndpoint": "https://api.amazonalexa.com/v2/accounts/",
+            "apiAccessToken": "simulated-access-token-never-sent"
+          }
+        },
+        "request": {
+          "type": "IntentRequest",
+          "requestId": "simreq-mvl38ua4-5",
+          "timestamp": "2026-10-23T14:51:43Z",
+          "locale": "en-US",
+          "dialogState": "COMPLETED",
+          "intent": {
+            "name": "RemoveInstructionIntent",
+            "confirmationStatus": "NONE",
+            "slots": {
+              "ItemPosition": {
+                "name": "ItemPosition",
+                "value": "third",
+                "confirmationStatus": "NONE",
+                "slotValue": {
+                  "type": "Simple",
+                  "value": "third"
+                },
+                "resolutions": {
+                  "resolutionsPerAuthority": [
+                    {
+                      "authority": "CareLoopItemPosition",
+                      "status": {
+                        "code": "ER_SUCCESS_MATCH"
+                      },
+                      "values": [
+                        {
+                          "value": {
+                            "name": "third",
+                            "id": "third"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "response_envelope": {
+        "version": "1.0",
+        "sessionAttributes": {
+          "lastUtterance": "remove the third one",
+          "careloop": {
+            "model": "ec4b62d616b3",
+            "tool": "delete_instruction",
+            "intent": "RemoveInstructionIntent",
+            "view": "confirm-delete",
+            "state": "confirm"
+          }
+        },
+        "response": {
+          "shouldEndSession": false,
+          "outputSpeech": {
+            "type": "SSML",
+            "ssml": "<speak>Just to check — delete the appointment item for Papa, about “Come back after six weeks. <break strength=\"x-weak\"/> ”?</speak>"
+          },
+          "card": {
+            "type": "Simple",
+            "title": "Confirm the removal",
+            "content": "Just to check — delete the appointment item for Papa, about “Come back after six weeks.”?"
+          },
+          "reprompt": {
+            "outputSpeech": {
+              "type": "SSML",
+              "ssml": "<speak>Just to check — delete the appointment item for Papa, about “Come back after six weeks.”?</speak>"
+            }
+          },
+          "directives": [
+            {
+              "type": "Dialog.ConfirmIntent",
+              "updatedIntent": {
+                "name": "RemoveInstructionIntent",
+                "confirmationStatus": "NONE",
+                "slots": {
+                  "ItemPosition": {
+                    "name": "ItemPosition",
+                    "value": "third",
+                    "confirmationStatus": "NONE",
+                    "slotValue": {
+                      "type": "Simple",
+                      "value": "third"
+                    },
+                    "resolutions": {
+                      "resolutionsPerAuthority": [
+                        {
+                          "authority": "CareLoopItemPosition",
+                          "status": {
+                            "code": "ER_SUCCESS_MATCH"
+                          },
+                          "values": [
+                            {
+                              "value": {
+                                "name": "third",
+                                "id": "third"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "spoken_text": "Just to check — delete the appointment item for Papa, about “Come back after six weeks.”?",
+      "words": 17,
+      "estimate_ms": 6282,
+      "masked_fields": [],
+      "problems": [],
+      "tool_ms": 12
+    },
+    {
+      "index": 5,
+      "utterance": "yes",
+      "at_ms": 2000,
+      "state": "speaking",
+      "slu": {
+        "intent": null,
+        "builtIn": "AMAZON.YesIntent",
+        "matched": "none",
+        "confidence": 1,
+        "slots": []
+      },
+      "routed": {
+        "tool": "delete_instruction",
+        "args": {
+          "ref": "third",
+          "confirm": true
+        }
+      },
+      "agrees": true,
+      "local": false,
+      "called": true,
+      "dialog": null,
+      "connection": null,
+      "proactive": false,
+      "delivery": null,
+      "meta": null,
+      "refused": null,
+      "request_envelope": {
+        "version": "1.0",
+        "session": {
+          "new": false,
+          "sessionId": "cl-5044bb5c194b4171",
+          "application": {
+            "applicationId": "amzn1.ask.skill.careloop-simulated"
+          },
+          "user": {
+            "userId": "amzn1.ask.account.CARELOOP-SIMULATED"
+          },
+          "attributes": {
+            "careloopPending": {
+              "intent": "RemoveInstructionIntent",
+              "collected": {
+                "ItemPosition": "third"
+              }
+            }
+          }
+        },
+        "context": {
+          "System": {
+            "application": {
+              "applicationId": "amzn1.ask.skill.careloop-simulated"
+            },
+            "user": {
+              "userId": "amzn1.ask.account.CARELOOP-SIMULATED"
+            },
+            "device": {
+              "deviceId": "careloop-simulated-device-0001",
+              "supportedInterfaces": {}
+            },
+            "apiEndpoint": "https://api.amazonalexa.com/v2/accounts/",
+            "apiAccessToken": "simulated-access-token-never-sent"
+          }
+        },
+        "request": {
+          "type": "IntentRequest",
+          "requestId": "simreq-mvl38um3-6",
+          "timestamp": "2026-10-23T14:51:43Z",
+          "locale": "en-US",
+          "dialogState": "COMPLETED",
+          "intent": {
+            "name": "RemoveInstructionIntent",
+            "confirmationStatus": "CONFIRMED",
+            "slots": {
+              "ItemPosition": {
+                "name": "ItemPosition",
+                "value": "third",
+                "confirmationStatus": "NONE",
+                "slotValue": {
+                  "type": "Simple",
+                  "value": "third"
+                },
+                "resolutions": {
+                  "resolutionsPerAuthority": [
+                    {
+                      "authority": "CareLoopItemPosition",
+                      "status": {
+                        "code": "ER_SUCCESS_MATCH"
+                      },
+                      "values": [
+                        {
+                          "value": {
+                            "name": "third",
+                            "id": "third"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "response_envelope": {
+        "version": "1.0",
+        "sessionAttributes": {
+          "lastUtterance": "yes",
+          "careloopPending": {
+            "intent": "RemoveInstructionIntent",
+            "collected": {
+              "ItemPosition": "third"
+            }
+          },
+          "careloop": {
+            "model": "ec4b62d616b3",
+            "tool": "delete_instruction",
+            "intent": "RemoveInstructionIntent",
+            "view": "deleted",
+            "state": "await"
+          }
+        },
+        "response": {
+          "shouldEndSession": false,
+          "outputSpeech": {
+            "type": "SSML",
+            "ssml": "<speak>It has been removed from the plan.</speak>"
+          },
+          "card": {
+            "type": "Simple",
+            "title": "Removed from the plan",
+            "content": "It has been removed from the plan."
+          },
+          "reprompt": {
+            "outputSpeech": {
+              "type": "SSML",
+              "ssml": "<speak>I only repeat what your clinician recorded for this household. I can tell you what is next, why something was said, what changed, and what is still to do.</speak>"
+            }
+          }
+        }
+      },
+      "spoken_text": "It has been removed from the plan.",
+      "words": 7,
+      "estimate_ms": 2545,
+      "masked_fields": [],
+      "problems": [],
+      "tool_ms": 14
+    }
+  ],
+  "events": [
+    {
+      "atMs": 0,
+      "kind": "state",
+      "from": "idle",
+      "to": "wake",
+      "note": "wake word"
+    },
+    {
+      "atMs": 0,
+      "kind": "state",
+      "from": "wake",
+      "to": "listening",
+      "note": "microphone open"
+    },
+    {
+      "atMs": 0,
+      "kind": "state",
+      "from": "listening",
+      "to": "wake",
+      "note": "wake word"
+    },
+    {
+      "atMs": 0,
+      "kind": "state",
+      "from": "wake",
+      "to": "listening",
+      "note": "microphone open"
+    },
+    {
+      "atMs": 0,
+      "kind": "heard",
+      "from": "listening",
+      "to": "processing",
+      "note": "heard “what is next for Papa”"
+    },
+    {
+      "atMs": 0,
+      "kind": "answer",
+      "from": "processing",
+      "to": "speaking",
+      "note": "29 words, about 10.7 s"
+    },
+    {
+      "atMs": 400,
+      "kind": "state",
+      "from": "speaking",
+      "to": "wake",
+      "note": "wake word"
+    },
+    {
+      "atMs": 400,
+      "kind": "state",
+      "from": "wake",
+      "to": "listening",
+      "note": "microphone open"
+    },
+    {
+      "atMs": 400,
+      "kind": "heard",
+      "from": "listening",
+      "to": "processing",
+      "note": "heard “remove that instruction”"
+    },
+    {
+      "atMs": 400,
+      "kind": "answer",
+      "from": "processing",
+      "to": "speaking",
+      "note": "17 words, about 6.3 s"
+    },
+    {
+      "atMs": 800,
+      "kind": "state",
+      "from": "speaking",
+      "to": "wake",
+      "note": "wake word"
+    },
+    {
+      "atMs": 800,
+      "kind": "state",
+      "from": "wake",
+      "to": "listening",
+      "note": "microphone open"
+    },
+    {
+      "atMs": 800,
+      "kind": "heard",
+      "from": "listening",
+      "to": "processing",
+      "note": "heard “the second one”"
+    },
+    {
+      "atMs": 800,
+      "kind": "answer",
+      "from": "processing",
+      "to": "speaking",
+      "note": "24 words, about 8.8 s"
+    },
+    {
+      "atMs": 1200,
+      "kind": "state",
+      "from": "speaking",
+      "to": "wake",
+      "note": "wake word"
+    },
+    {
+      "atMs": 1200,
+      "kind": "state",
+      "from": "wake",
+      "to": "listening",
+      "note": "microphone open"
+    },
+    {
+      "atMs": 1200,
+      "kind": "heard",
+      "from": "listening",
+      "to": "processing",
+      "note": "heard “no, keep it”"
+    },
+    {
+      "atMs": 1200,
+      "kind": "answer",
+      "from": "processing",
+      "to": "speaking",
+      "note": "8 words, about 3 s"
+    },
+    {
+      "atMs": 1600,
+      "kind": "state",
+      "from": "speaking",
+      "to": "wake",
+      "note": "wake word"
+    },
+    {
+      "atMs": 1600,
+      "kind": "state",
+      "from": "wake",
+      "to": "listening",
+      "note": "microphone open"
+    },
+    {
+      "atMs": 1600,
+      "kind": "heard",
+      "from": "listening",
+      "to": "processing",
+      "note": "heard “remove the third one”"
+    },
+    {
+      "atMs": 1600,
+      "kind": "answer",
+      "from": "processing",
+      "to": "speaking",
+      "note": "17 words, about 6.3 s"
+    },
+    {
+      "atMs": 2000,
+      "kind": "state",
+      "from": "speaking",
+      "to": "wake",
+      "note": "wake word"
+    },
+    {
+      "atMs": 2000,
+      "kind": "state",
+      "from": "wake",
+      "to": "listening",
+      "note": "microphone open"
+    },
+    {
+      "atMs": 2000,
+      "kind": "heard",
+      "from": "listening",
+      "to": "processing",
+      "note": "heard “yes”"
+    },
+    {
+      "atMs": 2000,
+      "kind": "answer",
+      "from": "processing",
+      "to": "speaking",
+      "note": "7 words, about 2.5 s"
+    }
+  ],
+  "summary": {
+    "turns": 6,
+    "calls": 4,
+    "local_fallbacks": 0,
+    "elicits": 1,
+    "confirmations_asked": 2,
+    "confirmations_refused": 1,
+    "reminders_armed": 0,
+    "reminders": 0,
+    "delivery_turns": 0,
+    "speaker_turns": 0,
+    "claims_sent": 0,
+    "refusals": 0,
+    "dose_mask_events": 3,
+    "problems": 0
+  }
+}

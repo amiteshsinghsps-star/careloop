@@ -1,0 +1,62 @@
+---
+import Base from '../layouts/Base.astro';
+
+const title = 'Terms of use — CareLoop';
+const description =
+  'CareLoop is a MIT-licensed prototype memory aid, not a clinical tool: adults only, consent of everyone recorded, no dose advice, and no warranty.';
+---
+<Base title={title} description={description}>
+  <article class="cl-prose">
+    <h1>Terms of use</h1>
+    <p class="u-mute">Short, honest terms for a prototype. They match how CareLoop behaves.</p>
+
+    <div class="cl-callout warn" style="margin:var(--cl-sp-5) 0;">
+      <strong>A memory aid, not a clinical tool.</strong> CareLoop repeats what a clinician said. It
+      does not diagnose, treat, recommend or decide doses, and it is not a substitute for
+      professional care.
+    </div>
+
+    <h2>Who may use it</h2>
+    <ul>
+      <li><strong>Adults only.</strong> CareLoop is intended for adult users and adult care plans. It
+        is configured to reject content about children.</li>
+      <li>You confirm you have the consent of everyone whose words or care you record before you
+        paste, upload or dictate it.</li>
+      <li>You keep your household PIN and linked sessions private, and you unlink any assistant you
+        no longer use.</li>
+    </ul>
+
+    <h2>What CareLoop does and does not do</h2>
+    <ul>
+      <li>It only repeats the clinician&rsquo;s recorded words and grounds every item in the original
+        sentence.</li>
+      <li>It never gives medicine dosing advice, and it never shows doses on the voice surface.</li>
+      <li>Because it works from what you record, it can be incomplete or reflect a misunderstanding
+        at the visit. It is a reminder, not an authority.</li>
+    </ul>
+
+    <div class="cl-callout">
+      <strong>Confirm anything uncertain.</strong> If an item looks unclear, ambiguous or you are
+      not sure it is right, confirm it with your clinician or pharmacist before acting. Items the
+      extraction is unsure about are explicitly flagged for this reason.
+    </div>
+
+    <h2>Prototype licence and no warranty</h2>
+    <p>
+      CareLoop is an MIT-licensed prototype, provided &ldquo;as is&rdquo; and for demonstration. To the
+      maximum extent permitted by law, the contributors disclaim all warranties &mdash; express or
+      implied &mdash; including fitness for a particular purpose and non-infringement, and accept no
+      liability for how you use it. Do not rely on CareLoop for medical decisions.
+    </p>
+
+    <h2>Changes</h2>
+    <p>
+      This is a hackathon project; these terms and the product may change without notice. Continued
+      use means you accept the current terms.
+    </p>
+
+    <p class="cl-disclaimer">
+      Not medical advice. In an emergency, contact your local emergency services.
+    </p>
+  </article>
+</Base>

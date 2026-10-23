@@ -1,0 +1,116 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CareLoop Home — companion</title><link rel="stylesheet" href="/static/base.css"></head>
+<body><main>
+<header class="row"><h1 style="margin:0">CareLoop Home</h1>
+  <span class="badge">Companion — full doses, behind your household login</span>
+  <span class="spacer"></span><button id="whoami" class="ghost">Sign in</button></header>
+
+<section id="auth" class="panel">
+  <h2>Household</h2>
+  <div class="row">
+    <div style="flex:1"><label>Household code</label><input id="code" value="CASA01" maxlength="12" style="text-transform:uppercase"></div>
+    <div style="flex:1"><label>Family PIN</label><input id="pin" type="password" inputmode="numeric" value="481542" maxlength="8"></div>
+  </div>
+  <div class="row"><button id="login">Sign in</button>
+    <button id="create" class="secondary">Create this household</button></div>
+  <p class="small">Demo PIN is 481542. In the real deploy you set your own. This page shows medicine
+  amounts; the voice assistant never does. Not medical advice.</p>
+</section>
+
+<section id="app" hidden>
+  <div class="panel">
+    <h2>Capture a visit</h2>
+    <label class="consent"><input type="checkbox" id="consent"> Everyone present agreed to this recording / note.</label>
+    <textarea id="transcript" placeholder="Paste what the clinician said, or upload / speak it. Example: Take 500 mg of metformin twice a day after food."></textarea>
+    <div class="row">
+      <input id="person" placeholder="Who is this about? e.g. Papa" style="max-width:220px" aria-label="Person">
+      <input type="file" id="file" accept=".txt,.md" style="max-width:240px">
+      <button id="mic" class="secondary">🎙 Speak visit</button>
+      <button id="extract" class="danger" style="background:var(--accent2);color:#001030">Extract care items</button>
+    </div>
+    <div id="captureNote" class="small"></div>
+  </div>
+
+  <div class="panel">
+    <h2>Care plan <span class="small" id="planMeta"></span></h2>
+    <div class="row"><select id="pfilter" aria-label="Filter person"><option value="">All people</option></select>
+      <button id="refresh" class="secondary">Refresh</button>
+      <button id="export" class="ghost">Export care sheet</button>
+      <span class="spacer"></span>
+      <button id="erase" class="danger">Erase everything</button></div>
+    <div id="plan"></div>
+  </div>
+
+  <div class="panel">
+    <h2>How CareLoop knows</h2>
+    <p class="small">Every item is a verbatim span of the recorded transcript. The extractor only
+    <em>points</em>; it cannot invent text. Doses are masked only on the voice surface — here you see the
+    clinician's own words in full.</p>
+    <div id="explain" class="small">Pick an item above.</div>
+  </div>
+</section>
+</main>
+<script>
+const $=s=>document.querySelector(s);
+async function api(path,body){const r=await fetch(path,{method:'POST',headers:{'Content-Type':'application/json'},
+  body:JSON.stringify(body||{})});const j=await r.json();if(!r.ok)throw new Error(j.error||JSON.stringify(j));return j;}
+$('#create').onclick=async()=>{try{await api('/api/create-household',{code:$('#code').value,pin:$('#pin').value,name:'you'});
+  await doLogin();}catch(e){alert(e.message);}};
+$('#login').onclick=()=>doLogin().catch(e=>alert(e.message));
+async function doLogin(){await api('/api/login',{code:$('#code').value,pin:$('#pin').value});
+  $('#auth').hidden=true;$('#app').hidden=false;$('#whoami').textContent='Signed in';load();}
+$('#whoami').onclick=()=>{ if($('#app').hidden) $('#auth').scrollIntoView(); };
+let PLAN=[];
+function load(){api('/api/plan',{}).then(render); }
+$('#refresh').onclick=load;
+function render(j){PLAN=j.items;
+  const sel=$('#pfilter');const people=[...new Set(j.items.map(i=>i.person))];
+  sel.innerHTML='<option value="">All people</option>'+people.map(p=>`<option ${p===sel.value?'selected':''}>${p}</option>`).join('');
+  $('#planMeta').textContent=`· ${j.items.length} items · ledger ${j.ledger.ok?'verified ✓':'BROKEN ✗'}`;
+  const f=sel.value; const rows=j.items.filter(i=>!f||i.person===f);
+  $('#plan').innerHTML=rows.map(i=>`<div class="item" data-ref="${i.ref}">
+    <div class="kind">${i.kind} · ${i.person} · ${i.status}</div>
+    <div style="font-size:1.15rem">${i.text}</div>
+    <div class="quote">“${i.quote}”</div>
+    <div class="small">schedule: ${JSON.stringify(i.schedule.day_parts)} · conf ${i.confidence} · v${i.version} · ${i.source}</div>
+    ${i.needs_confirm?'<div class="flag">⚑ Confirm with clinician</div>':''}
+    <div class="row"><button class="done" data-ref="${i.ref}">Done</button>
+      <button class="cf secondary" data-ref="${i.ref}">Confirmed</button>
+      <button class="del danger" data-ref="${i.ref}">Delete</button>
+      <button class="exp ghost" data-ref="${i.ref}">How do we know?</button></div></div>`).join('')
+    ||'<p class="small">Nothing yet — capture a visit above.</p>';
+  wire();}
+$('#pfilter').onchange=()=>api('/api/plan',{}).then(render);
+function wire(){
+ document.querySelectorAll('#plan .done').forEach(b=>b.onclick=async()=>{await api('/api/mark',{ref:b.dataset.ref,who:'web',version:versionOf(b)});load();});
+ document.querySelectorAll('#plan .cf').forEach(b=>b.onclick=async()=>{await api('/api/confirm',{ref:b.dataset.ref});load();});
+ document.querySelectorAll('#plan .del').forEach(b=>b.onclick=async()=>{if(confirm('Delete this item for good?')){await api('/api/delete',{ref:b.dataset.ref,confirm:true});load();}});
+ document.querySelectorAll('#plan .exp').forEach(b=>b.onclick=()=>{const i=PLAN.find(x=>x.ref===b.dataset.ref);
+   $('#explain').innerHTML=`<div class="quote">${i.quote}</div>
+     <div>span offsets ${i.qstart}–${i.qend} · engine ${i.source} · confidence ${i.confidence} ·
+     ${i.needs_confirm?'flagged for confirmation':'grounded'}. Nothing here is paraphrased or invented.</div>`;});
+}
+function versionOf(btn){const i=PLAN.find(x=>x.ref===btn.dataset.ref);return i?i.version:undefined;}
+$('#extract').onclick=async()=>{
+  if(!$('#consent').checked){$('#captureNote').innerHTML='<span class="err">Please tick the consent box first.</span>';return;}
+  const t=$('#transcript').value.trim(); if(t.length<5){$('#captureNote').textContent='Add some text first.';return;}
+  $('#captureNote').textContent='Extracting…';
+  try{const r=await api('/api/capture',{transcript:t,person:$('#person').value||'Household member'});
+    $('#captureNote').innerHTML=`<span class="ok">Added ${r.added} item(s)</span> via ${r.engine} model. ${r.notes.join(' ')}`;
+    load();}catch(e){$('#captureNote').innerHTML='<span class="err">'+e.message+'</span>';}};
+$('#file').onchange=e=>{const f=e.target.files[0];if(!f)return;const rd=new FileReader();
+  rd.onload=()=>{$('#transcript').value=rd.result;};rd.readAsText(f);};
+$('#mic').onclick=()=>{const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR){$('#captureNote').textContent='Speech capture needs Chrome or Edge.';return;}
+  if(!$('#consent').checked){$('#captureNote').innerHTML='<span class="err">Tick consent before recording.</span>';return;}
+  const rec=new SR();rec.lang='en-US';rec.interimResults=true;rec.continuous=true;
+  $('#captureNote').textContent='Listening… speak the visit.';
+  rec.onresult=ev=>{let s='';for(const r of ev.results)s+=r[0].transcript;$('#transcript').value=s;};
+  rec.start();};
+$('#export').onclick=async()=>{const r=await api('/api/export',{});
+  const blob=new Blob([r.markdown],{type:'text/markdown'});const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);a.download='careloop-sheet.md';a.click();};
+$('#erase').onclick=async()=>{if(confirm('Erase this whole household? This destroys the encryption key and the data becomes unrecoverable.')){
+  await api('/api/erase',{confirm:true});alert('Erased. A fresh household can be created.');load();}};
+</script></body></html>

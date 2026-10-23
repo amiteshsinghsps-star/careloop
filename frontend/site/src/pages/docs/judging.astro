@@ -1,0 +1,160 @@
+---
+import Base from '../../layouts/Base.astro';
+
+const title = 'Judging map — CareLoop';
+const description =
+  'Where each judging claim is evidenced in the repository: technical depth, design, impact and idea, plus the AWS Builder and Open Source mini-challenges.';
+
+// criterion -> { claim, evidence, paths[] }
+const main = [
+  {
+    c: 'Technical depth',
+    claim: 'A self-hosted MCP server that implements the real spec, not a wrapper.',
+    ev: 'Streamable HTTP, MCP-Session-Id semantics, protocol-version checks, structured tool results and an outbound policy guard.',
+    paths: ['careloop/mcp_server.py'],
+  },
+  {
+    c: 'Technical depth',
+    claim: 'Grounding that makes fabrication impossible, not just unlikely.',
+    ev: 'Two-pass extraction with a pointer-only schema, deterministic quote guard, and rules fallback when the model is unavailable.',
+    paths: ['careloop/extract.py', 'careloop/policy_guard.py'],
+  },
+  {
+    c: 'Technical depth',
+    claim: 'Safety policies are code, tested and reported.',
+    ev: 'Dose masking, crisis redirect, child-data rejection and injection blocking run as self-tests surfaced on the judge panel.',
+    paths: ['careloop/policy_guard.py', 'tests/test_guards.py'],
+  },
+  {
+    c: 'Technical depth',
+    claim: 'One authorization decision point, differentially tested.',
+    ev: 'A runtime authorizer and a Cedar-subset evaluator checked against each other with randomised differential tests.',
+    paths: ['careloop/authz.py', 'artifacts/policies.cedar', 'tests/test_guards.py'],
+  },
+  {
+    c: 'Design',
+    claim: 'Two surfaces with one data model — voice is dose-free by construction.',
+    ev: 'The same structured result is guarded into a spoken, masked summary for the assistant and a full-dose view for the logged-in companion.',
+    paths: ['careloop/policy_guard.py', 'careloop/mcp_server.py', 'frontend/companion/'],
+  },
+  {
+    c: 'Design',
+    claim: 'A shared, accessible design system across every surface.',
+    ev: 'Tokens and components (48px targets, large-text mode, AA contrast, dark mode, reduced motion) reused by the site, simulator and companion.',
+    paths: ['frontend/ui/src/tokens.css', 'frontend/ui/src/components.css'],
+  },
+  {
+    c: 'Impact',
+    claim: 'It addresses a real, unevenly shared burden.',
+    ev: 'Family caregivers carry most day-to-day care; CareLoop is a shared, grounded memory that keeps everyone in the household aligned on the clinician’s own words.',
+    paths: ['README at the repo root', 'careloop/extract.py'],
+  },
+  {
+    c: 'Impact',
+    claim: 'Trust is the feature that makes it usable.',
+    ev: 'Per-household encrypted cells, crypto-shredding, a tamper-evident ledger and a dose-free voice policy are what let sensitive care info live on a shared speaker.',
+    paths: ['careloop/store.py', 'careloop/authz.py'],
+  },
+  {
+    c: 'Idea',
+    claim: 'An agent that is deliberately not an authority.',
+    ev: 'CareLoop never writes health text; it points at and cites what the clinician said, and flags anything uncertain for confirmation.',
+    paths: ['careloop/extract.py', 'careloop/tools.py'],
+  },
+];
+
+const mini = [
+  {
+    c: 'AWS Builder',
+    claim: 'Uses AWS AI in the core path and degrades gracefully without it.',
+    ev: 'A two-pass Amazon Bedrock extraction (small-model cascade, verifier, budget cap) that always falls back to a deterministic rules engine.',
+    paths: ['careloop/extract.py', 'careloop/config.py'],
+  },
+  {
+    c: 'Open Source',
+    claim: 'MIT-licensed and reproducible end to end.',
+    ev: 'Clear module boundaries, tests, a seeded demo household and a guided demo target so anyone can run the whole loop locally.',
+    paths: ['LICENSE at the repo root', 'tests/test_http.py', 'Makefile'],
+  },
+];
+---
+<Base title={title} description={description}>
+  <article class="cl-prose">
+    <h1>Judging map</h1>
+    <p class="u-mute">
+      Every claim below is backed by code you can open in the repository. Paths are given so a judge
+      can jump straight to the evidence rather than read a pitch. Claims are kept factual: we say
+      “differentially tested”, never “provably secure”.
+    </p>
+
+    <h2>Main criteria</h2>
+    <div class="cl-panel" style="padding-inline:0;overflow:hidden;margin:var(--cl-sp-4) 0;">
+      <table class="cl-table">
+        <caption class="sr-only">Judging criteria mapped to evidence and file paths</caption>
+        <thead>
+          <tr><th scope="col">Criterion</th><th scope="col">Claim &amp; evidence</th><th scope="col">Where to look</th></tr>
+        </thead>
+        <tbody>
+          {main.map((item) => (
+            <tr>
+              <th scope="row">{item.c}</th>
+              <td>
+                {item.claim}
+                <p class="u-tiny u-mute" style="margin:var(--cl-sp-2) 0 0;">{item.ev}</p>
+              </td>
+              <td>
+                <ul class="cl-list" style="gap:var(--cl-sp-1);">
+                  {item.paths.map((p) => <li><span class="cl-kbd">{p}</span></li>)}
+                </ul>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Mini-challenges</h2>
+    <div class="cl-panel" style="padding-inline:0;overflow:hidden;margin:var(--cl-sp-4) 0;">
+      <table class="cl-table">
+        <caption class="sr-only">Mini-challenge evidence and file paths</caption>
+        <thead>
+          <tr><th scope="col">Challenge</th><th scope="col">Claim &amp; evidence</th><th scope="col">Where to look</th></tr>
+        </thead>
+        <tbody>
+          {mini.map((item) => (
+            <tr>
+              <th scope="row">{item.c}</th>
+              <td>
+                {item.claim}
+                <p class="u-tiny u-mute" style="margin:var(--cl-sp-2) 0 0;">{item.ev}</p>
+              </td>
+              <td>
+                <ul class="cl-list" style="gap:var(--cl-sp-1);">
+                  {item.paths.map((p) => <li><span class="cl-kbd">{p}</span></li>)}
+                </ul>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Live evidence, not screenshots</h2>
+    <p>
+      Run the server and open <span class="cl-kbd">/judge</span> (or
+      <span class="cl-kbd"> /api/judge-data</span>) for policy self-test results, ledger verification
+      across cells, protocol versions, the guest-safe tool set and latency/cost — all computed from
+      the running code. The <span class="cl-kbd">/metrics</span> endpoint reports per-tool percentiles.
+    </p>
+
+    <div class="cl-callout">
+      <strong>One-liner for judges.</strong> CareLoop turns a clinician&rsquo;s spoken instructions into
+      a grounded, per-household, dose-safe plan an entire family can query by voice &mdash; with the
+      safety rules written as tested code rather than as good intentions.
+    </div>
+
+    <p class="cl-note">
+      Quickstart: <a href="/docs/">docs home</a> · <a href="/docs/architecture">architecture</a>.
+    </p>
+  </article>
+</Base>

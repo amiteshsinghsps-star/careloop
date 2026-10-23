@@ -1,0 +1,50 @@
+{
+  "action": "MarkDone",
+  "annotations": {
+    "idempotentHint": true
+  },
+  "description": "Record that one care item was completed. Synonyms: finished, taken, did it, done.",
+  "guest_safe": false,
+  "inputSchema": {
+    "additionalProperties": false,
+    "properties": {
+      "idempotency_key": {
+        "description": "Reuse the same key when retrying this exact completion.",
+        "maxLength": 64,
+        "type": "string"
+      },
+      "ref": {
+        "maxLength": 40,
+        "type": "string"
+      },
+      "who": {
+        "maxLength": 30,
+        "type": "string"
+      }
+    },
+    "required": [
+      "ref"
+    ],
+    "type": "object"
+  },
+  "name": "mark_done",
+  "outputSchema": {
+    "properties": {
+      "ref": {
+        "type": "string"
+      },
+      "remaining_count": {
+        "type": "integer"
+      },
+      "status": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "ref",
+      "status"
+    ],
+    "type": "object"
+  },
+  "ui": false
+}

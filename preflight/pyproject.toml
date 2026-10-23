@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "alexa-mcp-preflight"
+version = "1.0.0"
+description = "Preflight checks for an Alexa+-style MCP server: transport, OAuth 2.1, safety policy, latency, MCP App card"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+dependencies = []          # standard library only, on purpose: it must run anywhere
+
+[project.scripts]
+alexa-mcp-preflight = "preflight.__main__:main"
+
+# The code sits in this directory and uses relative imports, so it has to install as the
+# `preflight` package rather than dumping client.py/policy.py/report.py into site-packages.
+[tool.setuptools]
+py-modules = []
+
+[tool.setuptools.packages.find]
+where = [".."]
+include = ["preflight*"]
+
+[tool.setuptools.package-dir]
+preflight = "."

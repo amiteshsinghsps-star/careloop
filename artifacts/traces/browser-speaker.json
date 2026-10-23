@@ -1,0 +1,686 @@
+{
+  "kind": "careloop-alexa-device-trace",
+  "version": 1,
+  "scenario": "speaker",
+  "created_at": "2026-10-23T14:02:42.581Z",
+  "device": {
+    "locale": "en-US",
+    "model": "simulated-browser-device"
+  },
+  "turns": [
+    {
+      "index": 0,
+      "utterance": "this is Mother",
+      "at_ms": 0,
+      "state": "speaking",
+      "slu": {
+        "intent": "IdentifySpeakerIntent",
+        "builtIn": null,
+        "matched": "literal",
+        "confidence": 0.95,
+        "slots": [
+          {
+            "name": "Person",
+            "spoken": "Mother",
+            "resolved": "mother",
+            "id": "mother",
+            "state": "success",
+            "confidence": 1
+          }
+        ]
+      },
+      "routed": {
+        "tool": "get_care_plan",
+        "args": {}
+      },
+      "agrees": false,
+      "local": false,
+      "called": false,
+      "dialog": null,
+      "connection": null,
+      "proactive": false,
+      "delivery": null,
+      "meta": null,
+      "refused": null,
+      "request_envelope": {
+        "version": "1.0",
+        "session": {
+          "new": false,
+          "sessionId": "cl-31495cfb126d6e8d",
+          "application": {
+            "applicationId": "amzn1.ask.skill.careloop-simulated"
+          },
+          "user": {
+            "userId": "amzn1.ask.account.CARELOOP-SIMULATED"
+          },
+          "attributes": {
+            "lastUtterance": "this is Mother"
+          }
+        },
+        "context": {
+          "System": {
+            "application": {
+              "applicationId": "amzn1.ask.skill.careloop-simulated"
+            },
+            "user": {
+              "userId": "amzn1.ask.account.CARELOOP-SIMULATED"
+            },
+            "device": {
+              "deviceId": "careloop-simulated-device-0001",
+              "supportedInterfaces": {}
+            },
+            "apiEndpoint": "https://api.amazonalexa.com/v2/accounts/",
+            "apiAccessToken": "simulated-access-token-never-sent"
+          }
+        },
+        "request": {
+          "type": "IntentRequest",
+          "requestId": "simreq-mvl1hrg3-5",
+          "timestamp": "2026-10-23T14:02:40Z",
+          "locale": "en-US",
+          "dialogState": "COMPLETED",
+          "intent": {
+            "name": "IdentifySpeakerIntent",
+            "confirmationStatus": "NONE",
+            "slots": {
+              "Person": {
+                "name": "Person",
+                "value": "Mother",
+                "confirmationStatus": "NONE",
+                "slotValue": {
+                  "type": "Simple",
+                  "value": "Mother"
+                },
+                "resolutions": {
+                  "resolutionsPerAuthority": [
+                    {
+                      "authority": "CareLoopPerson",
+                      "status": {
+                        "code": "ER_SUCCESS_MATCH"
+                      },
+                      "values": [
+                        {
+                          "value": {
+                            "name": "mother",
+                            "id": "mother"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "response_envelope": null,
+      "spoken_text": "For this session I will answer as mother. What I can read out is bounded by what your household lets mother hear.",
+      "words": 0,
+      "estimate_ms": 0,
+      "masked_fields": [],
+      "problems": [],
+      "tool_ms": 0
+    },
+    {
+      "index": 1,
+      "utterance": "what is next for Papa",
+      "at_ms": 400,
+      "state": "speaking",
+      "slu": {
+        "intent": "WhatsMyPlanIntent",
+        "builtIn": null,
+        "matched": "literal",
+        "confidence": 0.95,
+        "slots": [
+          {
+            "name": "Person",
+            "spoken": "Papa",
+            "resolved": "Papa",
+            "id": "Papa",
+            "state": "success",
+            "confidence": 1
+          }
+        ]
+      },
+      "routed": {
+        "tool": "get_care_plan",
+        "args": {
+          "person": "Papa"
+        }
+      },
+      "agrees": true,
+      "local": false,
+      "called": true,
+      "dialog": null,
+      "connection": null,
+      "proactive": false,
+      "delivery": null,
+      "meta": {
+        "careloop/speaker": "mother",
+        "careloop/voiceProfile": "careloop-simulated/1"
+      },
+      "refused": "speaker-unknown",
+      "request_envelope": {
+        "version": "1.0",
+        "session": {
+          "new": false,
+          "sessionId": "cl-31495cfb126d6e8d",
+          "application": {
+            "applicationId": "amzn1.ask.skill.careloop-simulated"
+          },
+          "user": {
+            "userId": "amzn1.ask.account.CARELOOP-SIMULATED"
+          },
+          "attributes": {
+            "lastUtterance": "what is next for Papa"
+          }
+        },
+        "context": {
+          "System": {
+            "application": {
+              "applicationId": "amzn1.ask.skill.careloop-simulated"
+            },
+            "user": {
+              "userId": "amzn1.ask.account.CARELOOP-SIMULATED"
+            },
+            "device": {
+              "deviceId": "careloop-simulated-device-0001",
+              "supportedInterfaces": {}
+            },
+            "apiEndpoint": "https://api.amazonalexa.com/v2/accounts/",
+            "apiAccessToken": "simulated-access-token-never-sent"
+          }
+        },
+        "request": {
+          "type": "IntentRequest",
+          "requestId": "simreq-mvl1hrs6-6",
+          "timestamp": "2026-10-23T14:02:40Z",
+          "locale": "en-US",
+          "dialogState": "COMPLETED",
+          "intent": {
+            "name": "WhatsMyPlanIntent",
+            "confirmationStatus": "NONE",
+            "slots": {
+              "Person": {
+                "name": "Person",
+                "value": "Papa",
+                "confirmationStatus": "NONE",
+                "slotValue": {
+                  "type": "Simple",
+                  "value": "Papa"
+                },
+                "resolutions": {
+                  "resolutionsPerAuthority": [
+                    {
+                      "authority": "CareLoopPerson",
+                      "status": {
+                        "code": "ER_SUCCESS_MATCH"
+                      },
+                      "values": [
+                        {
+                          "value": {
+                            "name": "Papa",
+                            "id": "Papa"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "response_envelope": {
+        "version": "1.0",
+        "sessionAttributes": {
+          "lastUtterance": "what is next for Papa",
+          "careloop": {
+            "model": "ec4b62d616b3",
+            "tool": "get_care_plan",
+            "intent": "WhatsMyPlanIntent",
+            "view": "error",
+            "state": "await"
+          }
+        },
+        "response": {
+          "shouldEndSession": false,
+          "outputSpeech": {
+            "type": "SSML",
+            "ssml": "<speak>I can&apos;t match that name to someone in this household, so I won&apos;t answer as them.  <break strength=\"x-weak\"/> Ask your household to add that person on the CareLoop companion page.</speak>"
+          },
+          "card": {
+            "type": "Simple",
+            "title": "That did not work",
+            "content": "I can't match that name to someone in this household, so I won't answer as them. Ask your household to add that person on the CareLoop companion page."
+          },
+          "reprompt": {
+            "outputSpeech": {
+              "type": "SSML",
+              "ssml": "<speak>I didn&apos;t catch that. You can ask what is next for someone, or what changed since the last visit.</speak>"
+            }
+          }
+        }
+      },
+      "spoken_text": "I can't match that name to someone in this household, so I won't answer as them. Ask your household to add that person on the CareLoop companion page.",
+      "words": 28,
+      "estimate_ms": 10282,
+      "masked_fields": [],
+      "problems": [],
+      "tool_ms": 18
+    },
+    {
+      "index": 2,
+      "utterance": "this is Papa",
+      "at_ms": 1000,
+      "state": "speaking",
+      "slu": {
+        "intent": "IdentifySpeakerIntent",
+        "builtIn": null,
+        "matched": "literal",
+        "confidence": 0.95,
+        "slots": [
+          {
+            "name": "Person",
+            "spoken": "Papa",
+            "resolved": "Papa",
+            "id": "Papa",
+            "state": "success",
+            "confidence": 1
+          }
+        ]
+      },
+      "routed": {
+        "tool": "get_care_plan",
+        "args": {
+          "person": "Papa"
+        }
+      },
+      "agrees": false,
+      "local": false,
+      "called": false,
+      "dialog": null,
+      "connection": null,
+      "proactive": false,
+      "delivery": null,
+      "meta": null,
+      "refused": null,
+      "request_envelope": {
+        "version": "1.0",
+        "session": {
+          "new": false,
+          "sessionId": "cl-31495cfb126d6e8d",
+          "application": {
+            "applicationId": "amzn1.ask.skill.careloop-simulated"
+          },
+          "user": {
+            "userId": "amzn1.ask.account.CARELOOP-SIMULATED"
+          },
+          "attributes": {
+            "lastUtterance": "this is Papa"
+          }
+        },
+        "context": {
+          "System": {
+            "application": {
+              "applicationId": "amzn1.ask.skill.careloop-simulated"
+            },
+            "user": {
+              "userId": "amzn1.ask.account.CARELOOP-SIMULATED"
+            },
+            "device": {
+              "deviceId": "careloop-simulated-device-0001",
+              "supportedInterfaces": {}
+            },
+            "apiEndpoint": "https://api.amazonalexa.com/v2/accounts/",
+            "apiAccessToken": "simulated-access-token-never-sent"
+          }
+        },
+        "request": {
+          "type": "IntentRequest",
+          "requestId": "simreq-mvl1hs3m-7",
+          "timestamp": "2026-10-23T14:02:41Z",
+          "locale": "en-US",
+          "dialogState": "COMPLETED",
+          "intent": {
+            "name": "IdentifySpeakerIntent",
+            "confirmationStatus": "NONE",
+            "slots": {
+              "Person": {
+                "name": "Person",
+                "value": "Papa",
+                "confirmationStatus": "NONE",
+                "slotValue": {
+                  "type": "Simple",
+                  "value": "Papa"
+                },
+                "resolutions": {
+                  "resolutionsPerAuthority": [
+                    {
+                      "authority": "CareLoopPerson",
+                      "status": {
+                        "code": "ER_SUCCESS_MATCH"
+                      },
+                      "values": [
+                        {
+                          "value": {
+                            "name": "Papa",
+                            "id": "Papa"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "response_envelope": null,
+      "spoken_text": "For this session I will answer as Papa. What I can read out is bounded by what your household lets Papa hear.",
+      "words": 0,
+      "estimate_ms": 0,
+      "masked_fields": [],
+      "problems": [],
+      "tool_ms": 0
+    },
+    {
+      "index": 3,
+      "utterance": "what is next for Papa",
+      "at_ms": 1400,
+      "state": "speaking",
+      "slu": {
+        "intent": "WhatsMyPlanIntent",
+        "builtIn": null,
+        "matched": "literal",
+        "confidence": 0.95,
+        "slots": [
+          {
+            "name": "Person",
+            "spoken": "Papa",
+            "resolved": "Papa",
+            "id": "Papa",
+            "state": "success",
+            "confidence": 1
+          }
+        ]
+      },
+      "routed": {
+        "tool": "get_care_plan",
+        "args": {
+          "person": "Papa"
+        }
+      },
+      "agrees": true,
+      "local": false,
+      "called": true,
+      "dialog": null,
+      "connection": null,
+      "proactive": false,
+      "delivery": null,
+      "meta": {
+        "careloop/speaker": "Papa",
+        "careloop/voiceProfile": "careloop-simulated/1"
+      },
+      "refused": null,
+      "request_envelope": {
+        "version": "1.0",
+        "session": {
+          "new": false,
+          "sessionId": "cl-31495cfb126d6e8d",
+          "application": {
+            "applicationId": "amzn1.ask.skill.careloop-simulated"
+          },
+          "user": {
+            "userId": "amzn1.ask.account.CARELOOP-SIMULATED"
+          },
+          "attributes": {
+            "lastUtterance": "what is next for Papa"
+          }
+        },
+        "context": {
+          "System": {
+            "application": {
+              "applicationId": "amzn1.ask.skill.careloop-simulated"
+            },
+            "user": {
+              "userId": "amzn1.ask.account.CARELOOP-SIMULATED"
+            },
+            "device": {
+              "deviceId": "careloop-simulated-device-0001",
+              "supportedInterfaces": {}
+            },
+            "apiEndpoint": "https://api.amazonalexa.com/v2/accounts/",
+            "apiAccessToken": "simulated-access-token-never-sent"
+          }
+        },
+        "request": {
+          "type": "IntentRequest",
+          "requestId": "simreq-mvl1hsgf-8",
+          "timestamp": "2026-10-23T14:02:41Z",
+          "locale": "en-US",
+          "dialogState": "COMPLETED",
+          "intent": {
+            "name": "WhatsMyPlanIntent",
+            "confirmationStatus": "NONE",
+            "slots": {
+              "Person": {
+                "name": "Person",
+                "value": "Papa",
+                "confirmationStatus": "NONE",
+                "slotValue": {
+                  "type": "Simple",
+                  "value": "Papa"
+                },
+                "resolutions": {
+                  "resolutionsPerAuthority": [
+                    {
+                      "authority": "CareLoopPerson",
+                      "status": {
+                        "code": "ER_SUCCESS_MATCH"
+                      },
+                      "values": [
+                        {
+                          "value": {
+                            "name": "Papa",
+                            "id": "Papa"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "response_envelope": {
+        "version": "1.0",
+        "sessionAttributes": {
+          "lastUtterance": "what is next for Papa",
+          "careloop": {
+            "model": "ec4b62d616b3",
+            "tool": "get_care_plan",
+            "intent": "WhatsMyPlanIntent",
+            "view": "plan",
+            "state": "await"
+          }
+        },
+        "response": {
+          "shouldEndSession": false,
+          "outputSpeech": {
+            "type": "SSML",
+            "ssml": "<speak>For Papa: the first item — Check the blood pressure every morning and write it down.  <break strength=\"x-weak\"/> plus 2 more.  <break strength=\"x-weak\"/> According to your clinician, as recorded on 23 October 2026.</speak>"
+          },
+          "card": {
+            "type": "Simple",
+            "title": "Care plan",
+            "content": "For Papa: the first item — Check the blood pressure every morning and write it down. plus 2 more. According to your clinician, as recorded on 23 October 2026."
+          },
+          "reprompt": {
+            "outputSpeech": {
+              "type": "SSML",
+              "ssml": "<speak>I only repeat what your clinician recorded for this household. I can tell you what is next, why something was said, what changed, and what is still to do.</speak>"
+            }
+          }
+        }
+      },
+      "spoken_text": "For Papa: the first item — Check the blood pressure every morning and write it down. plus 2 more. According to your clinician, as recorded on 23 October 2026.",
+      "words": 29,
+      "estimate_ms": 10745,
+      "masked_fields": [
+        "items[1].text"
+      ],
+      "problems": [],
+      "tool_ms": 45
+    }
+  ],
+  "events": [
+    {
+      "atMs": 0,
+      "kind": "state",
+      "from": "idle",
+      "to": "wake",
+      "note": "wake word"
+    },
+    {
+      "atMs": 0,
+      "kind": "state",
+      "from": "wake",
+      "to": "listening",
+      "note": "microphone open"
+    },
+    {
+      "atMs": 0,
+      "kind": "state",
+      "from": "listening",
+      "to": "wake",
+      "note": "wake word"
+    },
+    {
+      "atMs": 0,
+      "kind": "state",
+      "from": "wake",
+      "to": "listening",
+      "note": "microphone open"
+    },
+    {
+      "atMs": 0,
+      "kind": "heard",
+      "from": "listening",
+      "to": "processing",
+      "note": "heard “this is Mother”"
+    },
+    {
+      "atMs": 0,
+      "kind": "answer",
+      "from": "processing",
+      "to": "speaking",
+      "note": "22 words, about 8 s, spoken locally: the model did not match"
+    },
+    {
+      "atMs": 400,
+      "kind": "state",
+      "from": "speaking",
+      "to": "wake",
+      "note": "wake word"
+    },
+    {
+      "atMs": 400,
+      "kind": "state",
+      "from": "wake",
+      "to": "listening",
+      "note": "microphone open"
+    },
+    {
+      "atMs": 400,
+      "kind": "heard",
+      "from": "listening",
+      "to": "processing",
+      "note": "heard “what is next for Papa”"
+    },
+    {
+      "atMs": 400,
+      "kind": "answer",
+      "from": "processing",
+      "to": "speaking",
+      "note": "28 words, about 10.3 s"
+    },
+    {
+      "atMs": 1000,
+      "kind": "state",
+      "from": "speaking",
+      "to": "wake",
+      "note": "wake word"
+    },
+    {
+      "atMs": 1000,
+      "kind": "state",
+      "from": "wake",
+      "to": "listening",
+      "note": "microphone open"
+    },
+    {
+      "atMs": 1000,
+      "kind": "heard",
+      "from": "listening",
+      "to": "processing",
+      "note": "heard “this is Papa”"
+    },
+    {
+      "atMs": 1000,
+      "kind": "answer",
+      "from": "processing",
+      "to": "speaking",
+      "note": "22 words, about 8 s, spoken locally: the model did not match"
+    },
+    {
+      "atMs": 1400,
+      "kind": "state",
+      "from": "speaking",
+      "to": "wake",
+      "note": "wake word"
+    },
+    {
+      "atMs": 1400,
+      "kind": "state",
+      "from": "wake",
+      "to": "listening",
+      "note": "microphone open"
+    },
+    {
+      "atMs": 1400,
+      "kind": "heard",
+      "from": "listening",
+      "to": "processing",
+      "note": "heard “what is next for Papa”"
+    },
+    {
+      "atMs": 1400,
+      "kind": "answer",
+      "from": "processing",
+      "to": "speaking",
+      "note": "29 words, about 10.7 s"
+    }
+  ],
+  "summary": {
+    "turns": 4,
+    "calls": 2,
+    "local_fallbacks": 0,
+    "elicits": 0,
+    "confirmations_asked": 0,
+    "confirmations_refused": 0,
+    "reminders_armed": 0,
+    "reminders": 0,
+    "delivery_turns": 0,
+    "speaker_turns": 2,
+    "claims_sent": 2,
+    "refusals": 1,
+    "dose_mask_events": 1,
+    "problems": 0
+  }
+}

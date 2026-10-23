@@ -1,0 +1,146 @@
+/* CareLoop design tokens — shared by the Astro site, the Svelte simulator/card and the
+   Angular companion. Tuned for arm's-length legibility and WCAG AA contrast. */
+
+:root {
+  color-scheme: light dark;
+
+  /* palette (light) */
+  --cl-bg: #f6f4ef;
+  --cl-surface: #ffffff;
+  --cl-surface-2: #efece4;
+  --cl-ink: #16202b;
+  --cl-ink-2: #465464;
+  --cl-ink-3: #6b7889;
+  --cl-line: #d8d3c8;
+  --cl-accent: #0d6e6b;
+  --cl-accent-ink: #ffffff;
+  --cl-accent-soft: #d7ece9;
+  --cl-warn: #8a5000;
+  --cl-warn-soft: #f8e8cd;
+  --cl-danger: #a32d24;
+  --cl-danger-soft: #f7ddd9;
+  --cl-done: #2a6b3f;
+  --cl-done-soft: #dcede1;
+  --cl-info: #1b5a8a;
+  --cl-info-soft: #d9e9f5;
+  --cl-shadow: 0 1px 2px rgba(20, 28, 38, .06), 0 8px 24px rgba(20, 28, 38, .07);
+
+  /* kind accents */
+  --k-medication: #1b5a8a;
+  --k-appointment: #6b3fa0;
+  --k-avoid: #a32d24;
+  --k-task: #0d6e6b;
+  --k-monitor: #8a5000;
+  --k-diet: #2a6b3f;
+
+  /* type */
+  --cl-font: "Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue", Arial, sans-serif;
+  --cl-serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+  --cl-mono: ui-monospace, "Cascadia Mono", Menlo, Consolas, monospace;
+  --cl-text-xs: .8125rem;
+  --cl-text-sm: .9375rem;
+  --cl-text-base: 1.0625rem;
+  --cl-text-lg: 1.25rem;
+  --cl-text-xl: 1.5rem;
+  --cl-text-2xl: 1.875rem;
+  --cl-text-3xl: 2.375rem;
+
+  /* rhythm */
+  --cl-sp-1: .25rem;
+  --cl-sp-2: .5rem;
+  --cl-sp-3: .75rem;
+  --cl-sp-4: 1rem;
+  --cl-sp-5: 1.5rem;
+  --cl-sp-6: 2rem;
+  --cl-sp-7: 3rem;
+  --cl-r-sm: 6px;
+  --cl-r: 12px;
+  --cl-r-lg: 18px;
+  --cl-target: 48px;          /* minimum touch target (Alexa accessibility) */
+  --cl-max: 68rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --cl-bg: #101720;
+    --cl-surface: #18212c;
+    --cl-surface-2: #212c39;
+    --cl-ink: #eaf0f6;
+    --cl-ink-2: #b6c3d1;
+    --cl-ink-3: #8d9cad;
+    --cl-line: #31404f;
+    --cl-accent: #58d3c8;
+    --cl-accent-ink: #07211f;
+    --cl-accent-soft: #143a38;
+    --cl-warn: #f0b95e;
+    --cl-warn-soft: #3c2c10;
+    --cl-danger: #f19b91;
+    --cl-danger-soft: #3d1a17;
+    --cl-done: #8fd8a5;
+    --cl-done-soft: #17301f;
+    --cl-info: #93c5ef;
+    --cl-info-soft: #12293c;
+    --cl-shadow: 0 1px 2px rgba(0, 0, 0, .5), 0 10px 30px rgba(0, 0, 0, .35);
+  }
+}
+
+/* Explicit theme overrides (the companion has a manual switch). */
+[data-theme="light"] {
+  --cl-bg: #f6f4ef; --cl-surface: #fff; --cl-surface-2: #efece4; --cl-ink: #16202b;
+  --cl-ink-2: #465464; --cl-ink-3: #6b7889; --cl-line: #d8d3c8; --cl-accent: #0d6e6b;
+  --cl-accent-ink: #fff; --cl-accent-soft: #d7ece9; --cl-warn: #8a5000; --cl-warn-soft: #f8e8cd;
+  --cl-danger: #a32d24; --cl-danger-soft: #f7ddd9; --cl-done: #2a6b3f; --cl-done-soft: #dcede1;
+  --cl-info: #1b5a8a; --cl-info-soft: #d9e9f5; color-scheme: light;
+}
+[data-theme="dark"] {
+  --cl-bg: #101720; --cl-surface: #18212c; --cl-surface-2: #212c39; --cl-ink: #eaf0f6;
+  --cl-ink-2: #b6c3d1; --cl-ink-3: #8d9cad; --cl-line: #31404f; --cl-accent: #58d3c8;
+  --cl-accent-ink: #07211f; --cl-accent-soft: #143a38; --cl-warn: #f0b95e; --cl-warn-soft: #3c2c10;
+  --cl-danger: #f19b91; --cl-danger-soft: #3d1a17; --cl-done: #8fd8a5; --cl-done-soft: #17301f;
+  --cl-info: #93c5ef; --cl-info-soft: #12293c; color-scheme: dark;
+}
+
+/* Large-text mode: the elder-facing surfaces start at 1.25rem. */
+[data-text="large"] { --cl-text-base: 1.3rem; --cl-text-lg: 1.55rem; --cl-text-xl: 1.9rem; }
+
+html { font-size: 100%; }
+body {
+  margin: 0; background: var(--cl-bg); color: var(--cl-ink);
+  font-family: var(--cl-font); font-size: var(--cl-text-base); line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+* { box-sizing: border-box; }
+:where(a) { color: var(--cl-accent); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+:where(h1, h2, h3) { line-height: 1.2; margin: 0 0 var(--cl-sp-3); font-weight: 650; letter-spacing: -.015em; }
+h1 { font-size: var(--cl-text-3xl); }
+h2 { font-size: var(--cl-text-2xl); }
+h3 { font-size: var(--cl-text-xl); }
+p { margin: 0 0 var(--cl-sp-4); }
+code, pre { font-family: var(--cl-mono); font-size: var(--cl-text-sm); }
+
+:focus-visible {
+  outline: 3px solid var(--cl-accent);
+  outline-offset: 2px;
+  border-radius: var(--cl-r-sm);
+}
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+.skip-link {
+  position: absolute; left: var(--cl-sp-4); top: -100px; z-index: 50;
+  background: var(--cl-accent); color: var(--cl-accent-ink);
+  padding: var(--cl-sp-3) var(--cl-sp-4); border-radius: var(--cl-r);
+}
+.skip-link:focus { top: var(--cl-sp-4); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .001ms !important; animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important; scroll-behavior: auto !important;
+  }
+}
+@media (forced-colors: active) {
+  .cl-btn, .cl-panel, .cl-item, .cl-pill { border: 2px solid CanvasText; }
+}

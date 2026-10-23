@@ -1,0 +1,52 @@
+---
+/**
+ * SiteFooter — site map plus the standing "not medical advice" disclaimer.
+ * Static links only; no forms, no external tracking.
+ */
+const product = [
+  { href: '/', label: 'Overview' },
+  { href: '/companion/', label: 'Companion app' },
+  { href: '/simulator', label: 'Simulated assistant' },
+  { href: '/judge', label: 'Ask CareLoop' },
+];
+const legal = [
+  { href: '/privacy', label: 'Privacy' },
+  { href: '/terms', label: 'Terms' },
+];
+const docs = [
+  { href: '/docs/', label: 'Quickstart' },
+  { href: '/docs/architecture', label: 'Architecture' },
+  { href: '/docs/judging', label: 'Judging map' },
+];
+const year = 2026;
+---
+<footer class="cl-foot">
+  <div class="cl-wrap">
+    <div class="cols">
+      <div>
+        <a class="brand" href="/" style="text-decoration:none;color:var(--cl-ink);font-weight:750;">
+          CareLoop
+        </a>
+        <p class="u-mute" style="margin-top:var(--cl-sp-3);max-width:40ch;">
+          A grounded family care-plan agent for Alexa+. It repeats what your
+          clinician said, shows the original words, and never speaks a medicine dose.
+        </p>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <ul>{product.map((l) => <li><a href={l.href}>{l.label}</a></li>)}</ul>
+      </div>
+      <div>
+        <h4>Legal</h4>
+        <ul>{legal.map((l) => <li><a href={l.href}>{l.label}</a></li>)}</ul>
+        <h4 style="margin-top:var(--cl-sp-5);">Docs</h4>
+        <ul>{docs.map((l) => <li><a href={l.href}>{l.label}</a></li>)}</ul>
+      </div>
+    </div>
+    <p class="fine">
+      CareLoop is a prototype built for a hackathon. It is not medical advice, is intended
+      for adults, and ships only with synthetic demo data. &copy; {year} CareLoop contributors,
+      MIT-licensed.
+    </p>
+  </div>
+</footer>

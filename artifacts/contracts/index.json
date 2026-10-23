@@ -1,0 +1,126 @@
+{
+  "generated_by": "scripts/gen_contracts.py",
+  "kind": "careloop-tool-contracts",
+  "manifest_sha256": "15fad278f097862481159f2afd978c18c3bd3aa320839f77725e73209d86a351",
+  "source_of_truth": "careloop/tools.py TOOL_DEFS",
+  "tool_count": 12,
+  "tools": [
+    {
+      "annotations": {
+        "readOnlyHint": true
+      },
+      "file": "about_careloop.schema.json",
+      "guest_safe": true,
+      "name": "about_careloop",
+      "sha256": "ddc3138634fe14ce80d11e84eb5cd4e403beec31d496fc177f5b6b9f8e12ead4",
+      "ui": false
+    },
+    {
+      "annotations": {},
+      "file": "add_note.schema.json",
+      "guest_safe": false,
+      "name": "add_note",
+      "sha256": "a57dd9e6b6b9d96f467df572d33ce230fc4a30c148b25ef7a9d8836e4be2fa96",
+      "ui": false
+    },
+    {
+      "annotations": {},
+      "file": "confirm_instruction.schema.json",
+      "guest_safe": false,
+      "name": "confirm_instruction",
+      "sha256": "5c7525668836e5bce3805ea9eaefe72c5531546d757e5bc9a4b530383fef35a4",
+      "ui": false
+    },
+    {
+      "annotations": {
+        "readOnlyHint": true
+      },
+      "file": "daily_digest.schema.json",
+      "guest_safe": false,
+      "name": "daily_digest",
+      "sha256": "9240e4df54b47d768059d0748a65977b3c8ce494cdb875ee404a7c0000fdad47",
+      "ui": false
+    },
+    {
+      "annotations": {
+        "destructiveHint": true
+      },
+      "file": "delete_instruction.schema.json",
+      "guest_safe": false,
+      "name": "delete_instruction",
+      "sha256": "43220a87a1197baf0b95c09adf9d3034681d8990bf8d0c4e264cac132a179b77",
+      "ui": false
+    },
+    {
+      "annotations": {
+        "readOnlyHint": true
+      },
+      "file": "explain_instruction.schema.json",
+      "guest_safe": false,
+      "name": "explain_instruction",
+      "sha256": "5cfe87e65d129e54b194e70268517b8416d76469994723b9f7fd5aab7706211b",
+      "ui": false
+    },
+    {
+      "annotations": {
+        "readOnlyHint": true
+      },
+      "file": "get_care_plan.schema.json",
+      "guest_safe": false,
+      "name": "get_care_plan",
+      "sha256": "3c57e117a01abc5a8a2d695c87b59a19c207e1303d2c7e5d480a2b27a77190fd",
+      "ui": true
+    },
+    {
+      "annotations": {
+        "readOnlyHint": true
+      },
+      "file": "list_people.schema.json",
+      "guest_safe": false,
+      "name": "list_people",
+      "sha256": "f63d52067e725f2ea4286cfe29361b1dcaec848e888a3866af45498bcb09e26e",
+      "ui": true
+    },
+    {
+      "annotations": {
+        "idempotentHint": true
+      },
+      "file": "mark_done.schema.json",
+      "guest_safe": false,
+      "name": "mark_done",
+      "sha256": "041b02b08dd397e3cd60f49e6ab025a05ae1287d85171bb23e7717df6f0ac2b7",
+      "ui": false
+    },
+    {
+      "annotations": {
+        "readOnlyHint": true
+      },
+      "file": "prepare_next_visit.schema.json",
+      "guest_safe": false,
+      "name": "prepare_next_visit",
+      "sha256": "52cb1668aaa5565e22e00f0dee6123f2f68df05137ed48142b4e5a9550e2ca1c",
+      "ui": false
+    },
+    {
+      "annotations": {
+        "readOnlyHint": true
+      },
+      "file": "todays_plan.schema.json",
+      "guest_safe": false,
+      "name": "todays_plan",
+      "sha256": "7e5008f6213cc0ae9732e794f7f0d648189365155b8103e3ef68982a8aba9b0f",
+      "ui": true
+    },
+    {
+      "annotations": {
+        "readOnlyHint": true
+      },
+      "file": "what_changed.schema.json",
+      "guest_safe": false,
+      "name": "what_changed",
+      "sha256": "7fe7bb0f468a44b5e90360127fadf1cab315a90dd3395305406afd45f4234133",
+      "ui": false
+    }
+  ],
+  "wire_manifest_hash": "ab35a9c207d12e4f504e527b726c78dc6253dc50782a3743ba9cd400b1e96c31"
+}

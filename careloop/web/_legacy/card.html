@@ -1,0 +1,45 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Care plan card</title><link rel="stylesheet" href="/static/base.css"></head>
+<body><main>
+<section class="panel" role="group" aria-label="Care plan">
+  <h1 id="title">Care plan</h1>
+  <p class="small" id="attr"></p>
+  <ul id="list" style="list-style:none;padding:0"></ul>
+  <div id="empty" hidden class="small">Nothing pending in the plan we have.</div>
+  <p class="small" id="dose"></p>
+  <p class="small" id="disc" style="margin-top:.6rem"></p>
+</section>
+<script type="module">
+// MCP App bridge (ext-apps) when hosted by an MCP App-capable host; graceful static fallback otherwise.
+const params = new URLSearchParams(location.search);
+async function callTool(name, args){
+  // In the simulated host (our own pages) we can just POST /mcp. A real MCP-Apps host
+  // would provide the tools/call bridge via postMessage; we detect and prefer it.
+  if (window.__mcpApps?.callTool) return window.__mcpApps.callTool({name, arguments:args});
+  const r = await fetch('/mcp',{method:'POST',headers:{'Content-Type':'application/json',
+    'Accept':'application/json'},body:JSON.stringify({jsonrpc:'2.0',id:'card-1',method:'tools/call',
+    params:{name,arguments:args}})});
+  return (await r.json()).result;
+}
+function render(sc){
+  document.getElementById('title').textContent = (sc.person? sc.person+'’s plan':'Care plan');
+  document.getElementById('attr').textContent = sc.attribution||'';
+  document.getElementById('dose').textContent = sc.dose_policy||'';
+  document.getElementById('disc').textContent = sc.disclaimer||'';
+  const ul=document.getElementById('list'); ul.innerHTML='';
+  (sc.items||[]).forEach((it,i)=>{
+    const li=document.createElement('li'); li.className='item';
+    li.innerHTML=`<div class="kind">${it.kind}</div><div>${it.text}</div>
+      <div class="small">${it.schedule||''} ${it.needs_confirm?'<span class="flag">⚑ confirm with clinician</span>':''}</div>`;
+    const b=document.createElement('button'); b.textContent='Mark done'; b.className='done';
+    b.setAttribute('aria-label','Mark item '+(i+1)+' done');
+    b.onclick=async()=>{await callTool('mark_done',{ref:it.ref,idempotency_key:'card-'+it.ref});
+      b.disabled=true;b.textContent='Done ✓';};
+    li.appendChild(b); ul.appendChild(li);
+  });
+  if(!(sc.items||[]).length) document.getElementById('empty').hidden=false;
+}
+const person = params.get('person')||undefined;
+callTool('get_care_plan', person?{person}:{}).then(r=>render(r.structuredContent||{}));
+</script></main></body></html>

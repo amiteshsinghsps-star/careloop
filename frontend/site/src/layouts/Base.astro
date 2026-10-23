@@ -1,0 +1,48 @@
+---
+/**
+ * Base — the single HTML shell for every site page.
+ * Pulls in the shared design system, provides landmarks, a skip link and one <h1>.
+ */
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+
+interface Props {
+  title: string;
+  description: string;
+}
+const { title, description } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="color-scheme" content="light dark" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site).href} />
+  </head>
+  <body>
+    <div class="cl-shell">
+      <a class="skip-link" href="#main">Skip to main content</a>
+      <header>
+        <SiteHeader />
+      </header>
+      <main id="main" class="cl-main" tabindex="-1">
+        <div class="cl-wrap">
+          <slot />
+        </div>
+      </main>
+      <SiteFooter />
+    </div>
+  </body>
+</html>
+
+<style is:global>
+  @import '../../../../frontend/ui/src/all.css';
+  @import '../styles/site.css';
+</style>

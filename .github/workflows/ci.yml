@@ -1,0 +1,134 @@
+# CareLoop CI -- the Part O pipeline. Stages mirror what we actually run locally:
+# there is NO linter/formatter configured in this repo, so we do not invent one; the
+# gates are typecheck, vitest, pytest, build+sync, the bundle/secret budget check, the
+# eval gates (hallucination==0, dose-leak==0) and the preflight + smoke contract run.
+name: CI
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: test / build / gate (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        # ubuntu-latest only: this is the one OS we have exercised these exact steps on
+        # end to end. Windows/Linux parity is not something we can claim untested here.
+        os: [ubuntu-latest]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          # match the versions these exact steps were verified against locally
+          python-version: "3.14"
+          cache: pip
+          cache-dependency-path: requirements.txt
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          npm ci
+
+      - name: Typecheck (svelte-check + Angular build)
+        run: npm run typecheck
+
+      - name: Frontend tests (vitest)
+        run: npm test
+
+      - name: Voice resolution accuracy (measured floors, zero false matches out of domain)
+        run: npm run eval:voice
+
+      - name: Python tests (pytest)
+        run: python -m pytest -q tests
+
+      - name: Contract drift (artifacts/contracts/ + contracts.ts vs careloop/tools.py)
+        run: npm run contracts:check
+
+      - name: Add-on + interaction-model drift vs the live server contract
+        run: python scripts/make_addon.py --check
+
+      - name: Simulated device model matches the shipped interaction model
+        run: npm run model:check
+
+      - name: Virtual Alexa+ device traces the real protocol (headless)
+        run: |
+          python scripts/serve.py --port 8090 --auth off > serve-device.log 2>&1 &
+          echo "$!" > serve-device.pid
+          for i in $(seq 1 30); do
+            if curl -s -o /dev/null "http://127.0.0.1:8090/simulator"; then break; fi
+            sleep 1
+            if [ "$i" = "30" ]; then echo "device server did not come up"; cat serve-device.log; exit 1; fi
+          done
+          python -m scripts.alexa_device --url http://127.0.0.1:8090/mcp --scenario all --strict
+          rc=$?
+          kill "$(cat serve-device.pid)" 2>/dev/null || true
+          exit $rc
+
+      - name: Build the three frontends and sync into careloop/web
+        run: |
+          npm run build
+          npm run sync
+
+      - name: Prose citations still point inside their files
+        run: python scripts/check_citations.py
+
+      - name: Bundle-size + card self-containment + secret/env budget
+        run: python scripts/check_budgets.py
+
+      - name: Extraction + voice-surface eval (built-in gates)
+        run: python -m scripts.eval.run
+
+      - name: Assert the two kill gates from the report
+        run: |
+          python - <<'PY'
+          import json, sys
+          r = json.load(open("data/eval/report.json"))
+          h = r["aggregate"]["hallucination"]["rate"]
+          d = r["aggregate"]["dose_leak"]["rate"]
+          print(f"hallucination={h}  dose-leak={d}  report.passed={r['passed']}")
+          sys.exit(0 if (h == 0.0 and d == 0.0 and r["passed"]) else 1)
+          PY
+
+      - name: Preflight + smoke against a locally started server
+        run: |
+          python scripts/serve.py --port 8080 --auth off > serve.log 2>&1 &
+          echo "$!" > serve.pid
+          for i in $(seq 1 30); do
+            if curl -s -o /dev/null "http://127.0.0.1:8080/simulator"; then break; fi
+            sleep 1
+            if [ "$i" = "30" ]; then echo "server did not come up"; cat serve.log; exit 1; fi
+          done
+          python -m preflight http://127.0.0.1:8080/mcp --skip-auth
+          python scripts/smoke.py http://127.0.0.1:8080/mcp
+          rc=$?
+          kill "$(cat serve.pid)" 2>/dev/null || true
+          exit $rc
+
+      - name: Show server log on failure
+        if: failure()
+        run: cat serve.log || true

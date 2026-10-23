@@ -1,0 +1,72 @@
+
+> careloop@6.0.0 test
+> npm run test -w frontend/simulator
+
+
+> @careloop/simulator@6.0.0 test
+> vitest run
+
+
+[1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/vijay/OneDrive/Desktop/CARELOOP/frontend/simulator[39m
+
+ [32m✓[39m src/lib/alexa/ssml.test.ts [2m([22m[2m18 tests[22m[2m)[22m[32m 25[2mms[22m[39m
+ [32m✓[39m src/lib/alexa/slu.test.ts [2m([22m[2m18 tests[22m[2m)[22m[32m 48[2mms[22m[39m
+[90mstdout[2m | src/lib/alexa/accuracy.test.ts[2m > [22m[2mthe shipped model, resolved by our own matcher[2m > [22m[2mreads out the five measured numbers
+[22m[39m
+  voice resolution, measured against alexa/interaction-model.json
+model’s own samples             80 cases   intent 100.0 %   slots 100.0 % (45)
+human paraphrases               33 cases   intent 42.4 %
+slot resolution                 14 cases   intent 92.9 %   slots 92.9 % (14)
+out of domain (must not match)  12 cases   intent 100.0 %
+platform built-ins               6 cases   intent 100.0 %
+  did not generalise:
+    “so what does mum have to do now” → nothing
+    “what's left for me to do” → nothing
+    “anything pending for meera” → nothing [Person: no slot returned]
+    “read me the plan” → nothing
+    “what did the doctor say about the tablets” → nothing
+    “whats on today” → nothing
+    “what have i got today” → nothing
+    “what is the schedule for ravi today” → nothing
+    “mark the pills as taken” → nothing
+    “mum's done the first item” → nothing
+    “why is that one on the plan” → RemoveInstructionIntent
+    “what did she actually say” → nothing
+    “jot down that the blood pressure was high” → nothing
+    “who do we have here” → nothing
+    “did the plan change for ravi” → nothing
+    “what is unresolved for meera” → nothing
+    “get rid of the second item” → nothing
+    “what do you actually do” → nothing
+    “what is this thing for” → nothing
+  slot misses (1 of 14):
+    “anything pending for meera” → nothing [Person: no slot returned]
+  match path on the paraphrases: 1 by a shipped sample, 14 only by the scored fallback
+  zero false matches on out-of-domain speech
+
+ [32m✓[39m src/lib/alexa/accuracy.test.ts [2m([22m[2m13 tests[22m[2m)[22m[32m 39[2mms[22m[39m
+ [32m✓[39m src/lib/planstream.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 16[2mms[22m[39m
+ [32m✓[39m src/lib/route.test.ts [2m([22m[2m26 tests[22m[2m)[22m[32m 23[2mms[22m[39m
+ [32m✓[39m src/lib/i18n.test.ts [2m([22m[2m9 tests[22m[2m)[22m[32m 32[2mms[22m[39m
+ [32m✓[39m src/lib/alexa/speaker.test.ts [2m([22m[2m9 tests[22m[2m)[22m[32m 21[2mms[22m[39m
+ [32m✓[39m src/lib/live.test.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 59[2mms[22m[39m
+ [32m✓[39m src/lib/alexa/delivery.test.ts [2m([22m[2m14 tests[22m[2m)[22m[32m 45[2mms[22m[39m
+ [32m✓[39m src/lib/alexa/dialog.test.ts [2m([22m[2m15 tests[22m[2m)[22m[32m 38[2mms[22m[39m
+ [32m✓[39m src/lib/alexa/proactive.test.ts [2m([22m[2m8 tests[22m[2m)[22m[32m 22[2mms[22m[39m
+ [32m✓[39m src/lib/view.test.ts [2m([22m[2m9 tests[22m[2m)[22m[32m 16[2mms[22m[39m
+ [32m✓[39m src/lib/mcp.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 25[2mms[22m[39m
+ [32m✓[39m src/lib/alexa/response.test.ts [2m([22m[2m17 tests[22m[2m)[22m[32m 19[2mms[22m[39m
+ [32m✓[39m src/lib/alexa/envelope.test.ts [2m([22m[2m15 tests[22m[2m)[22m[32m 19[2mms[22m[39m
+ [32m✓[39m src/lib/palette.test.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 12[2mms[22m[39m
+ [32m✓[39m src/lib/a11y.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 14[2mms[22m[39m
+ [32m✓[39m src/lib/privacy.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 15[2mms[22m[39m
+ [32m✓[39m src/lib/adherence.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 12[2mms[22m[39m
+ [32m✓[39m src/lib/alexa/machine.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 9[2mms[22m[39m
+ [32m✓[39m src/lib/print.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 6[2mms[22m[39m
+ [32m✓[39m src/lib/alexa/ask-sdk-conformance.test.ts [2m([22m[2m13 tests[22m[2m)[22m[32m 17[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m22 passed[39m[22m[90m (22)[39m
+[2m      Tests [22m [1m[32m231 passed[39m[22m[90m (231)[39m
+[2m   Start at [22m 22:13:31
+[2m   Duration [22m 3.46s[2m (transform 1.92s, setup 0ms, collect 12.08s, tests 531ms, environment 9ms, prepare 7.94s)[22m
+

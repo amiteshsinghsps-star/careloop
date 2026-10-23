@@ -1,0 +1,2 @@
+check_citations: 0 citations resolve inside their files and none lands on blank space.
+  (does not prove the line says what the prose claims - that is still a human job)

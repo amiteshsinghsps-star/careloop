@@ -1,0 +1,45 @@
+{
+  "name": "careloop",
+  "version": "6.0.0",
+  "private": true,
+  "license": "MIT",
+  "description": "CareLoop — a grounded Alexa+ care-plan agent: Astro site, Svelte simulator + MCP card, Angular companion.",
+  "workspaces": [
+    "frontend/*"
+  ],
+  "scripts": {
+    "dev:site": "npm run dev -w frontend/site",
+    "dev:sim": "npm run dev -w frontend/simulator",
+    "dev:companion": "npm run dev -w frontend/companion",
+    "build": "npm run build -w frontend/simulator && npm run build -w frontend/companion && npm run build -w frontend/site",
+    "sync": "node scripts/sync_web.mjs",
+    "dist": "npm run build && npm run sync",
+    "typecheck": "npm run typecheck -w frontend/simulator && npm run typecheck -w frontend/companion",
+    "test": "npm run test -w frontend/simulator",
+    "eval:voice": "npm run test -w frontend/simulator -- src/lib/alexa/accuracy.test.ts",
+    "test:py": "python -m pytest -q tests",
+    "check:budgets": "python scripts/check_budgets.py",
+    "check:citations": "python scripts/check_citations.py",
+    "serve": "python scripts/serve.py",
+    "demo": "npm run dist && python scripts/serve.py",
+    "eval": "python -m scripts.eval.run",
+    "data:fetch": "python scripts/fetch_reference_data.py",
+    "eval:real": "python scripts/eval_real_reference.py",
+    "smoke": "python scripts/smoke.py",
+    "preflight": "python -m preflight http://127.0.0.1:8080/mcp",
+    "bundle": "python scripts/offline_bundle.py make",
+    "bundle:verify": "python scripts/offline_bundle.py verify",
+    "bundle:restore": "python scripts/offline_bundle.py restore",
+    "contracts": "python scripts/gen_contracts.py",
+    "contracts:check": "python scripts/gen_contracts.py --check",
+    "model:gen": "node scripts/gen_device_model.mjs",
+    "model:check": "node scripts/gen_device_model.mjs --check",
+    "server": "python -m careloop.mcp_server"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

@@ -1,0 +1,9 @@
+# CareLoop's server runs on the Python standard library alone (3.10+).
+# Everything here is development or optional-integration tooling.
+
+pytest>=8.0            # tests/test_guards.py, test_store.py, test_tools.py, test_http.py
+hypothesis>=6.100      # property tests for the guards (N1, N10, N11)
+
+# AWS integration (Bedrock extraction only - no Comprehend Medical or Transcribe client exists).
+# Install only if you want the model path; the deterministic rules extractor works offline:
+#     pip install boto3

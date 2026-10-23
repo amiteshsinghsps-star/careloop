@@ -1,0 +1,80 @@
+{
+  "version": "2026.10.21",
+  "notes": "Anticoagulation monitoring and osteoporosis. Synthetic, invented speakers.",
+  "cases": [
+    {
+      "id": "warf-01",
+      "title": "Warfarin: fixed night dose, INR Fridays, bleeding warnings",
+      "person": "Bai",
+      "tags": ["warfarin", "anticoagulation", "inr"],
+      "lines": [
+        "Doctor: His INR is steady at two point five, so the tablet stays as it is.",
+        "Doctor: Take warfarin one tablet at night, the same hour every night.",
+        "Nurse: Do not miss the warfarin tablet, and never double up if a day is forgotten.",
+        "Doctor: Avoid the green leafy vegetables in big portions, keep the salad steady instead.",
+        "Nurse: Please get the INR done every Friday at the same lab, and bring the book here.",
+        "Nurse: Make sure to call us at once if there is blood in the urine, a black stool or a knock on the head.",
+        "Doctor: Please note the new dose on the chart, and keep the tablet box in the locked drawer.",
+        "Doctor: No ibuprofen, no aspirin and no herbal mixes with this tablet.",
+        "Doctor: Come back after ten days for the INR, we cannot leave it longer than three weeks."
+      ],
+      "items": [
+        {"kind": "medication", "quote": "Take warfarin one tablet at night, the same hour every night.",
+         "schedule": {"kind": "RECURRENCE", "day_parts": ["BEDTIME"]}},
+        {"kind": "avoid", "quote": "Do not miss the warfarin tablet, and never double up if a day is forgotten.",
+         "schedule": null},
+        {"kind": "diet", "quote": "Avoid the green leafy vegetables in big portions, keep the salad steady instead.",
+         "schedule": null, "needs_confirm": true},
+        {"kind": "task", "quote": "Please get the INR done every Friday at the same lab, and bring the book here.",
+         "schedule": {"kind": "WEEKLY", "weekdays": [4]}},
+        {"kind": "task", "quote": "Make sure to call us at once if there is blood in the urine, a black stool or a knock on the head.",
+         "schedule": null},
+        {"kind": "task", "quote": "Please note the new dose on the chart, and keep the tablet box in the locked drawer.",
+         "schedule": null},
+        {"kind": "avoid", "quote": "No ibuprofen, no aspirin and no herbal mixes with this tablet.",
+         "schedule": null,
+         "note": "a bare 'No <drug>' negation is not in the avoid rules, so this warning is lost"},
+        {"kind": "appointment", "quote": "Come back after ten days for the INR, we cannot leave it longer than three weeks.",
+         "schedule": {"kind": "ONCE", "has_date": true},
+         "note": "the extractor reads 'after ten days' but timecraft only anchors 'in N days'"}
+      ]
+    },
+    {
+      "id": "osteo-01",
+      "title": "Osteoporosis: weekly bisphosphonate technique, calcium, night light",
+      "person": "Lata",
+      "tags": ["osteoporosis", "falls", "spouse"],
+      "lines": [
+        "Doctor: Her bone is thin and there is a fresh fracture, so today we add a bone tablet.",
+        "Doctor: Take the alendronate 70 mg once a week, on Wednesday morning.",
+        "Nurse: Make sure she swallows the tablet standing upright, not leaning back.",
+        "Nurse: She must not lie down for thirty minutes after the tablet, so keep the glass of water beside the chair.",
+        "Doctor: Take calcium 500 mg and vitamin D 800 IU with breakfast every day.",
+        "Doctor: Do not take the calcium with the thyroid tablet, keep a four hour gap.",
+        "Nurse: Wear the non-slip slippers indoors, and put a light on in the corridor at night.",
+        "Doctor: Come back in six weeks, and bring the last bone scan report with you.",
+        "Doctor: The same calcium tablet is for her husband Sunil, so he must take it after food."
+      ],
+      "items": [
+        {"kind": "medication", "quote": "Take the alendronate 70 mg once a week, on Wednesday morning.",
+         "schedule": {"kind": "RECURRENCE", "day_parts": ["MORNING"]},
+         "note": "the weekly part of 'once a week' is not read as an interval, only the morning is"},
+        {"kind": "task", "quote": "Make sure she swallows the tablet standing upright, not leaning back.",
+         "schedule": null},
+        {"kind": "avoid", "quote": "She must not lie down for thirty minutes after the tablet, so keep the glass of water beside the chair.",
+         "schedule": null},
+        {"kind": "medication", "quote": "Take calcium 500 mg and vitamin D 800 IU with breakfast every day.",
+         "schedule": {"kind": "RECURRENCE", "day_parts": ["AFTER_FOOD"]}},
+        {"kind": "avoid", "quote": "Do not take the calcium with the thyroid tablet, keep a four hour gap.",
+         "schedule": null},
+        {"kind": "task", "quote": "Wear the non-slip slippers indoors, and put a light on in the corridor at night.",
+         "schedule": {"kind": "RECURRENCE", "day_parts": ["BEDTIME"]}},
+        {"kind": "appointment", "quote": "Come back in six weeks, and bring the last bone scan report with you.",
+         "schedule": {"kind": "ONCE", "has_date": true}},
+        {"kind": "medication", "quote": "The same calcium tablet is for her husband Sunil, so he must take it after food.",
+         "person": "Sunil", "schedule": {"kind": "RECURRENCE", "day_parts": ["AFTER_FOOD"]},
+         "note": "the rules pass never fills person_ref, so this is filed under the patient of the visit"}
+      ]
+    }
+  ]
+}

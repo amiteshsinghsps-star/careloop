@@ -1,0 +1,40 @@
+{
+  "action": "AddNote",
+  "annotations": {},
+  "description": "Add one short instruction the family was told verbally, so it is remembered with the plan. CareLoop stores the words exactly; it never adds medical advice. Synonyms: remember that, note this, the nurse said, add a note.",
+  "guest_safe": false,
+  "inputSchema": {
+    "additionalProperties": false,
+    "properties": {
+      "person": {
+        "maxLength": 40,
+        "type": "string"
+      },
+      "text": {
+        "maxLength": 300,
+        "minLength": 3,
+        "type": "string"
+      }
+    },
+    "required": [
+      "text"
+    ],
+    "type": "object"
+  },
+  "name": "add_note",
+  "outputSchema": {
+    "properties": {
+      "items": {
+        "type": "array"
+      },
+      "status": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "items"
+    ],
+    "type": "object"
+  },
+  "ui": false
+}

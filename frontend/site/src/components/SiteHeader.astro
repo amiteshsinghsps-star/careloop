@@ -1,0 +1,31 @@
+---
+/**
+ * SiteHeader — sticky brand + primary nav. Uses the shared `.cl-nav` layout.
+ * Marks the active page with aria-current (not colour-only).
+ */
+const nav = [
+  { href: '/', label: 'Overview' },
+  { href: '/a11y-lab', label: 'Accessibility Lab' },
+  { href: '/privacy', label: 'Privacy' },
+  { href: '/terms', label: 'Terms' },
+  { href: '/docs/', label: 'Docs' },
+];
+const here = Astro.url.pathname;
+const isActive = (href: string) =>
+  href === '/' ? here === '/' : here.startsWith(href.replace(/\/$/, ''));
+---
+<div class="cl-nav">
+  <div class="cl-wrap" style="display:flex;align-items:center;gap:var(--cl-sp-5);flex-wrap:wrap;width:100%;">
+    <a class="brand" href="/">
+      <span class="mark" aria-hidden="true"></span>
+      <span>CareLoop</span>
+    </a>
+    <nav aria-label="Primary">
+      {nav.map((item) => (
+        <a href={item.href} aria-current={isActive(item.href) ? 'page' : undefined}>
+          {item.label}
+        </a>
+      ))}
+    </nav>
+  </div>
+</div>

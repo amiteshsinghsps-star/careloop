@@ -1,0 +1,26 @@
+{
+  "action": "ViewPlan",
+  "annotations": {
+    "readOnlyHint": true
+  },
+  "description": "List the people in this household's care plans. Synonyms: who, family members.",
+  "guest_safe": false,
+  "inputSchema": {
+    "additionalProperties": false,
+    "properties": {},
+    "type": "object"
+  },
+  "name": "list_people",
+  "outputSchema": {
+    "properties": {
+      "people": {
+        "type": "array"
+      }
+    },
+    "required": [
+      "people"
+    ],
+    "type": "object"
+  },
+  "ui": true
+}

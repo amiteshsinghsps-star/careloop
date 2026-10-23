@@ -1,0 +1,12 @@
+---
+/**
+ * Pill — a small status/label chip. Reuses the shared `.cl-pill` classes.
+ * `tone` maps to the design-system variants: '' (default), warn, done, bad, info, ok.
+ * Meaning is carried by the text too, never by colour alone.
+ */
+interface Props {
+  tone?: '' | 'warn' | 'done' | 'bad' | 'info' | 'ok';
+}
+const { tone = '' } = Astro.props;
+---
+<span class:list={['cl-pill', tone]}><slot /></span>

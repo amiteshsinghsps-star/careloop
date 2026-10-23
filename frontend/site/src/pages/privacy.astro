@@ -1,0 +1,99 @@
+---
+import Base from '../layouts/Base.astro';
+
+const title = 'Privacy — CareLoop';
+const description =
+  'How CareLoop handles your data: PIN-gated households, encrypted per-household cells, transcript hashing, crypto-shredding, and a dose-free voice surface.';
+---
+<Base title={title} description={description}>
+  <article class="cl-prose">
+    <h1>Privacy</h1>
+    <p class="u-mute">
+      This page describes what CareLoop actually does with data, in plain language. It is written
+      to match the running code, not to make promises the software does not keep.
+    </p>
+
+    <div class="cl-callout warn" style="margin:var(--cl-sp-5) 0;">
+      <strong>Prototype, not a clinical service.</strong> CareLoop is a hackathon prototype that
+      ships with synthetic demo data only. Do not enter real patient information.
+    </div>
+
+    <h2>Accounts are PIN-gated households</h2>
+    <p>
+      A &ldquo;household&rdquo; is the unit of ownership. It is created with a household code and a
+      family PIN, and access to the companion page and to linked assistants always starts by
+      proving that PIN. Each person linked to a household has a role &mdash; caregiver, elder or
+      viewer &mdash; and those roles decide what they can see and change. A household can only ever
+      reach its own data; requests that cross households are refused at the authorization layer.
+    </p>
+
+    <h2>Linking happens once, with one-time consent</h2>
+    <p>
+      When you connect an assistant to CareLoop you sign in with the household code and PIN and
+      tick a single consent screen. That consent is asked once, at link time, and it explains
+      exactly what is shared: the care items, quotes and schedules for the household, and
+      <strong>never medicine amounts on the voice surface</strong>. You can unlink at any time from
+      the companion page; the moment you unlink, the credentials for that link stop working and a
+      relink starts a fresh session.
+    </p>
+
+    <h2>The transcript is processed, then mostly discarded</h2>
+    <p>
+      When you record or paste a visit, CareLoop processes the transcript to extract care items.
+      By default it keeps a one-way <strong>hash</strong> of the full transcript plus the
+      <strong>extracted items</strong> and the exact clinician sentences they came from &mdash; not the
+      entire raw transcript. The hash lets the household confirm &ldquo;we held this visit&rdquo;
+      without storing every word again.
+    </p>
+
+    <h2>Each household is its own encrypted cell</h2>
+    <p>
+      Storage is one isolated, encrypted database (&ldquo;cell&rdquo;) per household, keyed with its
+      own data key. Quotes and other sensitive fields are encrypted at rest. Because cells are
+      separate, a bug, a leaked file or a stolen query can reach at most one household &mdash; never
+      the whole population.
+    </p>
+
+    <h2>Delete-everything means crypto-shredding</h2>
+    <p>
+      Choosing to erase a household destroys both its database file and its encryption key, then
+      writes an <strong>erasure receipt</strong> recording that the cell was shredded. Without the
+      key, the leftover ciphertext is undecryptable. Local file deletion is not forensic-grade; in
+      a production deployment the key would live in a managed key service (AWS KMS) and deletion
+      would revoke the key material there.
+    </p>
+
+    <h2>No dose data ever reaches the voice surface</h2>
+    <p>
+      Every response the MCP server can send to the assistant passes through a single outbound
+      guard that masks medicine amounts, adds the disclaimer and attaches attribution. The exact
+      doses are available only on the companion page, behind the household login. This is a
+      deliberate policy boundary, and it is enforced in code and measured by self-tests.
+    </p>
+
+    <h2>The browser microphone is the least private path</h2>
+    <p>
+      If you use in-browser dictation, it relies on the browser&rsquo;s own speech technology
+      (the Web Speech API), which may route audio through your browser vendor&rsquo;s speech
+      service &mdash; that is outside CareLoop&rsquo;s control. For that reason the
+      <strong>paste or upload path is the privacy-preserving default</strong>: it never sends audio
+      anywhere, it only handles text you already have.
+    </p>
+
+    <h2>No real patient data</h2>
+    <p>
+      The repository and the demo contain only synthetic data. You should treat CareLoop the same
+      way: it is a demonstration, not a place to store real health records.
+    </p>
+
+    <h2>Questions</h2>
+    <p>
+      Privacy contact:
+      <a href="mailto:privacy@careloop.invalid">privacy@careloop.invalid</a>
+      <span class="cl-pill warn" style="margin-left:var(--cl-sp-2);">Placeholder</span>
+    </p>
+    <p class="cl-note">
+      This address is a placeholder. Replace it with a real, monitored contact before publishing.
+    </p>
+  </article>
+</Base>

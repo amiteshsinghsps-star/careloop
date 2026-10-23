@@ -1,0 +1,121 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CareLoop — Simulated Alexa+</title>
+<link rel="stylesheet" href="/static/base.css"></head>
+<body><main>
+<header class="row">
+  <h1 style="margin:0">CareLoop</h1>
+  <span class="badge sim" role="note">Simulated Alexa+ experience</span>
+  <span class="spacer"></span>
+  <button class="ghost" id="devBtn" aria-pressed="false" title="Preview how the card looks on a small or large screen">
+    Screen: large</button>
+  <button class="ghost" id="trafficBtn" aria-pressed="false">Show MCP traffic</button>
+</header>
+<p class="small">Say or type a question. Alexa writes its own spoken reply; CareLoop only supplies
+grounded, <b>dose-free</b> data. Full medicine amounts live on the companion page.</p>
+
+<div id="screen" class="panel" style="max-width:640px">
+  <div id="chat" aria-live="polite" role="log" style="min-height:120px"></div>
+  <div class="row" style="margin-top:.8rem">
+    <input id="q" placeholder="What's next for Papa?" aria-label="Ask about the care plan">
+    <button id="send">Ask</button>
+    <button id="mic" class="secondary" aria-label="Speak your question">🎙 Say it</button>
+    <button id="replay" class="secondary" title="Load a scripted synthetic visit">Replay sample visit</button>
+  </div>
+  <div class="row small" style="margin-top:.5rem">
+    <span>Try:</span>
+    <button class="chip" data-phrase="What's next for Papa?" aria-pressed="false">What's next for Papa?</button>
+    <button class="chip" data-phrase="Why the first one?" aria-pressed="false">Why the first one?</button>
+    <button class="chip" data-phrase="What changed since the last visit?" aria-pressed="false">What changed?</button>
+    <button class="chip" data-phrase="Mark the first one done" aria-pressed="false">Mark done</button>
+    <button class="chip" data-phrase="What can you do?" aria-pressed="false">What can you do?</button>
+  </div>
+</div>
+<div class="drawer" id="traffic" hidden aria-label="MCP JSON-RPC traffic"></div>
+<div class="drawer" id="cardbox" hidden aria-label="Care plan card"></div>
+
+<script>
+const S = {session:null, lastRefs:[], lastText:[]};
+const $ = s => document.querySelector(s);
+function say(role, html){const d=document.createElement('div');d.className='item';
+  d.innerHTML=`<div class="kind">${role}</div><div>${html}</div>`;$('#chat').appendChild(d);
+  $('#chat').scrollTop=1e9;return d;}
+function tts(text){ if(!window.speechSynthesis) return;
+  try{const u=new SpeechSynthesisUtterance(text);u.rate=1.02;speechSynthesis.cancel();speechSynthesis.speak(u);}catch(e){} }
+async function rpc(method, params){
+  const body={jsonrpc:"2.0",id:"req-"+Math.random().toString(16).slice(2,8),method,params};
+  const headers={'Content-Type':'application/json','Accept':'application/json, text/event-stream'};
+  if(S.session) headers['MCP-Session-Id']=S.session;
+  headers['MCP-Protocol-Version']='2025-03-26';
+  const logLine=()=>{const t=$('#traffic');t.hidden=false;};
+  logLine(); $('#traffic').textContent += '\n>>> '+JSON.stringify(body,null,1);
+  const r=await fetch('/mcp',{method:'POST',headers,body:JSON.stringify(body)});
+  const sid=r.headers.get('MCP-Session-Id'); if(sid) S.session=sid;
+  const j=await r.json().catch(()=>({raw:'(non-json)'}));
+  $('#traffic').textContent += '\n<<< '+JSON.stringify(j,null,1);
+  return j;
+}
+async function ensureInit(){ if(S.session) return;
+  await rpc('initialize',{protocolVersion:'2025-03-26',clientInfo:{name:'CareLoop Simulated Alexa+',version:'6.0'},
+    capabilities:{roots:{listChanged:true}}});
+  await rpc('notifications/initialized',{});
+}
+async function callTool(name,args){ const j=await rpc('tools/call',{name,arguments:args});
+  return j.result||{}; }
+function renderStructured(sc){ if(!sc) return;
+  const box=$('#cardbox'); box.hidden=false;
+  let h='<h2>Care plan card</h2>';
+  if(sc.items){ sc.items.forEach((it,i)=>{ h+=`<div class="item"><div class="kind">${it.kind}</div>
+     <div>${it.text}</div><div class="small">${it.schedule||''} ${it.needs_confirm?'<span class="flag">⚑ confirm with clinician</span>':''}</div>
+     <button data-ref="${it.ref}" class="done">Mark done</button></div>`;});
+    if(sc.avoid&&sc.avoid.length) h+='<h2>Avoid</h2>'+sc.avoid.map(a=>`<div class="quote">${a}</div>`).join('');
+    h+=`<div class="small">${sc.attribution||''}</div>`; }
+  else if(sc.slots){ sc.slots.forEach(s=>{h+=`<h2>${s.part_of_day}</h2>`+s.items.map(i=>`<div class="item">${i.text}</div>`).join('');});}
+  else if(sc.capabilities){ h+='<ul>'+sc.capabilities.map(c=>`<li>${c}</li>`).join('')+'</ul>'; }
+  else h='<pre>'+JSON.stringify(sc,null,1)+'</pre>';
+  h+=`<p class="small">${sc.dose_policy||''}</p>`;
+  box.innerHTML=h;
+  box.querySelectorAll('.done').forEach(b=>b.onclick=async()=>{
+    const r=await callTool('mark_done',{ref:b.dataset.ref}); render(r.structuredContent, r.content?.[0]?.text||'');});
+}
+function render(sc, text){ if(text) {say('Alexa', text.replace(/</g,'&lt;')); tts(text);} renderStructured(sc); }
+async function ask(q){ await ensureInit(); say('You', q.replace(/</g,'&lt;'));
+  const low=q.toLowerCase(); let r;
+  if(/what can you do|help|capabilit/.test(low)) r=await callTool('about_careloop',{});
+  else if(/why|source|proof|first one|second one/.test(low)&&/why|source|proof/.test(low)){
+    const idx=(/first/.test(low)?0:/second/.test(low)?1:0);
+    r=await callTool('explain_instruction',{ref:S.lastRefs[idx]||'first'});}
+  else if(/mark|done|complete/.test(low)){const idx=/second/.test(low)?1:0;
+    r=await callTool('mark_done',{ref:S.lastRefs[idx]||'first', idempotency_key:'sim-'+Date.now()});}
+  else if(/changed|since last/.test(low)) r=await callTool('what_changed',{person:personOf(q)});
+  else if(/today|schedule|agenda/.test(low)) r=await callTool('todays_plan',{person:personOf(q)});
+  else if(/avoid/.test(low)) r=await callTool('get_care_plan',{kind:'avoid',person:personOf(q)});
+  else if(/who|people|family/.test(low)) r=await callTool('list_people',{});
+  else if(/digest|progress|how am/.test(low)) r=await callTool('daily_digest',{person:personOf(q)});
+  else r=await callTool('get_care_plan',{person:personOf(q)});
+  const sc=r.structuredContent||{}; if(sc.items) S.lastRefs=sc.items.map(i=>i.ref);
+  const text=(r.content&&r.content[0]&&r.content[0].text)||'';
+  render(sc, text);
+}
+function personOf(q){const m=q.match(/for ([a-z]+)/i);return m?m[1]:undefined;}
+$('#send').onclick=()=>{const v=$('#q').value.trim();if(v){ask(v);$('#q').value='';}};
+$('#q').addEventListener('keydown',e=>{if(e.key==='Enter')$('#send').click();});
+document.querySelectorAll('.chip').forEach(c=>c.onclick=()=>ask(c.dataset.phrase));
+$('#devBtn').onclick=()=>{const s=$('#screen');const small=s.style.maxWidth==='420px';
+  s.style.maxWidth=small?'640px':'420px';$('#devBtn').textContent='Screen: '+(small?'large':'small');
+  $('#devBtn').setAttribute('aria-pressed',String(!small));};
+$('#trafficBtn').onclick=()=>{const t=$('#traffic');t.hidden=!t.hidden;
+  $('#trafficBtn').setAttribute('aria-pressed',String(!t.hidden));};
+$('#mic').onclick=()=>{const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR){say('System','Voice input needs Chrome or Edge. Type your question instead.');return;}
+  const rec=new SR();rec.lang='en-US';rec.interimResults=true;rec.maxAlternatives=1;
+  say('System','Listening…');
+  rec.onresult=e=>{const t=e.results[0][0].transcript;$('#q').value=t;if(e.results[0].isFinal)ask(t);};
+  rec.onerror=()=>say('System','Didn’t catch that — type it.'); rec.start();};
+$('#replay').onclick=async()=>{
+  const t="Doctor: Take 500 mg of metformin twice a day after food. Take one tablet of atorvastatin at bedtime. Do not take the painkiller on an empty stomach. Avoid grapefruit juice completely. Come back after two weeks with the report.";
+  await fetch('/api/capture',{method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({transcript:t,person:'Papa'})});
+  say('System','Loaded a scripted synthetic visit for Papa. Now ask about it.');};
+ask("What's next for Papa?");
+</script></main></body></html>

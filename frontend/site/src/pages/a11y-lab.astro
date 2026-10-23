@@ -1,0 +1,285 @@
+---
+// Accessibility Lab (/a11y-lab) — M14.
+// The real care-plan content is pushed through the SAME shared render model the voice surface
+// and the MCP App card use: toView() and viewTextNodes(). Nothing here is a second copy of the
+// render logic. A vitest (frontend/simulator/src/lib/a11y.test.ts) asserts this payload yields the
+// identical text nodes, in the identical order, as the simulator card. Every string is a
+// closed-vocabulary label from @careloop/ui or a verbatim server field; doses are already masked
+// to the "your prescribed amount" token. Text nodes only — no HTML injection.
+import Base from '../layouts/Base.astro';
+import { A11Y_LAB_PAYLOAD, toView, viewTextNodes } from '@careloop/client';
+import { ordinal, kindLabel, STATUS_LABEL } from '@careloop/ui';
+
+const title = 'CareLoop Accessibility Lab';
+const description =
+  'The real care-plan render model, shown under forced colours, zoom, colour-vision filters, reduced motion and Elder mode, with a live log of what a screen reader is told.';
+
+const view = toView(A11Y_LAB_PAYLOAD, false);
+const announced = viewTextNodes(view);
+
+function pillFor(item) {
+  if (item.needs_confirm && item.status === 'pending') return 'Check with the clinician';
+  return STATUS_LABEL[item.status] ?? item.status;
+}
+---
+<Base title={title} description={description}>
+
+  <section aria-labelledby="lab-h">
+    <p class="eyebrow">Accessibility, by construction</p>
+    <h1 id="lab-h">The Accessibility Lab</h1>
+    <p class="sub">
+      This is the real care-plan card, the same structuredContent the voice surface and the MCP App
+      card receive, rendered by the shared toView() in frontend/client. Flip the switches to see and
+      hear how it holds up under forced colours, zoom, colour-vision deficiency, reduced motion and
+      Elder / large-text. The panel on the right is the exact ordered text a screen reader reads out,
+      and it updates, politely, as you change a setting.
+    </p>
+  </section>
+
+  <!-- Inline colour-vision-deficiency filters. No external assets, the matrices are here. -->
+  <svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
+    <filter id="cvd-protan"><feColorMatrix type="matrix" values="0.567 0.433 0 0 0  0.558 0.442 0 0 0  0 0.242 0.758 0 0  0 0 0 1 0"/></filter>
+    <filter id="cvd-deutan"><feColorMatrix type="matrix" values="0.625 0.375 0 0 0  0.7 0.3 0 0 0  0 0.3 0.7 0 0  0 0 0 1 0"/></filter>
+    <filter id="cvd-tritan"><feColorMatrix type="matrix" values="0.95 0.05 0 0 0  0 0.433 0.567 0 0  0 0.475 0.525 0 0  0 0 0 1 0"/></filter>
+  </svg>
+
+  <div class="lab-grid">
+
+    <section class="cl-panel lab-controls" aria-labelledby="ctl-h">
+      <h2 id="ctl-h">Try it like this</h2>
+
+      <div class="lab-field">
+        <span class="cl-label" id="fc-label">Forced-colours mode (emulated)</span>
+        <label class="cl-check">
+          <input type="checkbox" id="opt-fc" aria-labelledby="fc-label" />
+          <span>Emulate high-contrast forced colours</span>
+        </label>
+      </div>
+
+      <div class="lab-field">
+        <span class="cl-label">Text zoom</span>
+        <div class="tiny-gap">
+          <button class="chip" type="button" data-zoom="100" aria-pressed="true">100%</button>
+          <button class="chip" type="button" data-zoom="200" aria-pressed="false">200%</button>
+          <button class="chip" type="button" data-zoom="400" aria-pressed="false">400%</button>
+        </div>
+      </div>
+
+      <div class="lab-field">
+        <label class="cl-label" for="opt-cvd">Colour-vision deficiency</label>
+        <select id="opt-cvd" class="cl-input">
+          <option value="none">Typical colour vision</option>
+          <option value="protan">Protanopia (no red)</option>
+          <option value="deutan">Deuteranopia (no green)</option>
+          <option value="tritan">Tritanopia (no blue)</option>
+        </select>
+      </div>
+
+      <div class="lab-field">
+        <label class="cl-check">
+          <input type="checkbox" id="opt-rm" />
+          <span>Reduce motion (kill transitions)</span>
+        </label>
+      </div>
+
+      <div class="lab-field">
+        <label class="cl-check">
+          <input type="checkbox" id="opt-elder" />
+          <span>Elder / large-text mode</span>
+        </label>
+      </div>
+
+      <p class="cl-note">
+        These are real CareLoop constraints: 48px touch targets, AA body contrast, a reduced-motion
+        path, and large text through tokens, not a picture of a device.
+      </p>
+    </section>
+
+    <section class="lab-stage" aria-labelledby="card-h">
+      <h2 id="card-h" class="sr-only">The care plan, as rendered</h2>
+      <div id="preview" class="lab-preview" data-zoom="100">
+        <article class="cl-panel cl-card">
+          <header class="cl-card-head">
+            <h3>{view.title}</h3>
+            {view.person ? <span class="cl-pill info">{view.person}</span> : null}
+          </header>
+
+          <ol class="cl-items">
+            {view.items.map((item, i) => (
+              <li class="cl-item" data-kind={item.kind}>
+                <div class="cl-item-top">
+                  <span class="cl-ord">{ordinal(i)}</span>
+                  <span class="cl-kind">{kindLabel(item.kind)}</span>
+                  <span class="cl-pill" data-status={item.status}>{pillFor(item)}</span>
+                </div>
+                <p class="cl-item-text">{item.text}</p>
+                {item.schedule ? <p class="cl-item-sched">{item.schedule}</p> : null}
+              </li>
+            ))}
+          </ol>
+
+          <footer class="cl-card-foot">
+            {view.attribution ? <p class="cl-attr">{view.attribution}</p> : null}
+            {view.dosePolicy ? <p class="cl-policy">{view.dosePolicy}</p> : null}
+            {view.disclaimer ? <p class="cl-disclaimer">{view.disclaimer}</p> : null}
+          </footer>
+        </article>
+      </div>
+    </section>
+
+    <section class="cl-panel lab-log" aria-labelledby="log-h">
+      <h2 id="log-h">What a screen reader is told</h2>
+      <p class="cl-note">
+        The exact ordered content text nodes of this same card, from viewTextNodes(). The list is
+        static content; the block below is a polite live region that announces each change you make.
+      </p>
+
+      <ol class="lab-log-list">
+        {announced.map((node) => <li>{node}</li>)}
+      </ol>
+
+      <h3>Live announcements</h3>
+      <ul id="live-log" class="lab-live" role="log" aria-live="polite" aria-label="Live accessibility announcements">
+        <li>Accessibility Lab ready. Toggling a setting announces here.</li>
+      </ul>
+    </section>
+
+  </div>
+
+  <div class="cl-callout">
+    <strong>Parity by construction.</strong> The card above, the simulator right-hand rail and the
+    single-file MCP App card are all toView(structuredContent). A voice answer and this screen can
+    never disagree about what the clinician said, because they read one model, and a test proves the
+    ordered text nodes match.
+  </div>
+
+</Base>
+
+<script>
+  // Client-side toggles for the Accessibility Lab. All they do is flip classes / a data attribute on
+  // the preview and write an honest sentence into the polite live region. No third-party code, no
+  // network, no fabricated health content. Plain DOM JavaScript.
+  const preview = document.getElementById('preview');
+  const live = document.getElementById('live-log');
+  if (preview && live) {
+    const say = (message) => {
+      const li = document.createElement('li');
+      li.textContent = message;
+      live.appendChild(li);
+      while (live.children.length > 8) live.removeChild(live.firstElementChild);
+    };
+
+    document.getElementById('opt-fc').addEventListener('change', (e) => {
+      const on = e.target.checked;
+      preview.classList.toggle('is-fc', on);
+      say('Forced colours ' + (on ? 'on' : 'off') + '.');
+    });
+
+    const zoomBtns = Array.prototype.slice.call(document.querySelectorAll('[data-zoom]'));
+    zoomBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const level = btn.getAttribute('data-zoom');
+        preview.setAttribute('data-zoom', level);
+        zoomBtns.forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+        say('Text zoom ' + level + '%.');
+      });
+    });
+
+    const cvdNames = {
+      none: 'typical colour vision', protan: 'protanopia (no red)',
+      deutan: 'deuteranopia (no green)', tritan: 'tritanopia (no blue)',
+    };
+    document.getElementById('opt-cvd').addEventListener('change', (e) => {
+      const value = e.target.value;
+      preview.setAttribute('data-cvd', value);
+      say('Colour vision: ' + (cvdNames[value] || value) + '.');
+    });
+
+    document.getElementById('opt-rm').addEventListener('change', (e) => {
+      const on = e.target.checked;
+      preview.classList.toggle('is-rm', on);
+      say('Reduced motion ' + (on ? 'on, transitions removed' : 'off') + '.');
+    });
+
+    document.getElementById('opt-elder').addEventListener('change', (e) => {
+      const on = e.target.checked;
+      preview.setAttribute('data-text', on ? 'large' : 'normal');
+      preview.classList.toggle('is-elder', on);
+      say('Elder large-text ' + (on ? 'on' : 'off') + '.');
+    });
+  }
+</script>
+
+<style>
+  /* Layout. The card itself is styled by @careloop/ui components.css, exactly as the
+     simulator and the card surface style it — nothing here redefines a shared class. */
+  .lab-grid { display: grid; gap: var(--cl-sp-5); grid-template-columns: minmax(0, 1fr); align-items: start; }
+  @media (min-width: 60rem) { .lab-grid { grid-template-columns: 1fr 1.2fr 1fr; } }
+  .lab-field { display: grid; gap: var(--cl-sp-2); margin-bottom: var(--cl-sp-4); }
+  .tiny-gap { display: flex; gap: var(--cl-sp-2); flex-wrap: wrap; }
+  .lab-stage { min-width: 0; }
+  .chip {
+    min-height: var(--cl-target); padding: 0 var(--cl-sp-4); cursor: pointer;
+    font: inherit; color: var(--cl-ink); background: var(--cl-surface);
+    border: 1px solid var(--cl-line); border-radius: 999px;
+  }
+  .chip[aria-pressed="true"] { background: var(--cl-accent); color: var(--cl-accent-ink); border-color: transparent; }
+  .chip:focus-visible { outline: 3px solid var(--cl-accent); outline-offset: 2px; }
+
+  .cl-card { padding: var(--cl-sp-4); display: grid; gap: var(--cl-sp-4); }
+  .cl-card-head { display: flex; align-items: center; gap: var(--cl-sp-3); flex-wrap: wrap; }
+  .cl-card-head h3 { margin: 0; }
+  .cl-items { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--cl-sp-3); }
+  .cl-item-top { display: flex; align-items: center; gap: var(--cl-sp-2); flex-wrap: wrap; }
+  .cl-ord { font-size: var(--cl-text-xs); text-transform: uppercase; letter-spacing: .06em; color: var(--cl-ink-3); }
+  .cl-kind { font-weight: 700; color: var(--cl-ink-2); }
+  .cl-item-text { margin: 0; line-height: 1.5; }
+  .cl-item-sched { margin: 0; font-size: var(--cl-text-sm); color: var(--cl-ink-2); }
+  .cl-card-foot { display: grid; gap: var(--cl-sp-2); }
+  .cl-attr, .cl-policy { margin: 0; font-size: var(--cl-text-sm); color: var(--cl-ink-2); }
+
+  .lab-log-list { margin: 0; padding-left: 1.4rem; display: grid; gap: .35rem; max-height: 30rem; overflow: auto; }
+  .lab-log-list li { color: var(--cl-ink-2); font-size: var(--cl-text-sm); }
+  .lab-live { margin: 0; padding-left: 0; list-style: none; display: grid; gap: .3rem; max-height: 12rem; overflow: auto; }
+  .lab-live li { font-size: var(--cl-text-sm); color: var(--cl-ink); border-left: 3px solid var(--cl-accent); padding-left: var(--cl-sp-3); }
+
+  /* Every switch below acts on the .lab-preview subtree only, so the page's own chrome is
+     never affected by what the visitor is emulating. */
+  .lab-preview { min-width: 0; }
+
+  /* Text zoom: the em scale below is what makes 200% and 400% real reflow, not a screenshot. */
+  .lab-preview { font-size: var(--cl-text-base); }
+  .lab-preview[data-zoom="200"] { font-size: calc(var(--cl-text-base) * 2); }
+  .lab-preview[data-zoom="400"] { font-size: calc(var(--cl-text-base) * 4); }
+  .lab-preview .cl-card-head h3 { font-size: 1.35em; }
+  .lab-preview .cl-item-text { font-size: 1em; }
+  .lab-preview .cl-item-sched, .lab-preview .cl-kind, .lab-preview .cl-attr, .lab-preview .cl-policy { font-size: .875em; }
+  .lab-preview .cl-ord, .lab-preview .cl-pill { font-size: .78em; }
+  .lab-preview .cl-item { padding: .9em; gap: .4em; }
+  .lab-preview .cl-card { gap: .9em; padding: .9em; }
+
+  /* Elder / large text: bigger body text plus larger targets and stronger item borders. */
+  .lab-preview[data-text="large"], .lab-preview.is-elder { font-size: var(--cl-text-lg); }
+  .lab-preview.is-elder .cl-item { border-width: 2px; }
+  .lab-preview.is-elder .cl-item-text { font-size: var(--cl-text-lg); }
+  .lab-preview.is-elder .cl-pill { padding: var(--cl-sp-2) var(--cl-sp-4); }
+
+  /* Forced colours, emulated the way Windows high-contrast does it: the palette collapses to
+     a flat background, one text colour and borders that carry the meaning colour used to. */
+  .lab-preview.is-fc .cl-card, .lab-preview.is-fc .cl-item { background: #fff; color: #000; border-color: #000; box-shadow: none; }
+  .lab-preview.is-fc .cl-item { border-width: 2px; border-left-width: 6px; }
+  .lab-preview.is-fc .cl-pill { background: transparent; color: #000; border: 2px solid #000; }
+  .lab-preview.is-fc :is(.cl-ord, .cl-kind, .cl-item-sched, .cl-attr, .cl-policy, .cl-disclaimer) { color: #000; }
+  .lab-preview.is-fc h3 { color: #000; }
+
+  /* Colour-vision deficiency: the three matrices are inline in this document, above. */
+  .lab-preview[data-cvd="protan"] { filter: url(#cvd-protan); }
+  .lab-preview[data-cvd="deutan"] { filter: url(#cvd-deutan); }
+  .lab-preview[data-cvd="tritan"] { filter: url(#cvd-tritan); }
+
+  /* Reduced motion, both the OS preference and the explicit switch. */
+  @media (prefers-reduced-motion: reduce) {
+    .lab-preview * { transition: none !important; animation: none !important; }
+  }
+  .lab-preview.is-rm, .lab-preview.is-rm * { transition: none !important; animation: none !important; }
+</style>

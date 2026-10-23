@@ -1,0 +1,251 @@
+{
+  "checks": [
+    {
+      "id": "init-handshake",
+      "section": "transport",
+      "status": "PASS",
+      "detail": "all 3 supported versions negotiated, serverInfo+capabilities present, unknown version falls back to 2025-11-25"
+    },
+    {
+      "id": "session-issued-and-honored",
+      "section": "transport",
+      "status": "PASS",
+      "detail": "session id cl-179ebd9... is honoured on later requests; a missing MCP-Session-Id header is tolerated by this server"
+    },
+    {
+      "id": "session-unknown-rejected",
+      "section": "transport",
+      "status": "PASS",
+      "detail": "an unrecognised session id is refused with 404/-32001, asking to re-initialize"
+    },
+    {
+      "id": "protocol-version-header-enforced",
+      "section": "transport",
+      "status": "PASS",
+      "detail": "a bad MCP-Protocol-Version header is refused with 400, a supported one passes"
+    },
+    {
+      "id": "accept-negotiation-enforced",
+      "section": "transport",
+      "status": "PASS",
+      "detail": "an Accept header that cannot carry JSON is refused with 406"
+    },
+    {
+      "id": "origin-check-enforced",
+      "section": "transport",
+      "status": "PASS",
+      "detail": "a foreign Origin is refused with 403 (forbidden_origin); the endpoint's own Origin passes"
+    },
+    {
+      "id": "get-on-mcp-refused",
+      "section": "transport",
+      "status": "PASS",
+      "detail": "GET /mcp -> 405 with Allow: POST (no SSE stream claimed)"
+    },
+    {
+      "id": "notification-202-no-body",
+      "section": "transport",
+      "status": "PASS",
+      "detail": "a JSON-RPC notification answers 202 with an empty body"
+    },
+    {
+      "id": "batch-requests-refused",
+      "section": "transport",
+      "status": "PASS",
+      "detail": "a JSON-RPC batch is refused with -32600 and says so in the message"
+    },
+    {
+      "id": "parse-error-code",
+      "section": "transport",
+      "status": "PASS",
+      "detail": "malformed JSON -> 400 with JSON-RPC -32700 Parse error"
+    },
+    {
+      "id": "tools-list-complete",
+      "section": "transport",
+      "status": "PASS",
+      "detail": "12 intents, each with name/description/inputSchema/outputSchema; descriptions carry no tool names, JSON keys or ids"
+    },
+    {
+      "id": "tool-annotations-honest",
+      "section": "transport",
+      "status": "PASS",
+      "detail": "delete_instruction is destructive, 8 read intents declare readOnlyHint, no tool claims both"
+    },
+    {
+      "id": "unauthenticated-401-challenge",
+      "section": "auth",
+      "status": "SKIP",
+      "detail": "skipped (--skip-auth)"
+    },
+    {
+      "id": "protected-resource-metadata",
+      "section": "auth",
+      "status": "PASS",
+      "detail": "resource=http://127.0.0.1:8090/mcp, servers=['http://127.0.0.1:8090'], scopes=['mcp:tools', 'mcp:service']"
+    },
+    {
+      "id": "authorization-server-metadata",
+      "section": "auth",
+      "status": "PASS",
+      "detail": "issuer/authorization/token endpoints all resolve to this host and the advertised endpoints answer"
+    },
+    {
+      "id": "metadata-internally-consistent",
+      "section": "auth",
+      "status": "PASS",
+      "detail": "issuer == authorization_servers[0], scopes agree, both endpoints resolve"
+    },
+    {
+      "id": "pkce-s256-only",
+      "section": "auth",
+      "status": "PASS",
+      "detail": "code_challenge_methods_supported is exactly ['S256']"
+    },
+    {
+      "id": "no-dynamic-registration-no-oidc",
+      "section": "auth",
+      "status": "PASS",
+      "detail": "grant types=['authorization_code', 'refresh_token', 'client_credentials'], scopes=['mcp:tools', 'mcp:service'], no registration or OIDC endpoints"
+    },
+    {
+      "id": "plain-code-challenge-refused",
+      "section": "auth",
+      "status": "PASS",
+      "detail": "code_challenge_method=plain is refused with 400 and never issues a code"
+    },
+    {
+      "id": "redirect-uri-strict-match",
+      "section": "auth",
+      "status": "PASS",
+      "detail": "an unregistered redirect_uri is refused; a registered one renders the consent screen"
+    },
+    {
+      "id": "resource-audience-checked",
+      "section": "auth",
+      "status": "PASS",
+      "detail": "an authorization request bound to another server's resource is refused"
+    },
+    {
+      "id": "credentials-in-query-rejected",
+      "section": "auth",
+      "status": "PASS",
+      "detail": "GET credentials in the query string -> 400; a secret in the form body -> 400 with 'send credentials in the Basic header only'"
+    },
+    {
+      "id": "client-credentials-service-scoped",
+      "section": "auth",
+      "status": "SKIP",
+      "detail": "skipped (--skip-auth)"
+    },
+    {
+      "id": "pkce-linking-flow",
+      "section": "auth",
+      "status": "SKIP",
+      "detail": "skipped (--skip-auth)"
+    },
+    {
+      "id": "revoked-token-rejected",
+      "section": "auth",
+      "status": "SKIP",
+      "detail": "skipped (--skip-auth)"
+    },
+    {
+      "id": "plan-surface-dose-free",
+      "section": "safety",
+      "status": "PASS",
+      "detail": "3 item(s) inspected on the voice surface, no dose anywhere in content[] or structuredContent; the masked phrase 'your prescribed amount' is present"
+    },
+    {
+      "id": "todays-surface-dose-free",
+      "section": "safety",
+      "status": "PASS",
+      "detail": "4 item(s) inspected on the voice surface, no dose anywhere in content[] or structuredContent; the masked phrase 'your prescribed amount' is present"
+    },
+    {
+      "id": "quote-surface-dose-free",
+      "section": "safety",
+      "status": "PASS",
+      "detail": "the recorded words for the second item come back verbatim with every quantity replaced (the masked phrase 'your prescribed amount' is present)"
+    },
+    {
+      "id": "disclaimer-and-attribution",
+      "section": "safety",
+      "status": "PASS",
+      "detail": "7 answers inspected: every one carries the not-medical-advice disclaimer and every item-bearing answer attributes the words to the clinician"
+    },
+    {
+      "id": "voice-hygiene-no-internals",
+      "section": "safety",
+      "status": "PASS",
+      "detail": "8 spoken answers audited: no tool name, no JSON key, no item id, no JSON markup, none over 80 words"
+    },
+    {
+      "id": "guest-safe-about-answers",
+      "section": "safety",
+      "status": "PASS",
+      "detail": "about_careloop answered with capabilities and the first-run link notice and no credential presented at all"
+    },
+    {
+      "id": "crisis-redirect-not-advice",
+      "section": "safety",
+      "status": "PASS",
+      "detail": "a crisis transcript returns the helpline redirect (112 / 14416), stores nothing and offers no advice"
+    },
+    {
+      "id": "child-content-refused",
+      "section": "safety",
+      "status": "PASS",
+      "detail": "a note naming a child is refused and nothing is stored (the reply explains the adult-only policy)"
+    },
+    {
+      "id": "injection-refused-not-stored",
+      "section": "safety",
+      "status": "PASS",
+      "detail": "the injection-style note is refused in plain language and appears in no later plan answer"
+    },
+    {
+      "id": "capture-surface-guardrails",
+      "section": "safety",
+      "status": "PASS",
+      "detail": "the capture surface redirects a crisis transcript, refuses paediatric content and refuses instruction-like text; no dose ever reaches a spoken field from here"
+    },
+    {
+      "id": "structured-content-conforms",
+      "section": "transport",
+      "status": "PASS",
+      "detail": "7/7 probed tools/call returned content[] plus structuredContent conforming to the declared outputSchema"
+    },
+    {
+      "id": "p95-under-500ms",
+      "section": "performance",
+      "status": "PASS",
+      "detail": "n=20 client-side round trips: p50 36 ms, p95 71 ms, p99 71 ms, max 71 ms (budget 500 ms, measured locally)"
+    },
+    {
+      "id": "card-resource-declared",
+      "section": "card",
+      "status": "PASS",
+      "detail": "resources/list declares ui://careloop/card as text/html;profile=mcp-app"
+    },
+    {
+      "id": "card-self-contained-html",
+      "section": "card",
+      "status": "PASS",
+      "detail": "one self-contained HTML document (72 KB), inline script and style only, no external script/stylesheet/font URL, disclaimer on the card"
+    }
+  ],
+  "summary": {
+    "pass": 35,
+    "fail": 0,
+    "skip": 4,
+    "total": 39,
+    "exit_code": 0,
+    "endpoint": "http://127.0.0.1:8090/mcp",
+    "auth_mode": "off",
+    "session": true,
+    "seeded": "pre-existing",
+    "checks_run": 39,
+    "stopped_early": false
+  }
+}

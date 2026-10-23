@@ -1,0 +1,63 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CareLoop — Judge mode</title><link rel="stylesheet" href="/static/base.css"></head>
+<body><main>
+<h1>CareLoop judge mode</h1>
+<p class="small">One page mapping every claim to on-screen evidence. <span class="badge">simulated Alexa+ · real MCP server</span></p>
+<div class="row"><button id="rerun">Re-run checks</button>
+  <button id="preflight" class="secondary">Run preflight live</button>
+  <a href="/metrics" class="ghost" target="_blank">/metrics</a></div>
+<div class="grid" id="cards"></div>
+<h2>Rule → evidence</h2>
+<table id="trace"><thead><tr><th>Rule / requirement</th><th>Where</th><th>Status</th></tr></thead><tbody></tbody></table>
+<h2>Live check output</h2>
+<div class="drawer" id="out">press a button above</div>
+<script>
+const $=s=>document.querySelector(s);
+const DATA=JSON.parse(document.getElementById('boot')?.textContent||'null')|| window.__JUDGE__ || null;
+function card(title, body, ok){const d=document.createElement('div');d.className='panel';
+  d.innerHTML=`<h2 style="margin-top:0">${title}</h2><div>${body}</div>
+  <div class="${ok===undefined?'':ok?'ok':'bad'}">${ok===undefined?'':ok?'✓ pass':'✗ check'}</div>`;return d;}
+function render(j){
+  $('#cards').innerHTML='';
+  const add=(t,b,ok)=>$('#cards').appendChild(card(t,b,ok));
+  add('Protocol', 'Negotiates '+j.protocol.join(', '), true);
+  add('Tools ('+j.tools.length+')', j.tools.map(t=>'<span class="chip">'+t+'</span>').join(' '), true);
+  add('Tool-manifest hash (pinned)', '<code>'+j.manifest_hash.slice(0,32)+'…</code><div class="small">CI fails if a description changes without a version bump.</div>', true);
+  add('Guest-safe tools', j.guest_safe.join(', ')||'(none)', true);
+  const L=j.metrics.latency; const p95 = Object.values(L).map(v=>v.p95).filter(x=>x!=null);
+  const slo = p95.length? Math.max(...p95)<500 : true;
+  add('Latency SLO p95 &lt; 500 ms', '<div class="small">per tool</div><table><tr><th>tool</th><th>p50</th><th>p95</th><th>n</th></tr>'+
+      Object.entries(L).map(([k,v])=>`<tr><td>${k}</td><td>${v.p50}</td><td>${v.p95}</td><td>${v.n}</td></tr>`).join('')+
+      '</table>'+(Object.keys(L).length?'':'<div class="small">no calls yet</div>'), slo);
+  const led=Object.entries(j.ledger||{}); const allOk=led.every(([k,v])=>v.ok);
+  add('Tamper-evident ledger', led.map(([k,v])=>`<div>${k}: ${v.events} events ${v.ok?'<span class=ok>verified</span>':'<span class=bad>broken@'+v.broken_at+'</span>'}</div>`).join('')||'<div class=small>no cells yet</div>', led.length?allOk:undefined);
+  add('Policy guard self-test', '<div class="small">dose-leak after masking: <b>'+j.policy_self_test.dose_leak_after_mask+'</b> (want 0)</div>'+
+      '<div class="small">crisis='+j.policy_self_test.crisis_recall_demo+' · child-block='+j.policy_self_test.child_block_demo+' · injection-block='+j.policy_self_test.injection_block_demo+'</div>'+
+      j.policy_self_test.masked_examples.map(m=>'<div class="quote">'+m+'</div>').join(''),
+      j.policy_self_test.dose_leak_after_mask===0 && j.policy_self_test.crisis_recall_demo && j.policy_self_test.injection_block_demo);
+  add('Cost / frugality', 'Model spend $'+j.metrics.cost_usd+' · escalations '+j.metrics.escalations+
+      '<div class="small">cascade: rules → small → large only on low confidence / disagreement.</div>', true);
+  add('Chaos / degradation', 'Injected faults now: '+(j.chaos.join(', ')||'none')+
+      ((j.chaos_unknown||[]).length? ' · unknown (inert): '+j.chaos_unknown.join(', '):'')+
+      '<div class="small">CARELOOP_CHAOS=bedrock_throttle,verify_down,latency_800ms,db_locked — see README.md for what each one really does.</div>', true);
+  const rows=[
+    ['Alexa+ §13 dosage: dose-free voice surface','policy_guard.mask_doses + guard_payload; N3 ViewDose forbidden on alexa','built'],
+    ['Alexa+ §6 no cross-account data','store cells + token sub=household; tests/test_isolation.py','built'],
+    ['Alexa+ §13 crisis redirect','policy_guard.is_crisis → CRISIS_REDIRECT (112 / 14416)','built'],
+    ['MCP 2025-11-25 Streamable HTTP','mcp_server.py; Origin 403, protocol-version 400, 202 notifications','built'],
+    ['Account linking OAuth 2.1 + PKCE','oauth.py; PRM + AS metadata + S256','built'],
+    ['Grounding / no hallucination','extract.py N1 pointer-only; quote guard; property tests','built'],
+    ['AWS Builder: Bedrock two-pass','extract.py process_visit (Converse extract+verify); Kiro for dev','built'],
+    ['Open Source: eval + preflight','eval/ dataset; scripts/alexa_mcp_preflight','built'],
+    ['Tool latency <500ms','this page + tests/test_perf.py','built'],
+  ];
+  $('#trace tbody').innerHTML=rows.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td class="ok">${r[2]}</td></tr>`).join('');
+}
+async function boot(){const r=await fetch('/api/judge-data');render(await r.json());}
+$('#rerun').onclick=boot;
+$('#preflight').onclick=async()=>{$('#out').textContent='running…';
+  const r=await fetch('/api/preflight');const j=await r.json();
+  $('#out').textContent=j.map(x=>`${x.pass?'✓':'✗'}  ${x.name}: ${x.detail}`).join('\n');};
+boot();
+</script></main></body></html>

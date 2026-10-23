@@ -1,0 +1,124 @@
+---
+import Base from '../../layouts/Base.astro';
+
+const title = 'Architecture — CareLoop';
+const description =
+  'CareLoop data flow: capture, two-pass grounded extraction, encrypted per-household cells, the MCP Streamable-HTTP server, the dose-free policy guard and the two surfaces.';
+
+// name -> one-line intent, from careloop/tools.py TOOL_DEFS
+const tools = [
+  ['about_careloop', 'Explain what CareLoop can do; the guest-safe entry point and first-run examples.'],
+  ['get_care_plan', 'List what to do next for one person, pending items first, dose-masked on the voice surface.'],
+  ['explain_instruction', 'Show the clinician’s original recorded sentence for one item and when it was recorded.'],
+  ['mark_done', 'Record that one care item was completed (idempotent, with version conflict detection).'],
+  ['confirm_instruction', 'Clear a flagged item’s “needs confirmation” flag after the caregiver checks with the clinician.'],
+  ['add_note', 'Remember one short verbal instruction exactly as given; never adds medical advice.'],
+  ['delete_instruction', 'Remove an item — reads it back first and requires explicit confirmation (destructive).'],
+  ['list_people', 'List the people in this household’s care plans.'],
+  ['todays_plan', 'Today’s agenda for one person, ordered by time of day.'],
+  ['what_changed', 'Diff this visit against the previous one: new, stopped and changed items.'],
+  ['prepare_next_visit', 'Build the caregiver’s question list from flagged, superseded and note items — no advice.'],
+  ['daily_digest', 'How much of today’s plan is done versus pending.'],
+];
+---
+<Base title={title} description={description}>
+  <article class="cl-prose">
+    <h1>Architecture</h1>
+    <p class="u-mute">
+      One self-hosted Python process speaks MCP over Streamable HTTP and serves both surfaces. The
+      same outbound guard is applied to every response, which is what makes the voice surface
+      dose-free by construction.
+    </p>
+
+    <h2>Data flow</h2>
+    <pre class="cl-pre" aria-label="CareLoop data flow diagram"><code>  clinician's words
+  (paste / upload / dictate)
+            │
+            ▼
+  ┌──────────────────────────┐   crisis / child / injection   ┌─────────────┐
+  │  policy_guard (inbound)  │ ───── rejects / redirects ───► │  stop line  │
+  └──────────────────────────┘                                └─────────────┘
+            │ transcript (treated as DATA, never instructions)
+            ▼
+  ┌──────────────────────────┐
+  │  extract: two-pass       │
+  │   1. rules extractor     │  deterministic, always runs
+  │   2. Bedrock pass 1      │  pointer-only schema (no free text)
+  │      Bedrock pass 2      │  verifier  ·  falls back to rules on error
+  │   validate_pointers +    │
+  │   quote_guard (verbatim) │  span must be inside its sentence AND in the transcript
+  └──────────────────────────┘
+            │ items &#123;kind, span, quote, schedule, confidence, needs_confirm&#125;
+            ▼
+  ┌──────────────────────────┐   transcript → SHA-256 hash only
+  │  store: per-household    │   (raw transcript not kept by default)
+  │  encrypted SQLite cell   │   AES-256-GCM fields · append-only hash-chained ledger
+  │  + crypto-shred erasure  │
+  └──────────────────────────┘
+            │ structuredContent
+            ▼
+  ┌──────────────────────────┐   OAuth 2.1 + PKCE(S256) · PRM/AS metadata · MCP-Session-Id
+  │  careloop.mcp_server     │ ◄── POST /mcp  (Streamable HTTP)
+  │  /mcp  + companion API   │
+  └──────────────────────────┘
+        │                    │
+        │ guard_payload      │ full doses (ViewDose, companion only)
+        │ (mask_doses +      │
+        │  disclaimer +      ▼
+        │  attribution) ┌───────────────┐        ┌────────────────────┐
+        └──────────────►│  Alexa voice  │        │ companion page     │
+                        │  surface      │        │ (behind household  │
+                        │  dose-free    │        │  login) — full dose│
+                        └───────────────┘        └────────────────────┘
+                                     ▲                      ▲
+                              authz.decide  ── one decision point, Cedar-style,
+                                              differentially tested vs policies.cedar</code></pre>
+
+    <h2>MCP transport &amp; auth</h2>
+    <ul>
+      <li><strong>Streamable HTTP</strong> at <span class="cl-kbd">POST /mcp</span>; GET is refused
+        with <span class="cl-kbd">405</span> (no server-initiated SSE stream). Batch requests are
+        rejected; notifications get <span class="cl-kbd">202</span>.</li>
+      <li><strong>MCP-Session-Id</strong> is issued on <span class="cl-kbd">initialize</span> and
+        required on initialised requests; an unknown session returns <span class="cl-kbd">404</span>
+        and a bad <span class="cl-kbd">MCP-Protocol-Version</span> header returns
+        <span class="cl-kbd">400</span>.</li>
+      <li><strong>OAuth 2.1</strong> authorization-code with <strong>PKCE (S256)</strong> only; static
+        clients authenticate with a Basic header, and credentials in the query string are rejected.
+        Tokens are audience-bound and expire.</li>
+      <li><strong>PRM / AS metadata</strong> are served at
+        <span class="cl-kbd">/.well-known/oauth-protected-resource</span> and
+        <span class="cl-kbd">/.well-known/oauth-authorization-server</span>; unauthenticated calls
+        return <span class="cl-kbd">401</span> with a <span class="cl-kbd">WWW-Authenticate</span>
+        pointer to the resource metadata.</li>
+      <li><strong>policy_guard</strong> is the last gate on every Alexa-surface response: dose
+        masking, disclaimer and attribution, plus a residual dose-leak check that hard-sanitizes and
+        counts.</li>
+      <li><strong>Bedrock two-pass with rules fallback</strong>: pass 1 points into the transcript,
+        pass 2 verifies; if the model is throttled or unreachable the pipeline degrades to the
+        deterministic rules extractor rather than failing.</li>
+    </ul>
+
+    <h2>The twelve MCP tools</h2>
+    <p>One intent per tool, validated inputs and declared output schemas:</p>
+    <div class="cl-panel" style="padding-inline:0;overflow:hidden;margin-top:var(--cl-sp-4);">
+      <table class="cl-table">
+        <caption class="sr-only">CareLoop MCP tools and their intents</caption>
+        <thead>
+          <tr><th scope="col">Tool</th><th scope="col">Intent</th></tr>
+        </thead>
+        <tbody>
+          {tools.map(([name, intent]) => (
+            <tr><th scope="row"><span class="cl-kbd">{name}</span></th><td>{intent}</td></tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <p class="cl-note" style="margin-top:var(--cl-sp-5);">
+      Storage layout: <span class="cl-kbd">&lt;db_root&gt;/cells/&lt;sha16(hid)&gt;/care.db</span> per
+      household, a separate keyring, and a global DB of households, links and tombstones that holds
+      no PHI. See <a href="/docs/judging">the judging map</a> for the files behind each claim.
+    </p>
+  </article>
+</Base>

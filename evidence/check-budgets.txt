@@ -1,0 +1,10 @@
+ITEM                      MEASURED      BUDGET  STATUS
+--------------------------------------------------------
+card (single file)          72.7 kB       100 kB    ok  (73%)
+simulator                  228.1 kB       232 kB    ok  (98%)
+companion                  340.0 kB       352 kB    ok  (97%)
+site                        87.5 kB        92 kB    ok  (95%)
+--------------------------------------------------------
+
+BUDGET CHECK PASSED  (size, self-contained card, no .env, no secrets)
+Note: budgets are our own, per-bundle measurements plus headroom (see the budget notes in this file), not Amazon-imposed ceilings.

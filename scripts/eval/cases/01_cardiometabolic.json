@@ -1,0 +1,141 @@
+{
+  "version": "2026.10.21",
+  "notes": "Synthetic adult geriatric primary-care transcripts. Invented clinicians and patients, no real PHI. Gold quotes are copied verbatim out of the transcripts by hand; the harness re-checks that.",
+  "cases": [
+    {
+      "id": "htn-01",
+      "title": "Hypertension: amlodipine added, home BP diary",
+      "person": "Papa",
+      "tags": ["hypertension", "medication-change"],
+      "lines": [
+        "Doctor: Papa's blood pressure is still high, so today we alter the plan.",
+        "Doctor: Start amlodipine 5 mg every morning, with breakfast.",
+        "Doctor: Continue telmisartan 40 mg at night, exactly as before.",
+        "Doctor: Never stop the amlodipine on a day when the reading looks normal.",
+        "Caregiver: Should he take it before food or after food?",
+        "Doctor: Check his blood pressure every evening and write it in the diary.",
+        "Nurse: Reduce the salt in his cooking, and avoid pickles and papad.",
+        "Doctor: Come back in two weeks and we will review the creatinine and the sugars.",
+        "Nurse: Remember to call us if he feels dizzy or faints after a tablet."
+      ],
+      "items": [
+        {"kind": "medication", "quote": "Start amlodipine 5 mg every morning, with breakfast.",
+         "schedule": {"kind": "RECURRENCE", "day_parts": ["MORNING"]}},
+        {"kind": "medication", "quote": "Continue telmisartan 40 mg at night, exactly as before.",
+         "schedule": {"kind": "RECURRENCE", "day_parts": ["BEDTIME"]}},
+        {"kind": "avoid", "quote": "Never stop the amlodipine on a day when the reading looks normal.",
+         "schedule": null},
+        {"kind": "monitor", "quote": "Check his blood pressure every evening and write it in the diary.",
+         "schedule": {"kind": "RECURRENCE", "day_parts": ["EVENING"]}},
+        {"kind": "avoid", "quote": "Reduce the salt in his cooking, and avoid pickles and papad.",
+         "schedule": null},
+        {"kind": "appointment", "quote": "Come back in two weeks and we will review the creatinine and the sugars.",
+         "schedule": {"kind": "ONCE", "has_date": true}},
+        {"kind": "task", "quote": "Remember to call us if he feels dizzy or faints after a tablet.",
+         "schedule": null}
+      ]
+    },
+    {
+      "id": "t2dm-01",
+      "title": "Type 2 diabetes: metformin timing, insulin started, lows",
+      "person": "Amma",
+      "tags": ["diabetes", "insulin", "hypoglycaemia"],
+      "lines": [
+        "Doctor: Amma's sugar control has slipped, so we adjust the tablets today.",
+        "Doctor: Take the metformin twice a day with dinner, that is 1000mg each time.",
+        "Doctor: Increase the metformin to 1000mg, two tablets in the morning and none at night.",
+        "Doctor: Inject insulin 10 units at bedtime, in the thigh, and rotate the spot every week.",
+        "Nurse: Check the glucose before breakfast and again two hours after food.",
+        "Doctor: Add one extra egg to her breakfast every morning, protein matters more than bread.",
+        "Doctor: If she feels shaky, give the glucose powder with a little water right away.",
+        "Doctor: Do not skip the morning tablet even if she sleeps late, take it with milk instead.",
+        "Nurse: Call the clinic the same day if her sugar runs below seventy or she is too sleepy to wake."
+      ],
+      "items": [
+        {"kind": "medication", "quote": "Take the metformin twice a day with dinner, that is 1000mg each time.",
+         "schedule": {"kind": "RECURRENCE", "day_parts": ["MORNING", "EVENING"], "times_per_day": 2}},
+        {"kind": "medication", "quote": "Increase the metformin to 1000mg, two tablets in the morning and none at night.",
+         "schedule": {"kind": "RECURRENCE", "day_parts": ["MORNING"]},
+         "note": "a dose change verb (increase) is not in the extractor's take-verb list, so the rules pass drops it"},
+        {"kind": "medication", "quote": "Inject insulin 10 units at bedtime, in the thigh, and rotate the spot every week.",
+         "schedule": {"kind": "RECURRENCE", "day_parts": ["BEDTIME"]}},
+        {"kind": "monitor", "quote": "Check the glucose before breakfast and again two hours after food.",
+         "schedule": {"kind": "RECURRENCE", "day_parts": ["BEFORE_FOOD"]}},
+        {"kind": "diet", "quote": "Add one extra egg to her breakfast every morning, protein matters more than bread.",
+         "schedule": {"kind": "RECURRENCE", "day_parts": ["MORNING"]}, "needs_confirm": true},
+        {"kind": "diet", "quote": "If she feels shaky, give the glucose powder with a little water right away.",
+         "schedule": null, "needs_confirm": true},
+        {"kind": "avoid", "quote": "Do not skip the morning tablet even if she sleeps late, take it with milk instead.",
+         "schedule": {"kind": "RECURRENCE", "day_parts": ["MORNING"]}},
+        {"kind": "task", "quote": "Call the clinic the same day if her sugar runs below seventy or she is too sleepy to wake.",
+         "schedule": null,
+         "note": "no 'call the clinic if' pattern in the task rules, so this warning is not extracted"}
+      ]
+    },
+    {
+      "id": "hf-01",
+      "title": "Heart failure: diuretic, daily weight, fluid limit",
+      "person": "Raghavan",
+      "tags": ["heart failure", "fluid restriction", "weights"],
+      "lines": [
+        "Doctor: His neck veins are up and the ankles are swollen, so today we need a stronger diuretic.",
+        "Doctor: Take furosemide 40 mg every morning, nothing after midday.",
+        "Nurse: Measure his weight every morning before breakfast and write the number in the diary.",
+        "Doctor: Restrict fluids to four cups a day, that is about one litre in total.",
+        "Doctor: Do not use ibuprofen or any painkiller from the shop for the leg pain.",
+        "Doctor: Avoid salt and pickles, they hold water in the body.",
+        "Nurse: Make sure to call us the same day if he gains two kilos in two days or needs more pillows at night.",
+        "Doctor: No smoking in the house from today, the smoke undoes the medicine."
+      ],
+      "items": [
+        {"kind": "medication", "quote": "Take furosemide 40 mg every morning, nothing after midday.",
+         "schedule": {"kind": "RECURRENCE", "day_parts": ["MORNING"]}},
+        {"kind": "monitor", "quote": "Measure his weight every morning before breakfast and write the number in the diary.",
+         "schedule": {"kind": "RECURRENCE", "day_parts": ["MORNING"]}},
+        {"kind": "diet", "quote": "Restrict fluids to four cups a day, that is about one litre in total.",
+         "schedule": null, "needs_confirm": true},
+        {"kind": "avoid", "quote": "Do not use ibuprofen or any painkiller from the shop for the leg pain.",
+         "schedule": null},
+        {"kind": "avoid", "quote": "Avoid salt and pickles, they hold water in the body.",
+         "schedule": null},
+        {"kind": "task", "quote": "Make sure to call us the same day if he gains two kilos in two days or needs more pillows at night.",
+         "schedule": null,
+         "note": "a conditional warning has no calendar date; reading 'in two days' as one is a schedule error"},
+        {"kind": "avoid", "quote": "No smoking in the house from today, the smoke undoes the medicine.",
+         "schedule": null,
+         "note": "a bare 'No <thing>' negation is not in the avoid rules, so this is missed"}
+      ]
+    },
+    {
+      "id": "statin-01",
+      "title": "Statin therapy: myalgia watch, repeat lipids, no self-stopping",
+      "person": "Martha",
+      "tags": ["statin", "lipids", "muscle pain"],
+      "lines": [
+        "Doctor: Her cholesterol is well held on the current statin, so we leave the tablet as it is.",
+        "Doctor: Continue atorvastatin 20 mg at night for now.",
+        "Nurse: Make sure to report any muscle pain, dark urine or new weakness straight away.",
+        "Doctor: Get the liver blood test and the lipid panel done in three months, before you come back.",
+        "Doctor: Eat less fried food and keep the walking going after dinner.",
+        "Doctor: Measure the calf and arm pain and write down which days it stops her moving.",
+        "Doctor: Do not start any over-the-counter painkiller without asking us, especially with the statin.",
+        "Doctor: Given the aching, some people stop the tablet on their own, and that is the risk we worry about."
+      ],
+      "items": [
+        {"kind": "medication", "quote": "Continue atorvastatin 20 mg at night for now.",
+         "schedule": {"kind": "RECURRENCE", "day_parts": ["BEDTIME"]}},
+        {"kind": "task", "quote": "Make sure to report any muscle pain, dark urine or new weakness straight away.",
+         "schedule": null},
+        {"kind": "appointment", "quote": "Get the liver blood test and the lipid panel done in three months, before you come back.",
+         "schedule": {"kind": "ONCE", "has_date": true},
+         "note": "timecraft reads 'in N days/weeks' but not months, so this follow-up date is not resolved"},
+        {"kind": "diet", "quote": "Eat less fried food and keep the walking going after dinner.",
+         "schedule": {"kind": "RECURRENCE", "day_parts": ["AFTER_FOOD"]}, "needs_confirm": true},
+        {"kind": "monitor", "quote": "Measure the calf and arm pain and write down which days it stops her moving.",
+         "schedule": null},
+        {"kind": "avoid", "quote": "Do not start any over-the-counter painkiller without asking us, especially with the statin.",
+         "schedule": null}
+      ]
+    }
+  ]
+}

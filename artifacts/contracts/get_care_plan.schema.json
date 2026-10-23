@@ -1,0 +1,68 @@
+{
+  "action": "ViewPlan",
+  "annotations": {
+    "readOnlyHint": true
+  },
+  "description": "List what to do next for one person's care plan: medicines, tasks, things to avoid, and follow-ups, with what is pending first. Synonyms: what's next, what is the plan, list instructions, what did the doctor say.",
+  "guest_safe": false,
+  "inputSchema": {
+    "additionalProperties": false,
+    "properties": {
+      "kind": {
+        "enum": [
+          "medication",
+          "appointment",
+          "avoid",
+          "task",
+          "monitor",
+          "diet"
+        ],
+        "type": "string"
+      },
+      "limit": {
+        "maximum": 5,
+        "minimum": 1,
+        "type": "integer"
+      },
+      "person": {
+        "description": "Who the plan is about, e.g. mother, father, Papa, name. Synonyms mapped to household members.",
+        "maxLength": 40,
+        "type": "string"
+      }
+    },
+    "type": "object"
+  },
+  "name": "get_care_plan",
+  "outputSchema": {
+    "properties": {
+      "attribution": {
+        "type": "string"
+      },
+      "avoid": {
+        "type": "array"
+      },
+      "disclaimer": {
+        "type": "string"
+      },
+      "dose_policy": {
+        "type": "string"
+      },
+      "items": {
+        "type": "array"
+      },
+      "person": {
+        "type": [
+          "string",
+          "null"
+        ]
+      }
+    },
+    "required": [
+      "items",
+      "attribution",
+      "disclaimer"
+    ],
+    "type": "object"
+  },
+  "ui": true
+}

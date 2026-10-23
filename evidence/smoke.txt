@@ -1,0 +1,5 @@
+handshake  2025-11-25 from {'name': 'careloop', 'version': '6.0.0'}, session cl-ba90fa6648501c0e
+tools      12 declared, manifest hash ab35a9c207d12e4f504e527b726c78dc6253dc50782a3743ba9cd400b1e96c31
+about      5 capabilities, spoken: CareLoop remembers what your clinician said. Ask what is next for some
+care plan  3 item(s), dose-masked YES (no quantity found in answer, masked phrase present)
+smoke: PASS

@@ -1,0 +1,180 @@
+{
+  "version": "2026.10.21",
+  "notes": "Non-medication care instructions: home safety, food and fluid rules, eye drops, bowels, and the labs needed before the next visit.",
+  "cases": [
+    {
+      "id": "falls-01",
+      "title": "Fall prevention: rails, footwear, lighting, physio booking",
+      "person": "Kamala",
+      "tags": ["falls", "mobility", "home-safety"],
+      "lines": [
+        "Doctor: She fell twice in the bathroom, but the scans and the heart are not the problem.",
+        "Nurse: Please arrange rails on both sides of the corridor and inside the toilet.",
+        "Doctor: Wear the non-slip shoes indoors, slippers are what sent her down.",
+        "Nurse: Please keep the hallway light on at night so she can see the floor.",
+        "Doctor: No stairs without someone nearby, and do not climb the terrace to fetch things.",
+        "Nurse: Make sure the walking frame is beside the bed before she stands up.",
+        "Doctor: Keep the call bell within her reach, and please note the room she fell in.",
+        "Nurse: Shift the family duty so someone is awake with her between midnight and four.",
+        "Doctor: Book the follow-up physio session every Monday and Thursday for the leg strength."
+      ],
+      "items": [
+        {"kind": "task", "quote": "Please arrange rails on both sides of the corridor and inside the toilet.",
+         "schedule": null},
+        {"kind": "task", "quote": "Wear the non-slip shoes indoors, slippers are what sent her down.",
+         "schedule": null},
+        {"kind": "task", "quote": "Please keep the hallway light on at night so she can see the floor.",
+         "schedule": {"kind": "RECURRENCE", "day_parts": ["BEDTIME"]}},
+        {"kind": "avoid", "quote": "No stairs without someone nearby, and do not climb the terrace to fetch things.",
+         "schedule": null},
+        {"kind": "task", "quote": "Make sure the walking frame is beside the bed before she stands up.",
+         "schedule": null},
+        {"kind": "task", "quote": "Keep the call bell within her reach, and please note the room she fell in.",
+         "schedule": null},
+        {"kind": "task", "quote": "Shift the family duty so someone is awake with her between midnight and four.",
+         "schedule": null,
+         "note": "'between midnight and four' is outside the schedule grammar, no clock reading is claimed"},
+        {"kind": "appointment", "quote": "Book the follow-up physio session every Monday and Thursday for the leg strength.",
+         "schedule": {"kind": "WEEKLY", "weekdays": [0, 3]},
+         "note": "extract_schedule returns only the first match, so Thursday is dropped"}
+      ]
+    },
+    {
+      "id": "diet-01",
+      "title": "Chronic kidney diet: fluid cap, salt, protein, potassium, walking",
+      "person": "Prema",
+      "tags": ["diet", "fluid-restriction", "ckd", "potassium"],
+      "lines": [
+        "Doctor: Her kidneys are tired, so the food rules matter more than any tablet this month.",
+        "Nurse: Boil and cool the water, and keep the total fluid to one litre a day.",
+        "Doctor: Do not add salt at the table, and skip the pickle and the papad.",
+        "Nurse: One egg and half a cup of dal every morning for protein.",
+        "Doctor: Do not eat banana or coconut water, the potassium climbs after them.",
+        "Nurse: A thirty minute walk after dinner, five days a week, and stop at the first chest pain.",
+        "Doctor: Please get the haemoglobin and the potassium done before the next visit.",
+        "Nurse: Make sure to call us the same day if she cannot drink at all or starts vomiting."
+      ],
+      "items": [
+        {"kind": "diet", "quote": "Boil and cool the water, and keep the total fluid to one litre a day.",
+         "schedule": {"kind": "RECURRENCE"}, "needs_confirm": true,
+         "note": "'one litre a day' is not read: the extractor needs a numeral before 'a day'"},
+        {"kind": "avoid", "quote": "Do not add salt at the table, and skip the pickle and the papad.",
+         "schedule": null},
+        {"kind": "diet", "quote": "One egg and half a cup of dal every morning for protein.",
+         "schedule": {"kind": "RECURRENCE", "day_parts": ["MORNING"]}, "needs_confirm": true},
+        {"kind": "diet", "quote": "Do not eat banana or coconut water, the potassium climbs after them.",
+         "schedule": null, "needs_confirm": true,
+         "note": "a food the family must not give reads as diet, not avoid: 'banana' is not in the avoid hint list"},
+        {"kind": "diet", "quote": "A thirty minute walk after dinner, five days a week, and stop at the first chest pain.",
+         "schedule": {"kind": "RECURRENCE", "day_parts": ["AFTER_FOOD"]}, "needs_confirm": true,
+         "note": "the 'five days a week' part of the dose of exercise is not read"},
+        {"kind": "appointment", "quote": "Please get the haemoglobin and the potassium done before the next visit.",
+         "schedule": null,
+         "note": "'before the next visit' is a deadline, not a slot: nothing is read"},
+        {"kind": "task", "quote": "Make sure to call us the same day if she cannot drink at all or starts vomiting.",
+         "schedule": null}
+      ]
+    },
+    {
+      "id": "eye-01",
+      "title": "Cataract follow-up: drop technique, second eye date, red-eye warning",
+      "person": "Amina",
+      "tags": ["ophthalmology", "drops", "post-op", "follow-up"],
+      "lines": [
+        "Doctor: The cataract operation went well, the vision is better already.",
+        "Nurse: Instill the antibiotic drops in the right eye, four times a day for the next ten days.",
+        "Doctor: Use the steroid drops five times a day for one week, then halve it.",
+        "Nurse: Make sure to wash the hands before opening the drop bottle.",
+        "Doctor: Do not let the drops touch the eyelashes, keep the tip away from the eye.",
+        "Doctor: Wear the dark glasses outdoors, the light will hurt for a week.",
+        "Doctor: She must come back on 25/11 for the second eye, please arrange the transport.",
+        "Doctor: No rubbing the eye, and no dust near it for ten days.",
+        "Nurse: Make sure to call us the same day if the eye goes red, painful or the vision drops."
+      ],
+      "items": [
+        {"kind": "medication", "quote": "Instill the antibiotic drops in the right eye, four times a day for the next ten days.",
+         "schedule": {"kind": "RECURRENCE", "times_per_day": 4}},
+        {"kind": "medication", "quote": "Use the steroid drops five times a day for one week, then halve it.",
+         "schedule": {"kind": "RECURRENCE", "times_per_day": 5},
+         "note": "'five times a day' is matched by the extractor but parse_schedule counts only up to four"},
+        {"kind": "task", "quote": "Make sure to wash the hands before opening the drop bottle.",
+         "schedule": null},
+        {"kind": "avoid", "quote": "Do not let the drops touch the eyelashes, keep the tip away from the eye.",
+         "schedule": null},
+        {"kind": "task", "quote": "Wear the dark glasses outdoors, the light will hurt for a week.",
+         "schedule": {"kind": "RECURRENCE"},
+         "note": "a duration ('for a week') is not a schedule the grammar can read"},
+        {"kind": "appointment", "quote": "She must come back on 25/11 for the second eye, please arrange the transport.",
+         "schedule": {"kind": "ONCE", "has_date": true}},
+        {"kind": "avoid", "quote": "No rubbing the eye, and no dust near it for ten days.",
+         "schedule": null,
+         "note": "a bare 'No <thing>' with no drug word is not in the avoid rules, so this warning is lost"},
+        {"kind": "task", "quote": "Make sure to call us the same day if the eye goes red, painful or the vision drops.",
+         "schedule": null}
+      ]
+    },
+    {
+      "id": "bowels-01",
+      "title": "Constipation after iron: syrup titration, fluids and fibre, charting",
+      "person": "Francis",
+      "tags": ["bowels", "laxative", "mobility", "charting"],
+      "lines": [
+        "Doctor: The constipation came back after the iron, so today we soften the motion.",
+        "Nurse: Use the lactulose syrup 15 ml at bedtime, and adjust it to two soft motions a day.",
+        "Doctor: Take one tablet of the stool softener at night for two weeks.",
+        "Nurse: Warm water and more fibre, and a walk after each meal, will do more than any pill.",
+        "Doctor: Do not take the senna or the bisacodyl tablet daily, the bowel gets dependent.",
+        "Nurse: Please note how many motions happen each day, and bring that note to the clinic.",
+        "Doctor: If there is blood in the motion or no motion for three days, make sure to call us."
+      ],
+      "items": [
+        {"kind": "medication", "quote": "Use the lactulose syrup 15 ml at bedtime, and adjust it to two soft motions a day.",
+         "schedule": {"kind": "RECURRENCE", "day_parts": ["BEDTIME"]},
+         "note": "the titration target 'two soft motions a day' is not read as a schedule"},
+        {"kind": "medication", "quote": "Take one tablet of the stool softener at night for two weeks.",
+         "schedule": {"kind": "RECURRENCE", "day_parts": ["BEDTIME"]}},
+        {"kind": "diet", "quote": "Warm water and more fibre, and a walk after each meal, will do more than any pill.",
+         "schedule": {"kind": "RECURRENCE", "day_parts": ["AFTER_FOOD"]}, "needs_confirm": true,
+         "note": "'after each meal' is not in the schedule grammar, only 'after the meal'/'after food'"},
+        {"kind": "avoid", "quote": "Do not take the senna or the bisacodyl tablet daily, the bowel gets dependent.",
+         "schedule": null},
+        {"kind": "task", "quote": "Please note how many motions happen each day, and bring that note to the clinic.",
+         "schedule": null,
+         "note": "the extractor only matches 'every N days' or 'daily', so 'each day' yields no schedule"},
+        {"kind": "task", "quote": "If there is blood in the motion or no motion for three days, make sure to call us.",
+         "schedule": null}
+      ]
+    },
+    {
+      "id": "labs-01",
+      "title": "Labs before the next visit: what to get, fasting, when to call",
+      "person": "Kavitha",
+      "tags": ["labs", "preparation", "fasting", "follow-up"],
+      "lines": [
+        "Doctor: Before the next visit we need the kidney and sugar numbers, so today I am listing them.",
+        "Nurse: Please get the HbA1c and the serum creatinine done in the lab on Tuesday morning.",
+        "Doctor: The eye screening and the foot check are due in the follow-up, book the slot for 30/11.",
+        "Nurse: Do not eat or drink anything sweet after midnight before the glucose sample.",
+        "Doctor: Collect the lab report and bring it to the next appointment, do not post it home.",
+        "Nurse: If the sugar runs below seventy or above three hundred, make sure to call us the same evening."
+      ],
+      "items": [
+        {"kind": "appointment", "quote": "Before the next visit we need the kidney and sugar numbers, so today I am listing them.",
+         "schedule": null},
+        {"kind": "task", "quote": "Please get the HbA1c and the serum creatinine done in the lab on Tuesday morning.",
+         "schedule": {"kind": "ONCE", "has_date": true},
+         "note": "only the word 'morning' is read, so a one-off test becomes a daily recurrence"},
+        {"kind": "appointment", "quote": "The eye screening and the foot check are due in the follow-up, book the slot for 30/11.",
+         "schedule": {"kind": "ONCE", "has_date": true}},
+        {"kind": "diet", "quote": "Do not eat or drink anything sweet after midnight before the glucose sample.",
+         "schedule": null, "needs_confirm": true,
+         "note": "the fasting window 'after midnight' is not readable, and the sentence lands as a diet rule"},
+        {"kind": "appointment", "quote": "Collect the lab report and bring it to the next appointment, do not post it home.",
+         "schedule": null},
+        {"kind": "task", "quote": "If the sugar runs below seventy or above three hundred, make sure to call us the same evening.",
+         "schedule": null,
+         "note": "expected: no timing. The word 'evening' inside a call-us-if warning is read as a recurring slot"}
+      ]
+    }
+  ]
+}

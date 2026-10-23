@@ -1,0 +1,118 @@
+/* CareLoop site-specific styles. Everything structural comes from the shared
+   design system (frontend/ui/src/*); this file only adds marketing-page chrome:
+   hero, feature grid, footer. Dark mode + reduced motion already work via tokens. */
+
+/* ---------- hero ---------- */
+.cl-hero {
+  padding-block: var(--cl-sp-7);
+  margin-bottom: var(--cl-sp-6);
+  border-bottom: 1px solid var(--cl-line);
+  background:
+    radial-gradient(60rem 24rem at 85% -10%, var(--cl-accent-soft), transparent 60%),
+    linear-gradient(var(--cl-surface), var(--cl-bg));
+  border-radius: 0 0 var(--cl-r-lg) var(--cl-r-lg);
+}
+.cl-hero .eyebrow {
+  display: inline-block;
+  font-size: var(--cl-text-xs);
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--cl-accent);
+  margin-bottom: var(--cl-sp-3);
+}
+.cl-hero h1 { max-width: 24ch; }
+.cl-hero .sub {
+  font-size: var(--cl-text-lg);
+  color: var(--cl-ink-2);
+  max-width: 56ch;
+  margin-bottom: var(--cl-sp-5);
+}
+.cl-hero .cta { display: flex; flex-wrap: wrap; gap: var(--cl-sp-3); }
+.cl-hero .cta a { text-decoration: none; }
+
+/* ---------- sections ---------- */
+.cl-section { padding-block: var(--cl-sp-6); scroll-margin-top: 5rem; }
+.cl-section > .head { margin-bottom: var(--cl-sp-5); }
+.cl-section .eyebrow {
+  font-size: var(--cl-text-xs); font-weight: 700; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--cl-ink-3); margin: 0 0 var(--cl-sp-2);
+}
+.cl-section h2 { margin-bottom: var(--cl-sp-2); }
+.cl-section .lede { color: var(--cl-ink-2); max-width: 68ch; margin-bottom: 0; }
+
+/* ---------- feature grid (extends the shared cols helpers) ---------- */
+.cl-features { display: grid; gap: var(--cl-sp-5); }
+@media (min-width: 44rem) { .cl-features { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 68rem) { .cl-features { grid-template-columns: repeat(3, 1fr); } }
+.cl-feature {
+  background: var(--cl-surface); border: 1px solid var(--cl-line);
+  border-radius: var(--cl-r-lg); padding: var(--cl-sp-5);
+  display: grid; gap: var(--cl-sp-2); align-content: start;
+}
+.cl-feature .glyph {
+  width: 40px; height: 40px; border-radius: 50%;
+  display: grid; place-items: center; font-weight: 800;
+  background: var(--cl-accent-soft); color: var(--cl-accent);
+  font-size: var(--cl-text-lg);
+}
+.cl-feature h3 { margin: var(--cl-sp-2) 0 0; font-size: var(--cl-text-lg); }
+.cl-feature p { margin: 0; color: var(--cl-ink-2); }
+
+/* numbered how-it-works steps */
+.cl-steps { counter-reset: step; display: grid; gap: var(--cl-sp-4); }
+.cl-step { display: grid; grid-template-columns: 3rem 1fr; gap: var(--cl-sp-4); align-items: start; }
+.cl-step .n {
+  counter-increment: step;
+  width: 3rem; height: 3rem; border-radius: 50%;
+  display: grid; place-items: center; font-weight: 800; font-size: var(--cl-text-lg);
+  background: var(--cl-accent); color: var(--cl-accent-ink);
+}
+.cl-step .n::before { content: counter(step); }
+.cl-step h3 { margin: 0 0 var(--cl-sp-1); font-size: var(--cl-text-lg); }
+.cl-step p { margin: 0; color: var(--cl-ink-2); }
+
+/* code / diagram block */
+.cl-pre {
+  background: var(--cl-surface-2); border: 1px solid var(--cl-line);
+  border-radius: var(--cl-r); padding: var(--cl-sp-4);
+  overflow-x: auto; font-family: var(--cl-mono);
+  font-size: var(--cl-text-sm); line-height: 1.5; color: var(--cl-ink);
+}
+.cl-pre code { background: none; padding: 0; }
+.cl-kbd {
+  font-family: var(--cl-mono); font-size: var(--cl-text-sm);
+  background: var(--cl-surface-2); border: 1px solid var(--cl-line);
+  border-radius: var(--cl-r-sm); padding: 1px 6px; color: var(--cl-ink);
+}
+
+/* ---------- footer ---------- */
+.cl-foot { border-top: 1px solid var(--cl-line); margin-top: var(--cl-sp-7); padding-block: var(--cl-sp-6); }
+.cl-foot .cols {
+  display: grid; gap: var(--cl-sp-5);
+  grid-template-columns: 1fr;
+}
+@media (min-width: 48rem) { .cl-foot .cols { grid-template-columns: 2fr 1fr 1fr; } }
+.cl-foot h4 {
+  margin: 0 0 var(--cl-sp-3); font-size: var(--cl-text-xs);
+  text-transform: uppercase; letter-spacing: .06em; color: var(--cl-ink-3);
+}
+.cl-foot ul { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--cl-sp-2); }
+.cl-foot a { color: var(--cl-ink-2); text-decoration: none; }
+.cl-foot a:hover { color: var(--cl-accent); }
+.cl-foot .fine {
+  margin-top: var(--cl-sp-5); padding-top: var(--cl-sp-4);
+  border-top: 1px solid var(--cl-line); color: var(--cl-ink-3); font-size: var(--cl-text-xs);
+}
+
+/* prose helper for legal + docs pages */
+.cl-prose { max-width: 66ch; }
+.cl-prose h2 { margin-top: var(--cl-sp-6); }
+.cl-prose h3 { margin-top: var(--cl-sp-5); }
+.cl-prose :where(ul, ol) { padding-left: var(--cl-sp-5); }
+.cl-prose li { margin-bottom: var(--cl-sp-2); }
+.cl-prose a { overflow-wrap: anywhere; }
+
+/* 404 */
+.cl-notfound { text-align: center; padding-block: var(--cl-sp-7); }
+.cl-notfound .big { font-size: 5rem; font-weight: 800; color: var(--cl-accent); line-height: 1; }

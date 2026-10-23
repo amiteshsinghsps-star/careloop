@@ -1,0 +1,92 @@
+/* App-local shell pieces only. Shared classes come from @careloop/ui tokens + components. */
+
+.cl-bar {
+  display: block;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--cl-surface-2);
+  overflow: hidden;
+  border: 1px solid var(--cl-line);
+}
+.cl-bar > i {
+  display: block;
+  height: 100%;
+  background: var(--cl-accent);
+  transition: width .2s ease;
+}
+
+.cl-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--cl-sp-2);
+  min-height: 40px;
+  padding: 0 var(--cl-sp-4);
+  border-radius: 999px;
+  border: 1px solid var(--cl-line);
+  background: var(--cl-surface);
+  color: var(--cl-ink-2);
+  font: inherit;
+  font-size: var(--cl-text-sm);
+  font-weight: 600;
+  cursor: pointer;
+}
+.cl-chip[aria-pressed="true"] {
+  background: var(--cl-accent-soft);
+  color: var(--cl-accent);
+  border-color: transparent;
+}
+
+.cl-filters { display: flex; flex-wrap: wrap; gap: var(--cl-sp-2); }
+
+.cl-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  display: grid;
+  place-items: center;
+  padding: var(--cl-sp-4);
+  background: color-mix(in srgb, var(--cl-ink) 45%, transparent);
+}
+.cl-dialog {
+  width: 100%;
+  max-width: 32rem;
+  background: var(--cl-surface);
+  border: 1px solid var(--cl-line);
+  border-radius: var(--cl-r-lg);
+  padding: var(--cl-sp-5);
+  box-shadow: var(--cl-shadow);
+}
+
+.cl-toastcard {
+  background: var(--cl-ink);
+  color: var(--cl-bg);
+  border-radius: var(--cl-r);
+  padding: var(--cl-sp-4);
+  box-shadow: var(--cl-shadow);
+  font-weight: 600;
+}
+
+.cl-errorbox {
+  border: 1px solid var(--cl-danger);
+  background: var(--cl-danger-soft);
+  color: var(--cl-ink);
+  border-radius: var(--cl-r);
+  padding: var(--cl-sp-4);
+}
+.cl-errorbox:focus { outline: 3px solid var(--cl-danger); outline-offset: 2px; }
+
+.mono-hash { font-family: var(--cl-mono); font-size: var(--cl-text-sm); }
+
+pre.cl-md {
+  white-space: pre-wrap;
+  word-break: break-word;
+  background: var(--cl-surface-2);
+  border: 1px solid var(--cl-line);
+  border-radius: var(--cl-r);
+  padding: var(--cl-sp-4);
+  max-height: 24rem;
+  overflow: auto;
+}
+
+.brand-mark { width: 28px; height: 28px; border-radius: 50%;
+  background: conic-gradient(from 210deg, var(--cl-accent), var(--cl-info), var(--cl-accent)); flex: none; }

@@ -1,0 +1,40 @@
+/* Styles for the MCP App card page. This file plus frontend/ui ships inside ONE
+   self-contained HTML (vite-plugin-singlefile), so there are no external requests.
+   The card is the elder-facing surface: body text at 1.25rem minimum, 48px touch targets. */
+@import "../../../../frontend/ui/src/all.css";
+
+html, body { min-height: 100%; }
+body {
+  font-size: 1.25rem;
+  line-height: 1.6;
+  background: var(--cl-bg);
+  color: var(--cl-ink);
+}
+
+h1, h2, h3 { font-size: clamp(1.5rem, 4.5vw, 2.1rem); }
+
+.cl-btn {
+  min-height: 48px;
+  min-width: 48px;
+  font-size: 1.15rem;
+  padding: 0 var(--cl-sp-5);
+}
+.cl-btn.sm { min-height: 48px; font-size: 1.05rem; }
+
+.cl-item { font-size: 1.2rem; }
+.cl-item .who { font-size: 1.35rem; }
+.cl-pill { font-size: .85rem; }
+.cl-quote { font-size: 1.3rem; }
+.cl-note { font-size: 1.05rem; }
+.cl-label { font-size: 1rem; }
+.cl-disclaimer { font-size: 1.05rem; }
+code { font-size: 1rem; }
+
+@media (max-width: 26rem) {
+  body { font-size: 1.15rem; }
+  .cl-item { font-size: 1.1rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}

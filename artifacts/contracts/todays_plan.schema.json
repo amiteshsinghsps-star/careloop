@@ -1,0 +1,31 @@
+{
+  "action": "ViewPlan",
+  "annotations": {
+    "readOnlyHint": true
+  },
+  "description": "Today's agenda for one person, ordered by time of day: morning, after food, evening, bedtime. Synonyms: what today, today's schedule.",
+  "guest_safe": false,
+  "inputSchema": {
+    "additionalProperties": false,
+    "properties": {
+      "person": {
+        "maxLength": 40,
+        "type": "string"
+      }
+    },
+    "type": "object"
+  },
+  "name": "todays_plan",
+  "outputSchema": {
+    "properties": {
+      "slots": {
+        "type": "array"
+      }
+    },
+    "required": [
+      "slots"
+    ],
+    "type": "object"
+  },
+  "ui": true
+}

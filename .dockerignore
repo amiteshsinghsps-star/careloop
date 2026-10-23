@@ -1,0 +1,32 @@
+# The image builds its own frontends and its own cells; nothing here belongs in the context.
+node_modules
+**/node_modules
+.git
+.github
+.venv
+venv
+__pycache__
+**/__pycache__
+*.pyc
+.env
+.env.*
+!.env.example
+data
+dist
+**/dist
+.DS_Store
+Thumbs.db
+
+# Built in the image by `npm run dist`, not copied in pre-built.
+careloop/web
+
+# Local evidence and scratch: the traces are re-measured per machine, the offline bundle is
+# restored with `npm run bundle:verify`, and no test-run output goes into an image.
+artifacts/traces
+data/sim
+data/cells
+data/eval
+*.trace.json
+*.log
+coverage
+.nyc_output

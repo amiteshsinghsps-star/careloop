@@ -1,0 +1,363 @@
+{
+  "brandTermNote": "Brand terms are the five policy_guard._BANNED_KEYWORDS look for. They do not appear in the developer's own copy: the surfaces are called 'your assistant' and 'the companion page'.",
+  "category": "HealthAndWellness",
+  "defaultLocale": "en-IN",
+  "developer": {
+    "contactEmailEnv": "CARELOOP_SUPPORT_EMAIL",
+    "note": "The contact address is held in the environment, never in this file.",
+    "organisation": "CareLoop",
+    "supportUrl": "http://localhost:8080/docs"
+  },
+  "distribution": {
+    "isAvailableForKids": false,
+    "isAvailableForWorksAndEducation": false,
+    "pricing": {
+      "type": "FREE"
+    },
+    "regions": [
+      "IN",
+      "US",
+      "GB"
+    ]
+  },
+  "generatedBy": "scripts/make_addon.py",
+  "locales": [
+    "en-IN",
+    "en-US",
+    "en-GB"
+  ],
+  "mediaAssetNote": "The icons and the carousel are generated into the assets folder beside this file by scripts/make_addon.py and are referenced by local path. Host them at the deployment's public HTTPS origin and put those absolute addresses here before submission.",
+  "mustReplaceBeforePublication": [
+    "storeListing.locales.*.privacyAndCompliance.privacyPolicyUrl",
+    "storeListing.locales.*.privacyAndCompliance.termsOfUseUrl",
+    "developer.supportUrl",
+    "serviceEndpoint.mcpUri",
+    "the icon and carousel local asset paths (host them over HTTPS)"
+  ],
+  "originLocales": [
+    "en-IN"
+  ],
+  "publicationReady": false,
+  "schemaVersion": "careloop-store-listing/1",
+  "serviceEndpoint": {
+    "mcpUri": "http://localhost:8080/mcp",
+    "note": "Self hosted: the household's own deployment, discovered through the OAuth metadata published by that deployment."
+  },
+  "storeListing": {
+    "distributorCategory": "HealthAndWellness",
+    "isTemplate": false,
+    "locales": {
+      "en-GB": {
+        "descriptionKeywords": [
+          "care plan",
+          "caregiver",
+          "clinician instructions",
+          "household",
+          "older adults",
+          "follow up",
+          "discharge"
+        ],
+        "examplePhrases": [
+          "Ask CareLoop what is next for my father today.",
+          "Ask CareLoop why the clinician said the second item, and what the exact words were.",
+          "Ask CareLoop to mark the first item as done.",
+          "Ask CareLoop what changed since the last visit and what to take to the next appointment."
+        ],
+        "fullDescription": "CareLoop keeps the care instructions your clinician already gave in one place the whole household can ask about.\n\nA discharge conversation is long, and the paper it ends up on goes in a drawer. CareLoop stores the words the clinician actually used, for each person a household looks after, with the date they were recorded, and lets you ask about them out loud when your hands are full.\n\nASK IT OUT LOUD\n  - What is next for someone, in the order the plan means it.\n  - Why an item is there, and the exact recorded words behind it.\n  - What today looks like, sorted by morning, after food, evening and bedtime.\n  - What you have already marked done and what is still pending.\n  - What changed compared with the previous visit: new, stopped, changed.\n  - Which questions to take to the next appointment.\n  - Something you were told verbally and nobody wrote down. CareLoop remembers it in your words.\n\nWHAT IT NEVER DOES\nIt is not medical advice and does not pretend to be. CareLoop never gives advice, never changes an instruction, never adds one of its own and never guesses. If it has no recording about something, it says so. Anything unclear is left flagged for the clinician rather than smoothed over, and it tells you it is unclear.\n\nAMOUNTS ARE NOT SPOKEN\nOn the voice surface every medicine amount is replaced with 'your prescribed amount'. Amounts are never spoken and never shown on the voice card. They live only on the CareLoop companion page, which opens for your household after signing in. The masking is not a preference you can lose: it is applied to every field the assistant can return and checked once more on the way out.\n\nYOUR HOUSEHOLD'S DATA\nEach household has its own encrypted store, separate from every other. The original words you record stay inside it. Nothing is sold, matched or shared. You can erase everything from the companion page, and the receipt is only given once the store and its key are genuinely gone. Unlinking your assistant stops it reading the plan straight away.\n\nIf anyone sounds in danger, say so: CareLoop points at your local emergency number and saves nothing.\n\nCareLoop is self hosted. A household runs its own copy, and this add-on connects your assistant to that copy. Not a medical device.",
+        "mediaAssets": {
+          "carouselImages": [
+            {
+              "description": "One person's day on screen: the loop mark, four plan items in the clinician's own words, two already marked done.",
+              "localPath": "alexa/assets/carousel-600x900.png",
+              "sha256": "6260d88d14a6c4915cf89187f4a1c8df6bc6494c9aedbbfe1e12625baa8f9272",
+              "size": "600x900"
+            }
+          ],
+          "icons": {
+            "light": [
+              {
+                "description": "CareLoop loop mark on a warm paper background",
+                "localPath": "alexa/assets/icon-64x64.png",
+                "sha256": "f357a1e529393b4137732a5c9a7e3ce88d68e9ea19ed40489d0509525a1013e7",
+                "size": "64x64"
+              },
+              {
+                "description": "CareLoop loop mark on a warm paper background",
+                "localPath": "alexa/assets/icon-72x72.png",
+                "sha256": "62448e02f1007b199a0a054cc8d2a89d2c2bea7cfd7f688294fbbb1db282d849",
+                "size": "72x72"
+              },
+              {
+                "description": "CareLoop loop mark on a warm paper background",
+                "localPath": "alexa/assets/icon-88x88.png",
+                "sha256": "66a0490b77ecd5fcd30ae8eb58319774ada1d3434beede034736b4728478ccfe",
+                "size": "88x88"
+              },
+              {
+                "description": "CareLoop loop mark on a warm paper background",
+                "localPath": "alexa/assets/icon-126x126.png",
+                "sha256": "ded6aa4ca881130a1b8133a2e9acdf133902b1543139e762eaf14ad6fb21fee1",
+                "size": "126x126"
+              },
+              {
+                "description": "CareLoop loop mark on a warm paper background",
+                "localPath": "alexa/assets/icon-180x180.png",
+                "sha256": "fbecc00a38786ea75ceb91ea60c3d90776b0bfcf083d07b3be7bc78f6b8bde69",
+                "size": "180x180"
+              },
+              {
+                "description": "CareLoop loop mark on a warm paper background",
+                "localPath": "alexa/assets/icon-241x241.png",
+                "sha256": "b278baaccdfb7c6d6a46d5d5765be35078bac99a1e62e1c5d67a5d1f6e2f038b",
+                "size": "241x241"
+              }
+            ]
+          }
+        },
+        "name": {
+          "value": "CareLoop"
+        },
+        "privacyAndCompliance": {
+          "controlsRequested": [
+            {
+              "description": {
+                "value": "Link or unlink this household"
+              },
+              "name": "ACCOUNT_LINKING"
+            },
+            {
+              "description": {
+                "value": "See whether the household is linked"
+              },
+              "name": "ACCOUNT_LINKING_STATUS"
+            },
+            {
+              "description": {
+                "value": "Erase the household's whole plan"
+              },
+              "name": "DELETE_USER_DATA"
+            }
+          ],
+          "privacyPolicyUrl": "http://localhost:8080/privacy",
+          "termsOfUseUrl": "http://localhost:8080/terms"
+        },
+        "shortDescription": "Repeats the care plan your clinician recorded, for the household to ask out loud. No amounts by voice.",
+        "summary": {
+          "value": "The care plan your clinician wrote down, asked out loud."
+        },
+        "testingInstructions": "Point the add-on at your own deployment and link the household with the household code and family PIN from that deployment's own environment - never say them on a shared device. Then ask what is next for the person in the plan, ask why an item was recorded, mark one item done and ask what changed. Every spoken answer must show any amount as 'your prescribed amount' and must name the clinician and the recording date. Ask the same thing signed out: the answer should be the link notice, not a plan."
+      },
+      "en-IN": {
+        "descriptionKeywords": [
+          "care plan",
+          "caregiver",
+          "clinician instructions",
+          "household",
+          "older adults",
+          "follow up",
+          "discharge"
+        ],
+        "examplePhrases": [
+          "Ask CareLoop what is next for my father today.",
+          "Ask CareLoop why the clinician said the second item, and what the exact words were.",
+          "Ask CareLoop to mark the first item as done.",
+          "Ask CareLoop what changed since the last visit and what to take to the next appointment."
+        ],
+        "fullDescription": "CareLoop keeps the care instructions your clinician already gave in one place the whole household can ask about.\n\nA discharge conversation is long, and the paper it ends up on goes in a drawer. CareLoop stores the words the clinician actually used, for each person a household looks after, with the date they were recorded, and lets you ask about them out loud when your hands are full.\n\nASK IT OUT LOUD\n  - What is next for someone, in the order the plan means it.\n  - Why an item is there, and the exact recorded words behind it.\n  - What today looks like, sorted by morning, after food, evening and bedtime.\n  - What you have already marked done and what is still pending.\n  - What changed compared with the previous visit: new, stopped, changed.\n  - Which questions to take to the next appointment.\n  - Something you were told verbally and nobody wrote down. CareLoop remembers it in your words.\n\nWHAT IT NEVER DOES\nIt is not medical advice and does not pretend to be. CareLoop never gives advice, never changes an instruction, never adds one of its own and never guesses. If it has no recording about something, it says so. Anything unclear is left flagged for the clinician rather than smoothed over, and it tells you it is unclear.\n\nAMOUNTS ARE NOT SPOKEN\nOn the voice surface every medicine amount is replaced with 'your prescribed amount'. Amounts are never spoken and never shown on the voice card. They live only on the CareLoop companion page, which opens for your household after signing in. The masking is not a preference you can lose: it is applied to every field the assistant can return and checked once more on the way out.\n\nYOUR HOUSEHOLD'S DATA\nEach household has its own encrypted store, separate from every other. The original words you record stay inside it. Nothing is sold, matched or shared. You can erase everything from the companion page, and the receipt is only given once the store and its key are genuinely gone. Unlinking your assistant stops it reading the plan straight away.\n\nIf anyone sounds in danger, say so: CareLoop points at your local emergency number and saves nothing.\n\nCareLoop is self hosted. A household runs its own copy, and this add-on connects your assistant to that copy. Not a medical device.",
+        "mediaAssets": {
+          "carouselImages": [
+            {
+              "description": "One person's day on screen: the loop mark, four plan items in the clinician's own words, two already marked done.",
+              "localPath": "alexa/assets/carousel-600x900.png",
+              "sha256": "6260d88d14a6c4915cf89187f4a1c8df6bc6494c9aedbbfe1e12625baa8f9272",
+              "size": "600x900"
+            }
+          ],
+          "icons": {
+            "light": [
+              {
+                "description": "CareLoop loop mark on a warm paper background",
+                "localPath": "alexa/assets/icon-64x64.png",
+                "sha256": "f357a1e529393b4137732a5c9a7e3ce88d68e9ea19ed40489d0509525a1013e7",
+                "size": "64x64"
+              },
+              {
+                "description": "CareLoop loop mark on a warm paper background",
+                "localPath": "alexa/assets/icon-72x72.png",
+                "sha256": "62448e02f1007b199a0a054cc8d2a89d2c2bea7cfd7f688294fbbb1db282d849",
+                "size": "72x72"
+              },
+              {
+                "description": "CareLoop loop mark on a warm paper background",
+                "localPath": "alexa/assets/icon-88x88.png",
+                "sha256": "66a0490b77ecd5fcd30ae8eb58319774ada1d3434beede034736b4728478ccfe",
+                "size": "88x88"
+              },
+              {
+                "description": "CareLoop loop mark on a warm paper background",
+                "localPath": "alexa/assets/icon-126x126.png",
+                "sha256": "ded6aa4ca881130a1b8133a2e9acdf133902b1543139e762eaf14ad6fb21fee1",
+                "size": "126x126"
+              },
+              {
+                "description": "CareLoop loop mark on a warm paper background",
+                "localPath": "alexa/assets/icon-180x180.png",
+                "sha256": "fbecc00a38786ea75ceb91ea60c3d90776b0bfcf083d07b3be7bc78f6b8bde69",
+                "size": "180x180"
+              },
+              {
+                "description": "CareLoop loop mark on a warm paper background",
+                "localPath": "alexa/assets/icon-241x241.png",
+                "sha256": "b278baaccdfb7c6d6a46d5d5765be35078bac99a1e62e1c5d67a5d1f6e2f038b",
+                "size": "241x241"
+              }
+            ]
+          }
+        },
+        "name": {
+          "value": "CareLoop"
+        },
+        "privacyAndCompliance": {
+          "controlsRequested": [
+            {
+              "description": {
+                "value": "Link or unlink this household"
+              },
+              "name": "ACCOUNT_LINKING"
+            },
+            {
+              "description": {
+                "value": "See whether the household is linked"
+              },
+              "name": "ACCOUNT_LINKING_STATUS"
+            },
+            {
+              "description": {
+                "value": "Erase the household's whole plan"
+              },
+              "name": "DELETE_USER_DATA"
+            }
+          ],
+          "privacyPolicyUrl": "http://localhost:8080/privacy",
+          "termsOfUseUrl": "http://localhost:8080/terms"
+        },
+        "shortDescription": "Repeats the care plan your clinician recorded, for the household to ask out loud. No amounts by voice.",
+        "summary": {
+          "value": "The care plan your clinician wrote down, asked out loud."
+        },
+        "testingInstructions": "Point the add-on at your own deployment and link the household with the household code and family PIN from that deployment's own environment - never say them on a shared device. Then ask what is next for the person in the plan, ask why an item was recorded, mark one item done and ask what changed. Every spoken answer must show any amount as 'your prescribed amount' and must name the clinician and the recording date. Ask the same thing signed out: the answer should be the link notice, not a plan."
+      },
+      "en-US": {
+        "descriptionKeywords": [
+          "care plan",
+          "caregiver",
+          "clinician instructions",
+          "household",
+          "older adults",
+          "follow up",
+          "discharge"
+        ],
+        "examplePhrases": [
+          "Ask CareLoop what is next for my father today.",
+          "Ask CareLoop why the clinician said the second item, and what the exact words were.",
+          "Ask CareLoop to mark the first item as done.",
+          "Ask CareLoop what changed since the last visit and what to take to the next appointment."
+        ],
+        "fullDescription": "CareLoop keeps the care instructions your clinician already gave in one place the whole household can ask about.\n\nA discharge conversation is long, and the paper it ends up on goes in a drawer. CareLoop stores the words the clinician actually used, for each person a household looks after, with the date they were recorded, and lets you ask about them out loud when your hands are full.\n\nASK IT OUT LOUD\n  - What is next for someone, in the order the plan means it.\n  - Why an item is there, and the exact recorded words behind it.\n  - What today looks like, sorted by morning, after food, evening and bedtime.\n  - What you have already marked done and what is still pending.\n  - What changed compared with the previous visit: new, stopped, changed.\n  - Which questions to take to the next appointment.\n  - Something you were told verbally and nobody wrote down. CareLoop remembers it in your words.\n\nWHAT IT NEVER DOES\nIt is not medical advice and does not pretend to be. CareLoop never gives advice, never changes an instruction, never adds one of its own and never guesses. If it has no recording about something, it says so. Anything unclear is left flagged for the clinician rather than smoothed over, and it tells you it is unclear.\n\nAMOUNTS ARE NOT SPOKEN\nOn the voice surface every medicine amount is replaced with 'your prescribed amount'. Amounts are never spoken and never shown on the voice card. They live only on the CareLoop companion page, which opens for your household after signing in. The masking is not a preference you can lose: it is applied to every field the assistant can return and checked once more on the way out.\n\nYOUR HOUSEHOLD'S DATA\nEach household has its own encrypted store, separate from every other. The original words you record stay inside it. Nothing is sold, matched or shared. You can erase everything from the companion page, and the receipt is only given once the store and its key are genuinely gone. Unlinking your assistant stops it reading the plan straight away.\n\nIf anyone sounds in danger, say so: CareLoop points at your local emergency number and saves nothing.\n\nCareLoop is self hosted. A household runs its own copy, and this add-on connects your assistant to that copy. Not a medical device.",
+        "mediaAssets": {
+          "carouselImages": [
+            {
+              "description": "One person's day on screen: the loop mark, four plan items in the clinician's own words, two already marked done.",
+              "localPath": "alexa/assets/carousel-600x900.png",
+              "sha256": "6260d88d14a6c4915cf89187f4a1c8df6bc6494c9aedbbfe1e12625baa8f9272",
+              "size": "600x900"
+            }
+          ],
+          "icons": {
+            "light": [
+              {
+                "description": "CareLoop loop mark on a warm paper background",
+                "localPath": "alexa/assets/icon-64x64.png",
+                "sha256": "f357a1e529393b4137732a5c9a7e3ce88d68e9ea19ed40489d0509525a1013e7",
+                "size": "64x64"
+              },
+              {
+                "description": "CareLoop loop mark on a warm paper background",
+                "localPath": "alexa/assets/icon-72x72.png",
+                "sha256": "62448e02f1007b199a0a054cc8d2a89d2c2bea7cfd7f688294fbbb1db282d849",
+                "size": "72x72"
+              },
+              {
+                "description": "CareLoop loop mark on a warm paper background",
+                "localPath": "alexa/assets/icon-88x88.png",
+                "sha256": "66a0490b77ecd5fcd30ae8eb58319774ada1d3434beede034736b4728478ccfe",
+                "size": "88x88"
+              },
+              {
+                "description": "CareLoop loop mark on a warm paper background",
+                "localPath": "alexa/assets/icon-126x126.png",
+                "sha256": "ded6aa4ca881130a1b8133a2e9acdf133902b1543139e762eaf14ad6fb21fee1",
+                "size": "126x126"
+              },
+              {
+                "description": "CareLoop loop mark on a warm paper background",
+                "localPath": "alexa/assets/icon-180x180.png",
+                "sha256": "fbecc00a38786ea75ceb91ea60c3d90776b0bfcf083d07b3be7bc78f6b8bde69",
+                "size": "180x180"
+              },
+              {
+                "description": "CareLoop loop mark on a warm paper background",
+                "localPath": "alexa/assets/icon-241x241.png",
+                "sha256": "b278baaccdfb7c6d6a46d5d5765be35078bac99a1e62e1c5d67a5d1f6e2f038b",
+                "size": "241x241"
+              }
+            ]
+          }
+        },
+        "name": {
+          "value": "CareLoop"
+        },
+        "privacyAndCompliance": {
+          "controlsRequested": [
+            {
+              "description": {
+                "value": "Link or unlink this household"
+              },
+              "name": "ACCOUNT_LINKING"
+            },
+            {
+              "description": {
+                "value": "See whether the household is linked"
+              },
+              "name": "ACCOUNT_LINKING_STATUS"
+            },
+            {
+              "description": {
+                "value": "Erase the household's whole plan"
+              },
+              "name": "DELETE_USER_DATA"
+            }
+          ],
+          "privacyPolicyUrl": "http://localhost:8080/privacy",
+          "termsOfUseUrl": "http://localhost:8080/terms"
+        },
+        "shortDescription": "Repeats the care plan your clinician recorded, for the household to ask out loud. No amounts by voice.",
+        "summary": {
+          "value": "The care plan your clinician wrote down, asked out loud."
+        },
+        "testingInstructions": "Point the add-on at your own deployment and link the household with the household code and family PIN from that deployment's own environment - never say them on a shared device. Then ask what is next for the person in the plan, ask why an item was recorded, mark one item done and ask what changed. Every spoken answer must show any amount as 'your prescribed amount' and must name the clinician and the recording date. Ask the same thing signed out: the answer should be the link notice, not a plan."
+      }
+    },
+    "publishAsBeta": false,
+    "skillType": "custom"
+  },
+  "subcategory": "Caregiving",
+  "voiceSurfaceGuarantees": {
+    "amountsAreShownOnlyOn": "the household companion page, after signing in",
+    "crisisHandling": "a spoken redirect to local emergency help, and nothing saved",
+    "noChildrensData": true,
+    "noMedicalAdvice": "This is not medical advice. CareLoop only repeats what your clinician said.",
+    "noMedicineAmountsSpoken": true,
+    "storesOnlyWhatAClinicianSaid": true
+  }
+}

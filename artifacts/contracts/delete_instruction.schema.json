@@ -1,0 +1,50 @@
+{
+  "action": "DeleteItem",
+  "annotations": {
+    "destructiveHint": true
+  },
+  "description": "Remove an item from the care plan. The first call without confirmation only reads the item back; the customer must confirm before it is deleted. Synonyms: delete, remove, take off the list, cross out.",
+  "guest_safe": false,
+  "inputSchema": {
+    "additionalProperties": false,
+    "properties": {
+      "confirm": {
+        "description": "Set true only after the customer confirms.",
+        "type": "boolean"
+      },
+      "ref": {
+        "maxLength": 40,
+        "type": "string"
+      }
+    },
+    "required": [
+      "ref"
+    ],
+    "type": "object"
+  },
+  "name": "delete_instruction",
+  "outputSchema": {
+    "properties": {
+      "deleted": {
+        "type": "boolean"
+      },
+      "needs_confirmation": {
+        "type": "boolean"
+      },
+      "question": {
+        "type": "string"
+      },
+      "ref": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "object"
+      }
+    },
+    "required": [
+      "ref"
+    ],
+    "type": "object"
+  },
+  "ui": false
+}

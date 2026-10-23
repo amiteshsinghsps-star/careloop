@@ -1,0 +1,42 @@
+{
+  "action": "ViewPlan",
+  "annotations": {
+    "readOnlyHint": true
+  },
+  "description": "Compare this visit with the previous recorded visit: what is new, what stopped, what changed. Synonyms: diff, since last time.",
+  "guest_safe": false,
+  "inputSchema": {
+    "additionalProperties": false,
+    "properties": {
+      "person": {
+        "maxLength": 40,
+        "type": "string"
+      }
+    },
+    "type": "object"
+  },
+  "name": "what_changed",
+  "outputSchema": {
+    "properties": {
+      "changed": {
+        "type": "array"
+      },
+      "compared_to": {
+        "type": "string"
+      },
+      "new": {
+        "type": "array"
+      },
+      "stopped": {
+        "type": "array"
+      }
+    },
+    "required": [
+      "new",
+      "stopped",
+      "changed"
+    ],
+    "type": "object"
+  },
+  "ui": false
+}

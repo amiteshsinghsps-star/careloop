@@ -1,0 +1,77 @@
+{
+  "version": "2026.10.21",
+  "notes": "Chronic kidney disease and COPD visits. Synthetic, invented speakers.",
+  "cases": [
+    {
+      "id": "ckd-01",
+      "title": "CKD stage 4: potassium, fluids, erythropoietin, labs",
+      "person": "Sudha",
+      "tags": ["ckd", "fluid restriction", "labs-before-visit"],
+      "lines": [
+        "Doctor: Her kidney function has settled at stage four, so the rules below are permanent.",
+        "Doctor: Stop the ibuprofen completely, it is hard on the kidneys.",
+        "Doctor: Never take any painkiller from the shop without asking the renal nurse.",
+        "Nurse: Reduce the potassium, so no banana, coconut water or orange juice.",
+        "Doctor: Keep the fluid to four glasses a day, that includes tea and curd.",
+        "Nurse: Note the swelling in her ankles every evening and record the weight chart.",
+        "Doctor: Take the erythropoietin injection every Sunday evening, in the clinic.",
+        "Doctor: The dietitian will see her after that, and we repeat the creatinine before the next visit.",
+        "Doctor: We will check the phosphate and the haemoglobin before you come back on 12/12."
+      ],
+      "items": [
+        {"kind": "avoid", "quote": "Stop the ibuprofen completely, it is hard on the kidneys.",
+         "schedule": null},
+        {"kind": "avoid", "quote": "Never take any painkiller from the shop without asking the renal nurse.",
+         "schedule": null},
+        {"kind": "diet", "quote": "Reduce the potassium, so no banana, coconut water or orange juice.",
+         "schedule": null, "needs_confirm": true},
+        {"kind": "diet", "quote": "Keep the fluid to four glasses a day, that includes tea and curd.",
+         "schedule": null, "needs_confirm": true},
+        {"kind": "monitor", "quote": "Note the swelling in her ankles every evening and record the weight chart.",
+         "schedule": {"kind": "RECURRENCE", "day_parts": ["EVENING"]}},
+        {"kind": "medication", "quote": "Take the erythropoietin injection every Sunday evening, in the clinic.",
+         "schedule": {"kind": "WEEKLY", "weekdays": [6]}},
+        {"kind": "appointment", "quote": "The dietitian will see her after that, and we repeat the creatinine before the next visit.",
+         "schedule": null},
+        {"kind": "appointment", "quote": "We will check the phosphate and the haemoglobin before you come back on 12/12.",
+         "schedule": {"kind": "ONCE", "has_date": true}}
+      ]
+    },
+    {
+      "id": "copd-01",
+      "title": "COPD: inhaler technique, spacer, steroid rinse, smoking",
+      "person": "Kutty",
+      "tags": ["copd", "inhaler technique", "smoking"],
+      "lines": [
+        "Doctor: His breathlessness is about the same, the chest is tight in the mornings.",
+        "Doctor: Use the salbutamol inhaler two puffs when he is breathless, and rinse the mouth after.",
+        "Doctor: Use the steroid inhaler two puffs every morning, then one puff at night.",
+        "Nurse: Make sure he rinses the mouth and spits after each steroid puff, thrush is the problem.",
+        "Nurse: Please note the spacer must be used for the steroid puff, it cuts the thrush.",
+        "Doctor: Stop smoking this year, the inhalers cannot hold on while the smoke continues.",
+        "Doctor: Walk for ten minutes twice a day, and rest if the breath is bad.",
+        "Nurse: Come back in three weeks if the breathlessness is worse, sooner if he needs the inhaler more than four times a day.",
+        "Doctor: Keep the rescue inhaler at the bedside, not in the bag."
+      ],
+      "items": [
+        {"kind": "medication", "quote": "Use the salbutamol inhaler two puffs when he is breathless, and rinse the mouth after.",
+         "schedule": null, "note": "a prn inhaler has no clock time; inventing one would be a schedule error"},
+        {"kind": "medication", "quote": "Use the steroid inhaler two puffs every morning, then one puff at night.",
+         "schedule": {"kind": "RECURRENCE", "day_parts": ["MORNING"]}},
+        {"kind": "task", "quote": "Make sure he rinses the mouth and spits after each steroid puff, thrush is the problem.",
+         "schedule": null},
+        {"kind": "task", "quote": "Please note the spacer must be used for the steroid puff, it cuts the thrush.",
+         "schedule": null},
+        {"kind": "avoid", "quote": "Stop smoking this year, the inhalers cannot hold on while the smoke continues.",
+         "schedule": null},
+        {"kind": "diet", "quote": "Walk for ten minutes twice a day, and rest if the breath is bad.",
+         "schedule": {"kind": "RECURRENCE", "day_parts": ["MORNING", "EVENING"], "times_per_day": 2},
+         "needs_confirm": true},
+        {"kind": "appointment", "quote": "Come back in three weeks if the breathlessness is worse, sooner if he needs the inhaler more than four times a day.",
+         "schedule": {"kind": "ONCE", "has_date": true}},
+        {"kind": "task", "quote": "Keep the rescue inhaler at the bedside, not in the bag.",
+         "schedule": null}
+      ]
+    }
+  ]
+}
